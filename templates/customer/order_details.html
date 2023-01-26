@@ -1,0 +1,145 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Order Detail | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i></button> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              {% if order_status == "0" %}
+              <a href="/update_order_status/{{fetch_order_id}}" class="btn btn-danger ml-auto">Confirm</a>
+              {% elif order_status == "1" %}
+              <a href="#" class="btn btn-success ml-auto">Confirmed Already</a>
+              {% endif %}
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px">Description</th>
+                    <th> Incl Price </th>
+                    <th> Excl Price </th>
+                    <th> Incl Total </th>
+                    <th> Excl Total </th>
+                    <th> Quantity</th>
+                    <th> Action </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for each_order_details in order_details %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">D</a>
+                        <div class="media-body">
+                          <a href="#">{{each_order_details.orderid}}</a> <small class="d-block text-muted">{{each_order_details.description}}</small>
+                        </div>
+                      </div>
+                    </td>
+            
+                    <td class="align-middle"><span>ZAR {{each_order_details.incl}}.00</span></td>
+
+                    <td class="align-middle"><span>ZAR {{each_order_details.excl}}.00</span></td>
+
+                    <td class="align-middle"><span>ZAR {{each_order_details.incltotal}}.00</span></td>
+
+                    <td class="align-middle"><span>ZAR {{each_order_details.excltotal}}.00</span></td>
+                    <td class="align-middle">
+                        <form action="/update_quantity/{{each_order_details.orderid}}/{{each_order_details.id}}" method="POST">
+                        {% csrf_token %}
+                        <div class="btn-group ml-auto">
+                            <div class="custom-number">
+                              <input type="number" name="quantity" class="form-control"  min="1" max="1000" value="{{each_order_details.quantity}}">
+                            </div>  
+                            {% if order_status == "0" %}
+                            <input class="btn btn-success" type="submit" value="OK">
+                            {% elif order_status == "1" %}
+
+                            {% endif %}
+                            </form
+                    </td>
+                    
+                    <td class="align-middle">
+                    <div class="btn-group ml-auto">
+                    {% if order_status == "0" %} 
+                    <a href="/delete_single_order/{{each_order_details.orderid}}/{{each_order_details.id}}" >
+                    <button class="btn btn-sm btn-secondary" hx-confirm="Are you sure?"><i class="far fa-trash-alt"></i></button></a>
+                    {% elif order_status == "1" %}
+                    <a href="#" >
+                        <button class="btn btn-sm btn-secondary" hx-confirm="Are you sure?"><i class="far fa-trash-alt"></i></button></a>
+                    {% endif %}
+                    </div>     
+       
+                </td>
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+            <br><br>
+            <div class="table-responsive">
+                <!-- .table -->
+                <table class="table">
+                  <!-- thead -->
+                  <thead>
+                    <tr>
+                      <th style="min-width:200px">INVOICE NOTICE </th>
+                      <th> INCL TOTAL  </th>
+                      <th> EXCL TOTAL   </th>
+                      
+                    </tr>
+                  </thead><!-- /thead -->
+                  <!-- tbody -->
+                  <tbody>
+                    <!-- tr -->
+
+                    <tr>
+                
+                      <td class="align-middle"><span>Total prices is subject to change </span>
+                    </td>
+  
+                      <td class="align-middle">
+                        <span>ZAR {{incl}}</span>
+                    </td>
+                      <td class="align-middle">
+                        <span>ZAR {{excl}}</span>
+                      </td>
+                      
+                      
+                    </tr>
+  
+                    <!-- /tr -->
+                    <!-- tr -->
+                  </tbody><!-- /tbody -->
+                </table><!-- /.table -->
+              </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}

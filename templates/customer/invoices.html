@@ -1,0 +1,59 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Invoices | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+<main class="app-main">
+  <!-- .wrapper -->
+  <div class="wrapper">
+    <!-- .page -->
+    <div class="page">
+      <div class="card">
+          <!-- .card-header -->
+
+          <div class="card-header d-flex">
+            <!-- .dropdown -->
+
+            <div class="dropdown">
+              <div class="dropdown-menu stop-propagation">
+                <div class="dropdown-arrow"></div>
+                <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+              </div><!-- /.dropdown-menu -->
+            </div><!-- /.dropdown -->
+            <a href="#" class="btn btn-primary ml-auto">New Order</a>
+            
+          </div><!-- /.card-header -->
+
+
+          <div class="container">
+  <!-- .form-group -->
+  <div class="form-group">
+    <label for="tf4">SEARCH PRODUCTS TO PLACE ORDER</label>
+    <div class="has-clearable">
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button> 
+        {% csrf_token %}
+        <input type="text" 
+        hx-post="/search_product"
+        hx-target="#searchresult"
+        hx-trigger="keyup changed delay:100ms"
+        name="search_text"
+        class="form-control" 
+        placeholder="Search Coke,Fanta etc..." >
+    </div>
+  </div><!-- /.form-group -->
+
+
+<div id="searchresult"> 
+
+
+</div>
+          </div>
+        </div><!-- /.card -->
+    </div><!-- /.page -->
+  </div><!-- /.wrapper -->
+</main><!-- /.app-main -->
+
+
+{% endblock %}

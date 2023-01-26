@@ -1,0 +1,454 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- End Required meta tags -->
+    <title> Dashboard | SaveMore Groups </title>
+    <meta name="author" content="SaveMore Group">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="Save More Group">
+    <meta property="og:description" content="Save More Group">
+    <meta property="og:site_name" content="Save More Group">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'assets/images/save_logo.png' %}">
+    <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}">
+    <meta name="theme-color" content="#3063A0">
+    <script type="application/ld+json">
+    </script>
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'assets/apple-touch-icon.png' %}">
+    <link rel="shortcut icon" href="{% static 'assets/favicon.ico' %}">
+    <meta name="theme-color" content="#3063A0">
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End GOOGLE FONT --> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'assets/vendor/open-iconic/font/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'assets/vendor/flatpickr/flatpickr.min.css' %} "><!-- END PLUGINS STYLES -->
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/theme.min.css' %} " data-skin="default">
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/theme-dark.min.css' %} " data-skin="dark">
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/custom.css' %} ">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/open-iconic/font/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-select/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/nouisliderribute/nouislider.min.css' %}"><!-- END PLUGINS STYLES -->
+
+    <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script>
+      var skin = localStorage.getItem('skin') || 'default';
+      var isCompact = JSON.parse(localStorage.getItem('hasCompactMenu'));
+      var disabledSkinStylesheet = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
+      // Disable unused skin immediately
+      disabledSkinStylesheet.setAttribute('rel', '');
+      disabledSkinStylesheet.setAttribute('disabled', true);
+      // add flag class to html immediately
+      if (isCompact == true) document.querySelector('html').classList.add('preparing-compact-menu');
+    </script><!-- END THEME STYLES -->
+  </head>
+  <body>
+
+    <!-- .app -->
+    <div class="app">
+        <header class="app-header app-header-dark">
+          <!-- .top-bar -->
+          <div class="top-bar">
+            <!-- .top-bar-brand -->
+            <div class="top-bar-brand">
+              <!-- toggle aside menu -->
+              <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu" aria-label="toggle aside menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle aside menu -->
+              <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+                  <defs>
+                    <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
+                  </defs>
+                  <div class="mb-3">
+                    <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="50">
+                </div>
+                </svg></a>
+            </div><!-- /.top-bar-brand -->
+            <!-- .top-bar-list -->
+            <div class="top-bar-list">
+              <!-- .top-bar-item -->
+              <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+                <!-- toggle menu -->
+                <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+              </div><!-- /.top-bar-item -->
+              <!-- .top-bar-item -->
+              <div class="top-bar-item top-bar-item-full">
+                <!-- .top-bar-search -->
+                <form class="top-bar-search">
+                  <!-- .input-group -->
+                  <div class="input-group input-group-search dropdown">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                    </div><input type="text" class="form-control" data-toggle="dropdown" aria-label="Search" placeholder="Search"> <!-- .dropdown-menu -->
+                    <div class="dropdown-menu dropdown-menu-rich dropdown-menu-xl ml-n4 mw-100">
+                      <div class="dropdown-arrow ml-3"></div><!-- .dropdown-scroll -->
+                      <div class="dropdown-scroll perfect-scrollbar h-auto" style="max-height: 360px">
+                        <!-- .list-group -->
+                        <div class="list-group list-group-flush list-group-reflow mb-2">
+                          <h6 class="list-group-header d-flex justify-content-between">
+                            <span>Shortcut</span>
+                          </h6><!-- .list-group-item -->
+                          <div class="list-group-item py-2">
+                            <a href="#" class="stretched-link"></a>
+                            <div class="tile tile-sm bg-muted">
+                              <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="ml-2"> Create user </div>
+                          </div><!-- /.list-group-item -->
+                          <!-- .list-group-item -->
+                          <div class="list-group-item py-2">
+                            <a href="#" class="stretched-link"></a>
+                            <div class="tile tile-sm bg-muted">
+                              <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="ml-2"> Create invoice </div>
+                          </div><!-- /.list-group-item -->
+                          <h6 class="list-group-header d-flex justify-content-between mt-2">
+                            <span>In projects</span> <a href="#" class="font-weight-normal">Show more</a>
+                          </h6><!-- .list-group-item -->
+                          <div class="list-group-item py-2">
+                            <a href="#" class="stretched-link"><span class="sr-only">Go to search result</span></a>
+                            <div class="user-avatar user-avatar-sm bg-muted">
+                              <img src="assets/images/avatars/bootstrap.svg" alt="">
+                            </div>
+                            <div class="ml-2">
+                              <div class="mb-n1"> Bootstrap </div><small class="text-muted">Just now</small>
+                            </div>
+                          </div><!-- /.list-group-item -->
+                          <!-- .list-group-item -->
+                          <div class="list-group-item py-2">
+                            <a href="#" class="stretched-link"><span class="sr-only">Go to search result</span></a>
+                            <div class="user-avatar user-avatar-sm bg-muted">
+                              <img src="assets/images/avatars/slack.svg" alt="">
+                            </div>
+                            <div class="ml-2">
+                              <div class="mb-n1"> Slack </div><small class="text-muted">Updated 25 minutes ago</small>
+                            </div>
+                          </div><!-- /.list-group-item -->
+                          <!-- /.list-group-item -->
+                          <h6 class="list-group-header d-flex justify-content-between mt-2">
+                            <span>Another section</span> <a href="#" class="font-weight-normal">Show more</a>
+                          </h6><!-- .list-group-item -->
+                          <div class="list-group-item py-2">
+                            <a href="#" class="stretched-link"><span class="sr-only">Go to search result</span></a>
+                            <div class="tile tile-sm bg-muted"> P </div>
+                            <div class="ml-2">
+                              <div class="mb-n1"> Product name </div>
+                            </div>
+                          </div><!-- /.list-group-item -->
+                        </div><!-- /.list-group -->
+                      </div><!-- /.dropdown-scroll -->
+                      <a href="#" class="dropdown-footer">Show all results</a>
+                    </div><!-- /.dropdown-menu -->
+                  </div><!-- /.input-group -->
+                </form><!-- /.top-bar-search -->
+              </div><!-- /.top-bar-item -->
+              <!-- .top-bar-item -->
+              <div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+                <!-- .nav -->
+                <ul class="header-nav nav">
+                  <!-- .nav-item -->
+                  <li class="nav-item dropdown header-nav-dropdown has-notified">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="oi oi-pulse"></span></a> <!-- .dropdown-menu -->
+                    <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
+                      <div class="dropdown-arrow"></div>
+                      <h6 class="dropdown-header stop-propagation">
+                        <span>Activities <span class="badge">(2)</span></span>
+                      </h6><!-- .dropdown-scroll -->
+                      <div class="dropdown-scroll perfect-scrollbar">
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item unread">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces15.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Jeffrey Wells created a schedule </p><span class="date">Just now</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item unread">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces16.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Anna Vargas logged a chat </p><span class="date">3 hours ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces17.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Sara Carr invited to Stilearn Admin </p><span class="date">5 hours ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces18.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Arthur Carroll updated a project </p><span class="date">1 day ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces19.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Hannah Romero created a task </p><span class="date">1 day ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces20.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Angela Peterson assign a task to you </p><span class="date">2 days ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/uifaces21.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="text"> Shirley Mason and 3 others followed you </p><span class="date">2 days ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                      </div><!-- /.dropdown-scroll -->
+                      <a href="user-activities.html" class="dropdown-footer">All activities <i class="fas fa-fw fa-long-arrow-alt-right"></i></a>
+                    </div><!-- /.dropdown-menu -->
+                  </li><!-- /.nav-item -->
+                  <!-- .nav-item -->
+                  <li class="nav-item dropdown header-nav-dropdown has-notified">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="oi oi-envelope-open"></span></a> <!-- .dropdown-menu -->
+                    <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
+                      <div class="dropdown-arrow"></div>
+                      <h6 class="dropdown-header stop-propagation">
+                        <span>Messages</span> <a href="#">Mark all as read</a>
+                      </h6><!-- .dropdown-scroll -->
+                      <div class="dropdown-scroll perfect-scrollbar">
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item unread">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/team1.jpg" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Stilearning </p>
+                            <p class="text text-truncate"> Invitation: Joe's Dinner @ Fri Aug 22 </p><span class="date">2 hours ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/team3.png" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Openlane </p>
+                            <p class="text text-truncate"> Final reminder: Upgrade to Pro </p><span class="date">23 hours ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="tile tile-circle bg-green"> GZ </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Gogo Zoom </p>
+                            <p class="text text-truncate"> Live healthy with this wireless sensor. </p><span class="date">1 day ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="tile tile-circle bg-teal"> GD </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Gold Dex </p>
+                            <p class="text text-truncate"> Invitation: Design Review @ Mon Jul 7 </p><span class="date">1 day ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="user-avatar">
+                            <img src="assets/images/avatars/team2.png" alt="">
+                          </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Creative Division </p>
+                            <p class="text text-truncate"> Need some feedback on this please </p><span class="date">2 days ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                        <!-- .dropdown-item -->
+                        <a href="#" class="dropdown-item">
+                          <div class="tile tile-circle bg-pink"> LD </div>
+                          <div class="dropdown-item-body">
+                            <p class="subject"> Lab Drill </p>
+                            <p class="text text-truncate"> Our UX exercise is ready </p><span class="date">6 days ago</span>
+                          </div>
+                        </a> <!-- /.dropdown-item -->
+                      </div><!-- /.dropdown-scroll -->
+                      <a href="page-messages.html" class="dropdown-footer">All messages <i class="fas fa-fw fa-long-arrow-alt-right"></i></a>
+                    </div><!-- /.dropdown-menu -->
+                  </li><!-- /.nav-item -->
+                  <!-- .nav-item -->
+                  <li class="nav-item dropdown header-nav-dropdown">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="oi oi-grid-three-up"></span></a> <!-- .dropdown-menu -->
+                    <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
+                      <div class="dropdown-arrow"></div><!-- .dropdown-sheets -->
+                      <div class="dropdown-sheets">
+                        <!-- .dropdown-sheet-item -->
+                        <div class="dropdown-sheet-item">
+                          <a href="#" class="tile-wrapper"><span class="tile tile-lg bg-indigo"><i class="oi oi-people"></i></span> <span class="tile-peek">Teams</span></a>
+                        </div><!-- /.dropdown-sheet-item -->
+                        <!-- .dropdown-sheet-item -->
+                        <div class="dropdown-sheet-item">
+                          <a href="#" class="tile-wrapper"><span class="tile tile-lg bg-teal"><i class="oi oi-fork"></i></span> <span class="tile-peek">Projects</span></a>
+                        </div><!-- /.dropdown-sheet-item -->
+                        <!-- .dropdown-sheet-item -->
+                        <div class="dropdown-sheet-item">
+                          <a href="#" class="tile-wrapper"><span class="tile tile-lg bg-pink"><i class="fa fa-tasks"></i></span> <span class="tile-peek">Tasks</span></a>
+                        </div><!-- /.dropdown-sheet-item -->
+                        <!-- .dropdown-sheet-item -->
+                        <div class="dropdown-sheet-item">
+                          <a href="#" class="tile-wrapper"><span class="tile tile-lg bg-yellow"><i class="oi oi-fire"></i></span> <span class="tile-peek">Feeds</span></a>
+                        </div><!-- /.dropdown-sheet-item -->
+                        <!-- .dropdown-sheet-item -->
+                        <div class="dropdown-sheet-item">
+                          <a href="#" class="tile-wrapper"><span class="tile tile-lg bg-cyan"><i class="oi oi-document"></i></span> <span class="tile-peek">Files</span></a>
+                        </div><!-- /.dropdown-sheet-item -->
+                      </div><!-- .dropdown-sheets -->
+                    </div><!-- .dropdown-menu -->
+                  </li><!-- /.nav-item -->
+                </ul><!-- /.nav -->
+
+                <!-- .btn-account -->
+            {% if request.user.is_authenticated and request.user.is_customer %}
+             <div class="dropdown d-none d-md-flex">
+              <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.jpg' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Customer Account</span></span></button> <!-- .dropdown-menu -->
+              <div class="dropdown-menu">
+                <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="/customer_profile"><span class="dropdown-icon oi oi-person"></span>My Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+              </div>
+              {% elif request.user.is_activation and request.user.is_ceo %}
+              <div class="dropdown d-none d-md-flex">
+                <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.jpg' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Management (CEO)</span></span></button> <!-- .dropdown-menu -->
+                <div class="dropdown-menu">
+                  <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                  <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                  <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="/customer_profile"><span class="dropdown-icon oi oi-person"></span> My Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                </div>
+                {% elif request.user.is_activation and request.user.is_admin %}
+                <div class="dropdown d-none d-md-flex">
+                  <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.jpg' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Super Admin</span></span></button> <!-- .dropdown-menu -->
+                  <div class="dropdown-menu">
+                    <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                    <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                    <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="/customer_profile"><span class="dropdown-icon oi oi-person"></span> Admin Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                  </div>
+              {% else %} 
+
+             {% endif %}
+                  
+                  <!-- /.dropdown-menu -->
+                </div><!-- /.btn-account -->
+              </div><!-- /.top-bar-item -->
+            </div><!-- /.top-bar-list -->
+          </div><!-- /.top-bar -->
+        </header><!-- /.app-header -->
+        <!-- .app-aside -->
+        <aside class="app-aside app-aside-expand-md app-aside-light">
+          <!-- .aside-content -->
+          <div class="aside-content">
+            <!-- .aside-header -->
+            <header class="aside-header d-block d-md-none">
+              <!-- .btn-account -->
+              <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img src="assets/images/avatars/profile.jpg" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name">Beni Arisandi</span> <span class="account-description">Marketing Manager</span></span></button> <!-- /.btn-account -->
+              <!-- .dropdown-aside -->
+              <div id="dropdown-aside" class="dropdown-aside collapse">
+                <!-- dropdown-items -->
+                <div class="pb-3">
+                  <a class="dropdown-item" href="user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="auth-signin-v1.html"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                </div><!-- /dropdown-items -->
+              </div><!-- /.dropdown-aside -->
+            </header><!-- /.aside-header -->
+
+            {% include 'customer/side_menu.html' %}
+            
+            <!-- Skin changer -->
+            <footer class="aside-footer border-top p-2">
+              <button class="btn btn-light btn-block text-primary" data-toggle="skin"><span class="d-compact-menu-none">Night mode</span> <i class="fas fa-moon ml-1"></i></button>
+            </footer><!-- /Skin changer -->
+          </div><!-- /.aside-content -->
+        </aside><!-- /.app-aside -->
+
+{% comment %} content template start here {% endcomment %}
+  
+
+{% block content %}
+
+    
+
+
+    
+{% endblock content %}
+
+{% comment %} content template ends here {% endcomment %}
+<footer class="app-footer">
+    {% comment %} <ul class="list-inline">
+      <li class="list-inline-item">
+        <a class="text-muted" href="#">Support</a>
+      </li>
+      <li class="list-inline-item">
+        <a class="text-muted" href="#">Help Center</a>
+      </li>
+      <li class="list-inline-item">
+        <a class="text-muted" href="#">Privacy</a>
+      </li>
+      <li class="list-inline-item">
+        <a class="text-muted" href="#">Terms of Service</a>
+      </li>
+    </ul> {% endcomment %}
+
+    <script>
+      document.body.addEventListener('htmx:configRequest',(event)=> {
+      event.detail.headers['X-CSRFToken'] = '{{csrf_token}}';
+    })
+    </script>
+    
+    <div class="copyright"> Copyright © 2023. SaveMore Group All right reserved. </div>
+  </footer>
+  <!-- /.app-footer -->
+    </div>
+    <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/popper.js/umd/popper.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script> <!-- END BASE JS -->
+    <!-- BEGIN PLUGINS JS -->
+    <script src="{% static 'assets/vendor/pace-progress/pace.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/stacked-menu/js/stacked-menu.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/handlebars/handlebars.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/typeahead.js/typeahead.bundle.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/select2/js/select2.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/tributejs/tribute.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/jquery.caret/jquery.caret.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/at.js/js/jquery.atwho.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/zxcvbn/zxcvbn.js' %} "></script>
+    <script src="{% static 'assets/vendor/vanilla-text-mask/vanillaTextMask.js' %} "></script>
+    <script src="{% static 'assets/vendor/text-mask-addons/textMaskAddons.js' %} "></script> <!-- END PLUGINS JS -->
+    <!-- BEGIN THEME JS -->
+    <script src="{% static 'assets/javascript/theme.min.js' %} "></script> <!-- END THEME JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="{% static 'assets/javascript/pages/select2-demo.js' %} "></script>
+    <script src="{% static 'assets/javascript/pages/typeahead-demo.js' %} "></script>
+    <script src="{% static 'assets/javascript/pages/atwho-demo.js' %}"></script> <!-- END PAGE LEVEL JS -->
+    <script src="{% static 'assets/javascript/pages/dashboard-demo.js' %}"></script> <!-- END PAGE LEVEL JS -->
+  </body>
+</html>

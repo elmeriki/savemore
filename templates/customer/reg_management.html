@@ -1,0 +1,95 @@
+{% extends "customer/core.html" %}
+{% block title %} Management Registration | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+    <main class="auth">
+        <header id="auth-header" class="auth-header" style="background-image: url('{% static 'assets/images/illustration/img-1.png'  %}')">
+          <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="64" viewbox="0 0 351 100">
+              <defs>
+                <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
+              </defs>
+              <div class="mb-3">
+                <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="72">
+            </div>
+            </svg> <span class="sr-only">Sign Up</span>
+          </h1>
+          <p> Already have an account? please <a href="/">Sign In</a>
+          </p>
+        </header>
+        <!-- form -->
+        <form class="auth-form" action="/create_new_manage_account" method="POST">
+          {% csrf_token %}
+            <!-- .form-group -->
+            <!-- .form-group -->
+            <div class="form-group">
+                <label class="control-label" for="bss1">DECINATION</label> <select id="bss1" name="decination" data-toggle="selectpicker" required="" data-width="100%">
+                  <optgroup label="Choose One">
+                    <option value="" selected disabled> Choose Decination </option>
+                    <option value="1"> Director </option>
+                    <option value="2"> Admin </option>
+                    <option value="3"> Sales </option>
+                    <option value="4">Cashier </option>
+                    <option value="5">Stock </option>
+                  </optgroup>
+                </select>
+              </div><!-- /.form-group -->
+              <!-- .form-group -->
+
+              <div class="form-group">
+                <label class="control-label" for="bss1">BRANCH</label> <select id="bss1" name="branch" data-toggle="selectpicker" reqrequired=""uired data-width="100%">
+                  <optgroup label="Choose One">
+                    <option value="" selected disabled> Choose Branch </option>
+                    <option value="Pretoria"> Pretoria </option>
+                    <option value="King Town Eastern Cape">King Town Eastern Cape</option>
+                    <option value="Port Elizabeth">Port Elizabeth </option>
+                    <option value="Uitenhage Eastern Cape">Uitenhage Eastern Cape</option>
+                  </optgroup>
+                </select>
+              </div><!-- /.form-group -->
+              <!-- .form-group -->
+
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="text" name="fullnames" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Full Names</label>
+            </div>
+          </div><!-- /.form-group -->
+
+
+
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Email Address</label>
+            </div>
+          </div><!-- /.form-group -->
+
+                    <!-- .form-group -->
+            <div class="form-group">
+                        <div class="form-label-group">
+                          <input type="number" name="cellphone" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Cellphone</label>
+                        </div>
+            </div><!-- /.form-group -->
+
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required=""> <label for="inputPassword">5 Digi PIN</label>
+            </div>
+          </div><!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+          </div><!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group text-center">
+            <div class="custom-control custom-control-inline custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="newsletter"> <label class="custom-control-label" for="newsletter">Accept terms and conditions</label>
+            </div>
+          </div><!-- /.form-group -->
+          <!-- recovery links -->
+          <p class="text-center text-muted mb-0">By clicking you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>. </p><!-- /recovery links -->
+        </form><!-- /.auth-form -->
+        <!-- copyright -->
+        <footer class="auth-footer"> © 2023 SaveMore Groups All Rights Reserved. </footer>
+      </main>
+{% endblock %}

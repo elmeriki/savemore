@@ -1,0 +1,54 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Send Promo Message | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page container">
+        <!-- .page-navs -->
+        <br><br>
+            <form action="/send_to_all_customer_promo" method="POST">
+            {% csrf_token %}
+                <fieldset>
+                  <div class="form-group">
+                    <label for="tf1">Promo Title</label> 
+                    <input type="text" class="form-control" name="title" id="tf1" aria-describedby="tf1Help" required placeholder="Summer Sales"> 
+                  </div>
+                  <!-- .form-group -->
+                  <div class="form-group">
+                    <label for="tf1">Sales Slogan</label> 
+                    <input type="text" class="form-control" id="tf1" name="slogan" aria-describedby="tf1Help" required placeholder="Valid for 10 days"> 
+                  </div><!-- /.form-group -->
+       
+                  <!-- .form-group -->
+                  <div class="form-group">
+                    <label for="tf6">Promo Message</label>
+                    <textarea class="form-control" name="message" placeholder="Promotional message" required id="tf6" rows="3"></textarea>
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+                </div>
+                </fieldset>
+              </form>
+
+              {% if messages %}
+              {% for message in messages %}
+              <h5 class="text-success"> {{message}} </h5>
+              {% endfor %}
+              {% else %}
+
+              {% endif %}
+            </div>
+        <!-- /.form -->
+        </div><!-- /.page-inner -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}

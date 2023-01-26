@@ -1,0 +1,127 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Promotion | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <!-- .page-navs -->
+        <nav class="page-navs">
+          <!-- .nav-scroller -->
+          <div class="nav-scroller">
+            <!-- .nav -->
+            <div class="nav nav-tabs">
+              <a class="nav-link active show" data-toggle="tab" href="#tab1">All <span class="badge">(7)</span></a> <a class="nav-link" data-toggle="tab" href="#tab2">Starred</a> <a class="nav-link" data-toggle="tab" href="#tab3">Trash</a>
+            </div><!-- /.nav -->
+          </div><!-- /.nav-scroller -->
+        </nav><!-- /.page-navs -->
+        <!-- .page-inner -->
+        <div class="page-inner">
+          <!-- .page-title-bar -->
+          <header class="page-title-bar">
+            <div class="d-flex justify-content-between">
+              <div class="d-md-inline-block">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                  <!-- .input-group -->
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                    </div><input type="text" class="form-control" placeholder="Search message">
+                  </div><!-- /.input-group -->
+                  <!-- .input-group-append -->
+                  <div class="input-group-append">
+                    <select class="custom-select">
+                      <option selected> Filter By </option>
+                      <option value="1"> Team </option>
+                      <option value="3"> Project </option>
+                      <option value="2"> People </option>
+                    </select>
+                  </div><!-- /.input-group-append -->
+                </div><!-- /.input-group -->
+              </div>
+              <a href="/send_promo"><button type="button" class="btn btn-success d-none d-sm-inline-block">New Message</button></a>
+            </div><button type="button" class="btn btn-success btn-floated d-block d-sm-none"><span class="fa fa-plus"></span></button>
+          </header><!-- /.page-title-bar -->
+
+          <!-- .page-section -->
+          <div class="page-section">
+            <!-- .card -->
+            <div class="card">
+
+              {% if promo_messages %}
+
+              {% for eachmessage  in promo_messages %}
+              <!-- .list-group-messages -->
+              <div class="list-group list-group-messages list-group-flush list-group-bordered">
+                <!-- message item -->
+                <div class="list-group-item unread">
+                  <!-- message figure -->
+                  <div class="list-group-item-figure">
+                    <span class="rating rating-sm mr-3"><input type="checkbox" id="star1" value="1"> <label for="star1"><span class="fa fa-star"></span></label></span> <!-- .avatar -->
+                    <div class="avatar has-badge">
+                      <a href="#" class="user-avatar"><img src="{% static 'assets/images/avatars/team2.png' %}" alt=""></a>
+                    </div><!-- /.avatar -->
+                  </div><!-- /message figure -->
+                  <div class="list-group-item-body pl-md-2">
+                    <!-- grid row -->
+                    <div class="row">
+                      <!-- grid column -->
+                      <div class="col-12 col-lg-3 d-none d-lg-block">
+                        <h4 class="list-group-item-title text-truncate">
+                          <a href="#">{{eachmessage.title}}</a>
+                        </h4>
+                        <p class="list-group-item-text"> {{eachmessage.created_at | timesince}} ago </p>
+                      </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-12 col-lg-9">
+                        <h4 class="list-group-item-title text-truncate">
+                          <a href="#">{{eachmessage.salestitle}}</a>
+                        </h4>
+                        <p class="list-group-item-text text-truncate"> {{eachmessage.message}} </p>
+                      </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-12 d-lg-none">
+                        <p class="list-group-item-text"> Feb 02 </p>
+                      </div><!-- /grid column -->
+                    </div><!-- /grid row -->
+                  </div><!-- /message body -->
+                  <!-- message actions -->
+                  <div class="list-group-item-figure">
+                    <!-- .dropdown -->
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button> <!-- .dropdown-menu -->
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-arrow mr-n1"></div><a href="#" class="dropdown-item">Mark as read</a> <a href="#" class="dropdown-item">Mark as unread</a> <a href="#" class="dropdown-item">Toggle star</a> <a href="#" class="dropdown-item">Trash</a>
+                      </div><!-- /.dropdown-menu -->
+                    </div><!-- /.dropdown -->
+                  </div><!-- /message actions -->
+                </div><!-- /message item -->
+              </div><!-- /.list-group-messages -->
+              {% endfor %}
+              {% else %}
+
+      <!-- .list-group-messages -->
+      <div class="list-group list-group-messages list-group-flush list-group-bordered">
+        <!-- message item -->
+        <div class="list-group-item unread">
+      
+       <p> THERE IS NO MESSAGES TO DISPLAY </p>
+
+        </div><!-- /message item -->
+      </div><!-- /.list-group-messages -->
+              {% endif %}
+            </div><!-- /.card -->
+            </div><!-- /.section-block -->
+          </div><!-- /.page-section -->
+        </div><!-- /.page-inner -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}

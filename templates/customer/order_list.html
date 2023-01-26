@@ -1,0 +1,86 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Order List | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i></button> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a href="#" class="btn btn-primary ml-auto">New Order</a>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Order ID </th>
+                    <th> My Status </th>
+                    <th> Dates</th>
+                    <th> Order Status </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for order_list in order_list %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="/order_detail/{{order_list.orderid}}" class="tile bg-pink text-white mr-2">SP</a>
+                        <div class="media-body">
+                          <a href="/order_detail/{{order_list.orderid}}">{{order_list.orderid}}</a> <small class="d-block text-muted">{{all_expenses.message}}</small>
+                        </div>
+                      </div>
+                    </td>
+                    {% if order_list.status == "0" %}
+                    <td class="align-middle"> 
+                        <span class="badge badge-danger">Incomplete</span>
+                         </td>
+                    {% else %}
+                    <td class="align-middle">
+                        <span class="badge badge-success">Completed</span>
+                        </td>
+                    {% endif %}
+
+                    <td class="align-middle"> {{order_list.created_at | timesince}} ago </td>
+                    
+                    {% if order_list.status == "0" %}
+                        <td class="align-middle"> 
+                            <span class="badge badge-warning">Pending Confirmation</span>
+                            </td>
+                        {% elif order_list.status == "1"  %}
+                        <td class="align-middle">
+                            <span class="badge badge-success">Processing</span>
+                            </td>
+                        {% endif %}
+                    </td>
+
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

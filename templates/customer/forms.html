@@ -1,0 +1,32 @@
+
+{% extends "customer/core_m.html" %}
+{% block title %} Customer Dashboard | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+     <!-- .app-main -->
+     <main class="app-main">
+                    <!-- .card -->
+                    <div class="card card-fluid">
+                        <div class="card-body">
+                            <form action="/stock" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %} 
+                          <label>Load Product to customer</label>
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="my_files" id="fileupload-customInput" required > 
+                            <label class="custom-file-label" for="fileupload-customInput">Choose files</label>
+                            <br><br>
+                           <center> 
+                            <button type="submit" class="btn btn-primary">Load Product</button></center>
+
+                          </div>
+                          </form
+                    </div>
+                    <!-- /grid column -->
+                  </div><!-- /grid row -->
+    </main><!-- /.app-main -->
+
+
+
+{% endblock %}

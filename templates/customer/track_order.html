@@ -1,0 +1,118 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Invoices | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+<main class="app-main">
+  <!-- .wrapper -->
+  <div class="wrapper">
+    <!-- .page -->
+    <div class="page">
+      <div class="card">
+          <!-- .card-header -->
+
+          <div class="card-header d-flex">
+            <!-- .dropdown -->
+            <div class="dropdown">
+              <div class="dropdown-menu stop-propagation">
+                <div class="dropdown-arrow">
+
+                </div>
+              </div><!-- /.dropdown-menu -->
+            </div><!-- /.dropdown -->
+          </div><!-- /.card-header -->
+          <div class="container">
+        </div><!-- /form col -->
+        <!-- form col -->
+        <form action="/track_my_order" method="POST">
+        {% csrf_token %}
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="number" class="form-control" id="pm2"  name="orderid" placeholder="XXXX XXXX XXXX XXXX" required=""> 
+              <label for="pm2">Enter Order Number</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            {% if messages %}
+            {% for message in messages %}
+            <p class="text-danger"> {{message}} </p>
+            {% endfor %}
+            {% endif %}
+            <!-- you can change attribute type to type="submit" on your real project -->
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Track Now</button>
+          </div><!-- /form col -->
+          <br>
+        </div><!-- /form col -->
+      </div><!-- /form row -->
+    </form>
+
+    
+    {% if order_status %}
+    <div class="card-body border-top">
+        <h4 class="card-title"> Order Movement </h4><!-- .timeline -->
+        <ul class="timeline timeline-dashed-line">
+          <!-- .timeline-item -->
+          <li class="timeline-item">
+            <!-- .timeline-figure -->
+            <div class="timeline-figure">
+              <span class="tile tile-circle tile-xs bg-success"><i class="fa fa-check"></i></span>
+            </div><!-- /.timeline-figure -->
+            <!-- .timeline-body -->
+            <div class="timeline-body">
+                {% for order_status in order_status %}
+                {% if  order_status.adminstatus == "0" %}
+              <h6 class="timeline-heading"> Processing </h6>
+                
+              <span class="timeline-date">{{order_status.updated_at | timesince}} ago</span>
+              {% elif order_status.adminstatus == "1" %}
+              <h6 class="timeline-heading"> Confirming Payment </h6>
+                
+              <span class="timeline-date">{{order_status.updated_at | timesince}} ago</span>
+              {% elif order_status.adminstatus == "2" %}
+              <h6 class="timeline-heading"> Processing for Delivery </h6>
+              <span class="timeline-date">{{order_status.updated_at | timesince}} ago</span>
+
+              {% elif order_status.adminstatus == "3" %}
+              <h6 class="timeline-heading"> Delivery on movement </h6>
+              <span class="timeline-date">{{order_status.updated_at | timesince}} ago</span>
+
+              {% elif order_status.adminstatus == "4" %}
+              <h6 class="timeline-heading"> Order is completed </h6>
+              <span class="timeline-date">{{order_status.updated_at | timesince}} ago</span>
+
+              {% endif %}
+              <br><br>
+              <p> Thank you</>
+                <hr>
+              {% endfor %}
+            </div><!-- /.timeline-body -->
+          </li><!-- /.timeline-item -->
+          <!-- .timeline-item -->
+        </ul><!-- /.timeline -->
+      </div><!-- /.card-body -->
+{% else %}
+
+{% endif %}
+
+      <!-- form row -->
+        <!-- form col -->
+      </div><!-- /form row -->
+    </div><!-- /.custom-control-hint -->
+  </div><!-- /.custom-control -->
+  </div><!-- /.form-group -->
+
+
+<div id="searchresult"> 
+
+
+</div>
+          </div>
+        </div><!-- /.card -->
+    </div><!-- /.page -->
+  </div><!-- /.wrapper -->
+</main><!-- /.app-main -->
+
+
+{% endblock %}

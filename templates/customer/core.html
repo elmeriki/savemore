@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} Welcome | Save More Groups {% endblock title %} </title>
+    <meta property="og:title" content="Simple &amp; SaveMore Groups">
+    <meta name="author" content="SaveMore Group">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="Save More Group">
+    <meta property="og:description" content="Save More Group">
+    <meta property="og:site_name" content="Save More Group">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'assets/images/save_logo.png' %}">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <meta name="theme-color" content="#3063A0">
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'assets/vendor/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/theme.min.css' %}" data-skin="default">
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/theme-dark.min.css' %%}" data-skin="dark">
+    <link rel="stylesheet" href="{% static 'assets/stylesheets/custom.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/open-iconic/font/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-select/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/flatpickr/flatpickr.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/nouisliderribute/nouislider.min.css' %}"><!-- END PLUGINS STYLES -->
+
+    <script>
+      var skin = localStorage.getItem('skin') || 'default';
+      var isCompact = JSON.parse(localStorage.getItem('hasCompactMenu'));
+      var disabledSkinStylesheet = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
+      disabledSkinStylesheet.setAttribute('rel', '');
+      disabledSkinStylesheet.setAttribute('disabled', true);
+      if (isCompact == true) document.querySelector('html').classList.add('preparing-compact-menu');
+    </script>
+  </head>
+  <body>
+ 
+{% block content %}
+
+    
+    
+{% endblock content %}
+
+    <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/popper.js/umd/popper.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script> 
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script> 
+    <script src="{% static 'assets/javascript/theme.min.js' %}"></script> 
+
+    <!-- BEGIN PLUGINS JS --> {% static '' %}
+    <script src="{% static 'assets/vendor/pace-progress/pace.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/stacked-menu/js/stacked-menu.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap-select/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/masonry-layout/masonry.pkgd.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/flatpickr/flatpickr.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/flatpickr/plugins/monthSelect/index.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/wnumb/wNumb.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/nouisliderribute/nouislider.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-load-image/js/load-image.all.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-canvas-to-blob/js/canvas-to-blob.min.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.iframe-transport.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload-process.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload-image.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload-audio.js' %} "></script>
+    <script src="{% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload-video.js' %} "></script>
+    <script src=" {% static 'assets/vendor/blueimp-file-upload/js/jquery.fileupload-validate.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %} "></script> <!-- END PLUGINS JS -->
+    <!-- BEGIN THEME JS -->
+    <script src="{% static 'assets/javascript/theme.min.js' %} "></script> <!-- END THEME JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="{% static 'assets/javascript/pages/colorpicker-demo.js' %} "></script>
+    <script src="{% static 'assets/javascript/pages/uploader-demo.js' %} "></script>
+    <script src="{% static 'assets/javascript/pages/slider-demo.js' %} "></script> <!-- END PAGE LEVEL JS -->
+  </body>
+</html>

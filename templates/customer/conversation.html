@@ -1,0 +1,157 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Conversation | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page has-sidebar has-sidebar-expand-xl">
+        <!-- .page-inner -->
+        <div class="page-inner page-inner-fill">
+          <!-- .message -->
+          <div class="message">
+            <!-- message header -->
+            <div class="message-header">
+              <div class="d-flex">
+                <a class="btn btn-light btn-icon" href="page-messages.html"><i class="fa fa-flip-horizontal fa-share"></i></a>
+              </div>
+              <h4 class="message-title"> Easy Customer Support </h4>
+              <div class="message-header-actions">
+                <!-- invite members -->
+                <div class="dropdown d-inline-block">
+                  <button type="button" class="btn btn-light btn-icon" title="Invite members" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-plus"></i></button> <!-- .dropdown-menu -->
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-rich stop-propagation">
+                    <div class="dropdown-arrow"></div>
+                    <div class="dropdown-header"> Add members </div>
+                    <div class="form-group px-3 py-2 m-0">
+                      <input type="text" class="form-control" placeholder="e.g. @bent10" data-toggle="tribute" data-remote="assets/data/tribute.json" data-menu-container="#people-list" data-item-template="true" data-autofocus="true"> <small class="form-text text-muted">Search people by username or email address to invite them.</small>
+                    </div>
+                    <div id="people-list" class="tribute-inline stop-propagation"></div><a href="#" class="dropdown-footer">Invite member by link <i class="far fa-clone"></i></a>
+                  </div><!-- /.dropdown-menu -->
+                </div><!-- /invite members -->
+                <button type="button" class="btn btn-light btn-icon d-xl-none" data-toggle="sidebar"><i class="fa fa-angle-double-left"></i></button>
+              </div>
+            </div><!-- /message header -->
+            <!-- message body -->
+
+            <div class="message-body">
+              <!-- .card -->
+              <div class="card card-fluid mb-0">
+                <!-- .conversations -->
+                <div role="log" class="conversations">
+                  <!-- .conversation-list -->
+                  <ul class="conversation-list">
+                    <!-- .conversation-divider -->
+                    <li class="log-divider">
+                      <span><i class="far fa-fw fa-comment-alt"></i> Chat started by <strong>Customer Support</strong> · Wed, Feb 14, 2023</span>
+                    </li><!-- /.conversation-divider -->
+                    {% for eachchat_messages in chat_messages %}
+                    <!-- .conversation-inbound -->
+                    <li class="conversation-inbound">
+                      <div class="conversation-avatar">
+                        <a href="#" class="tile tile-circle bg-muted"><i class="oi oi-person"></i></a>
+                      </div>
+                      <div class="conversation-message">
+                        <div class="conversation-message-text"> {{eachchat_messages.message}} </div>
+                        <div class="conversation-meta"> {{request.user.first_name}} · {{eachchat_messages.created_at | timesince}} ago </div>
+                      </div>
+                      <div class="conversation-actions dropdown">
+                        <button class="btn btn-sm btn-icon btn-light" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-h"></i></button>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-arrow ml-n1"></div>
+                          <a href="/delete_chat_message/{{eachchat_messages.id}}"><button type="button" class="dropdown-item">Remove</button></a>
+                        </div>
+                      </div>
+                    </li><!-- /.conversation-inbound -->
+        
+          
+                    <!-- .conversation-outbound -->
+                    <li class="conversation-outbound conversation-faux">
+                      <div class="conversation-actions dropdown">
+                        <button class="btn btn-sm btn-icon btn-light" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-h"></i></button>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-arrow ml-n1"></div>
+                          <a href="/delete_chat_message/{{eachchat_messages.id}}"><button type="button" class="dropdown-item">Remove</button></a>
+                        </div>
+                      </div>
+                      <div class="conversation-message">
+                        <div class="conversation-message-text"> {{eachchat_messages.response}} </div>
+                        <div class="conversation-meta"> Customer Support· {{eachchat_messages.updated_at | timesince}} ago  </div>
+                      </div>
+                    </li><!-- /.conversation-outbound -->
+
+
+                    {% endfor %}
+
+
+                  </ul><!-- /.conversation-list -->
+                </div><!-- /.conversations -->
+                <!-- PhotoSwipe (.pswp) element -->
+          
+            <!-- message publisher -->
+            <div class="message-publisher">
+              <!-- form -->
+              <form action="/chat_message" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <!-- .media -->
+                <div class="media mb-1">
+                  <div class="btn btn-light btn-icon fileinput-button">
+                    <i class="fa fa-paperclip"></i> <input type="file" id="pm-attachment" name="pmAttachment[]" multiple>
+                  </div>
+                  <div class="media-body">
+                    <input type="text" name="message" class="form-control border-0 shadow-none"  autocomplete="off" placeholder="Type a message">
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-light btn-icon"><i class="far fa-smile"></i></button>
+                     <button type="submit" class="btn btn-light btn-icon"><i class="far fa-paper-plane"></i>
+                    </button>
+                  </div>
+                </div><!-- /.media -->
+              </form><!-- /form -->
+            </div><!-- /message publisher -->
+          </div><!-- /.message -->
+        </div><!-- /.page-inner -->
+        <!-- .page-sidebar -->
+        <div class="page-sidebar">
+          <!-- .sidebar-header -->
+          <header class="sidebar-header d-sm-none">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item">
+                <a class="prevent-default" href="#" onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+              </li>
+            </ol>
+          </header><!-- /.sidebar-header -->
+          <!-- .nav-tabs -->
+          <ul class="nav nav-tabs nav-fill" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#team-profile" role="tab" aria-controls="team-profile" aria-selected="true">Admin</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#message-files" role="tab" aria-controls="message-files" aria-selected="false">Support</a>
+            </li>
+          </ul><!-- /.nav-tabs -->
+          <!-- .sidebar-section-fill -->
+          <div class="sidebar-section-fill">
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <!-- #team-profile -->
+              <div id="team-profile" class="tab-pane fade show active" role="tabpanel" aria-labelledby="team-profile">
+                <!-- .card -->
+                <div class="card card-reflow border-bottom">
+                  <!-- .card-body -->
+                  <div class="card-body text-center">
+                    <!-- team avatar -->
+                    <a href="#" class="user-avatar user-avatar-xl my-3"><img src="{% static 'assets/images/avatars/team4.jpg' %}" alt=""></a> <!-- /team avatar -->
+                  </div><!-- /.card-body -->
+            </div><!-- /Tab panes -->
+          </div><!-- /.sidebar-section-fill -->
+        </div><!-- /.page-sidebar -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+</div><!-- /.app -->
+
+
+{% endblock %}

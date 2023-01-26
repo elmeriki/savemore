@@ -1,0 +1,62 @@
+{% if search_result %}
+<main class="app-main">
+    <div class="wrapper">
+      <div class="page">
+        <div class="card">
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Description </th>
+                    <th> Stock Code </th>
+                    <th> Incl</th>
+                    <th> Excl</th>
+                    <th> Action</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                <div id="searchresult">
+                    {% for eachsearch_result in search_result %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">O</a>
+                        <div class="media-body">
+                          <a href="#">{{eachsearch_result.description}}</a> <small class="d-block text-muted">{{all_sales.message}}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle">{{eachsearch_result.stockcode}}</td>
+  
+                    <td class="align-middle">
+                      <span class="badge badge-success">ZAR{{eachsearch_result.incl}}.00</span>
+  
+                    </td>
+  
+                    <td class="align-middle">
+                      <span class="badge badge-danger">ZAR{{eachsearch_result.excl}}.00</span>
+                    </td>
+  
+                     </td>
+                    <td class="align-middle">
+                    {% csrf_token %}
+                    <button type="button" 
+                    hx-post="/add_to_cart/{{eachsearch_result.auto_increment_id}}"
+                    hx-swap="outerHTML"                    
+                    hx-trigger="click"
+                    class="btn btn-success">Add to Cart</button>
+                </td>
+                  </tr>
+                {% endfor %}
+              </div>
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+  {% endif %}

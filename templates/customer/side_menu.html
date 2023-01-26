@@ -1,0 +1,167 @@
+        {% if request.user.is_authenticated and request.user.is_customer %}
+            <!-- .aside-menu -->
+            <div class="aside-menu overflow-hidden">
+              <!-- .stacked-menu -->
+              <nav id="stacked-menu" class="stacked-menu">
+                <!-- .menu -->
+                <ul class="menu">
+                  <!-- .menu-item -->
+                  <li class="menu-item has-active">
+                    <a href="/customer_dashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/invoice" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Place Order</span> <span class="badge badge-success">New</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/order_list" class="menu-link"><span class="menu-icon oi oi-cart"></span> <span class="menu-text">My Orders </span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-credit-card"></span> <span class="menu-text">My Invoice</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/customer_promo_message" class="menu-link"><span class="menu-icon oi oi-browser"></span> <span class="menu-text">Promo Alert</span> <span class="badge badge-subtle badge-success">+4</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-header -->
+                  <li class="menu-header">OTHERS </li><!-- /.menu-header -->
+                  <li class="menu-item has-child">
+                    <a href="/track_order" class="menu-link"><span class="menu-icon oi oi-cart"></span> <span class="menu-text">Track Order</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/customer_profile" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">My Profile</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+          
+                  <!-- .menu-item -->
+
+                  <!-- .menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/conversation" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Support</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                </ul><!-- /.menu -->
+              </nav><!-- /.stacked-menu -->
+            </div><!-- /.aside-menu -->
+
+            {% elif request.user.is_activation and request.user.is_ceo %}
+
+            <!-- .aside-menu -->
+            <div class="aside-menu overflow-hidden">
+              <!-- .stacked-menu -->
+              <nav id="stacked-menu" class="stacked-menu">
+                <!-- .menu -->
+                <ul class="menu">
+                  <!-- .menu-item -->
+                  <li class="menu-item has-active">
+                    <a href="/admin_dashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/stock" class="menu-link"><span class="menu-icon far fa-file"></span> <span class="menu-text">Load Products</span> <span class="badge badge-warning">New</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/invoice" class="menu-link"><span class="menu-icon oi oi-wrench"></span> <span class="menu-text">New Order</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/list_customers" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Customer</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-browser"></span> <span class="menu-text">Sales</span> <span class="badge badge-subtle badge-success">+4</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item">
+                    <a href="#" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Promotion</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-header -->
+                  <li class="menu-header">OTHERS </li><!-- /.menu-header -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Settings</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-pencil"></span> <span class="menu-text">Coming Soon</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-bar-chart"></span> <span class="menu-text">Coming Soon</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Coming Soon</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                </ul><!-- /.menu -->
+              </nav><!-- /.stacked-menu -->
+            </div><!-- /.aside-menu -->
+
+            {% elif request.user.is_activation and request.user.is_admin %}
+            <!-- .aside-menu -->
+            <div class="aside-menu overflow-hidden">
+              <!-- .stacked-menu -->
+              <nav id="stacked-menu" class="stacked-menu">
+                <!-- .menu -->
+                <ul class="menu">
+                  <!-- .menu-item -->
+                  <li class="menu-item has-active">
+                    <a href="/super_admin_dashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/stock" class="menu-link"><span class="menu-icon far fa-file"></span> <span class="menu-text">Load Products</span> <span class="badge badge-warning">New</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/invoice" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">New Order</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Order List</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/list_customers" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Customers</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/dailysales_display" class="menu-link"><span class="menu-icon oi oi-browser"></span> <span class="menu-text">Daily Sales</span> <span class="badge badge-subtle badge-success">+4</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item">
+                    <a href="/promotion" class="menu-link"><span class="menu-icon fas fa-bell"></span> <span class="menu-text">Promotion</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-header -->
+                  <li class="menu-header">OTHERS </li><!-- /.menu-header -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/expenses_display" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Expenses</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Invoices</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/promotion" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Promo</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="/approve_account" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Aprove Account</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                </ul><!-- /.menu -->
+              </nav><!-- /.stacked-menu -->
+            </div><!-- /.aside-menu -->
+
+            {% else %}
+
+
+
+            {% endif %}

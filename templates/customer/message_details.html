@@ -1,0 +1,83 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Message Details | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <!-- .page-navs -->
+        <nav class="page-navs">
+          <!-- .nav-scroller -->
+          <div class="nav-scroller">
+            <!-- .nav -->
+            <div class="nav nav-tabs">
+              <a class="nav-link active show" data-toggle="tab" href="#tab1">All Message <span class="badge">(0)</span></a> 
+              {% comment %} <a class="nav-link" data-toggle="tab" href="#tab2">Sales</a> 
+              <a class="nav-link" data-toggle="tab" href="#tab3">Promo</a> {% endcomment %}
+            </div><!-- /.nav -->
+          </div><!-- /.nav-scroller -->
+        </nav><!-- /.page-navs -->
+        <!-- .page-inner -->
+        <div class="page-inner">
+          <!-- .page-title-bar -->
+          <header class="page-title-bar">
+            <div class="d-flex justify-content-between">
+              <div class="d-md-inline-block">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+           
+                  <!-- .input-group-append -->
+                  <div class="input-group-append">
+                  </div><!-- /.input-group-append -->
+                </div><!-- /.input-group -->
+              </div>
+            </div><button type="button" class="btn btn-success btn-floated d-block d-sm-none"><span class="fa fa-plus"></span></button>
+          </header><!-- /.page-title-bar -->
+
+          <!-- .page-section -->
+          <div class="page-section">
+            <!-- .card -->
+
+                  <!-- grid column -->
+                  <div class="col-lg-12">
+                    <!-- .card -->
+                    <div class="card card-fluid">
+
+                      <!-- .list-group -->
+                      <div class="list-group list-group-flush list-group-divider">
+                        
+                        {% for eachpromo_messages in promo_messages %}
+                        <a href="#" class="list-group-item list-group-item-action">
+                          <div class="list-group-item-figure">
+                            <div class="user-avatar">
+                              <img src="{% static 'assets/images/avatars/profile.jpg' %}" alt="">
+                            </div>
+                          </div>
+                          <div class="list-group-item-body">
+                            <h4 class="list-group-item-title"> {{eachpromo_messages.title}} </h4>
+                            <p class="list-group-item-text text-truncate">
+                              <span class="text-dark">{{eachpromo_messages.created_at | timesince}} ago </span> – {{eachpromo_messages.message}} </p>
+                          </div>
+                        </a> 
+                        {% endfor %}
+                        
+
+
+                        
+                      </div><!-- /.list-group -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+            </div><!-- /.card -->
+            </div><!-- /.section-block -->
+          </div><!-- /.page-section -->
+        </div><!-- /.page-inner -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}

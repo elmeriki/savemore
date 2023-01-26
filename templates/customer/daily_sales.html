@@ -1,0 +1,56 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Daily Sales | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page container">
+        <!-- .page-navs -->
+        <br><br>
+            <form action="/save_daily_sales" method="POST">
+            {% csrf_token %}
+                <fieldset>
+                  <div class="form-group">
+                    <label for="tf1">Branch (Auto Select)</label> 
+                    <input type="text" class="form-control" name="branch" id="tf1" aria-describedby="tf1Help" readonly value="{{request.user.branch}}"> 
+                  </div>
+
+                  
+                  <!-- .form-group -->
+                  <div class="form-group">
+                    <label for="tf1">Amount</label> 
+                    <input type="number" class="form-control" id="tf1" name="amount" aria-describedby="tf1Help" required placeholder="Enter amount"> 
+                  </div><!-- /.form-group -->
+       
+                  <!-- .form-group -->
+                  <div class="form-group">
+                    <label for="tf6">Message</label>
+                    <textarea class="form-control" name="message" placeholder="optional" required id="tf6" rows="3"></textarea>
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Save Sales</button>
+                </div>
+                </fieldset>
+              </form>
+
+              {% if messages %}
+              {% for message in messages %}
+              <h5 class="text-success"> {{message}} </h5>
+              {% endfor %}
+              {% else %}
+
+              {% endif %}
+            </div>
+        <!-- /.form -->
+        </div><!-- /.page-inner -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}
