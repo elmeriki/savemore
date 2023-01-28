@@ -1,0 +1,109 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Invoice Detail | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            </div><!-- /.card-header -->
+                <!-- .tab-content -->
+                <div class="tab-content pt-4" id="clientDetailsTabs">
+                    <!-- .tab-pane -->
+                    <div class="tab-pane fade show active" id="client-billing-contact" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                      <!-- .card -->
+                      <div class="card">
+                        <!-- .card-body -->
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <h2 id="client-billing-contact-tab" class="card-title"> PBANKING INFORMATION </h2><button type="button" class="btn btn-link" data-toggle="modal" class="text-danger">UNPAID</button>
+                          </div>
+                          <address> Account Number: 6151771718181<br> Branch: Pretoria<br> Reference:8101010 </address>
+                        </div><!-- /.card-body -->
+                      </div><!-- /.card -->
+                      <!-- .card -->
+                      <div class="card mt-4">
+                        <!-- .card-body -->
+                        <div class="card-body">
+                          <div class="table-responsive">
+                            <table class="table table-hover" style="min-width: 678px">
+                              <thead>
+                                <tr>
+                                  <th> Description </th>
+                                  <th> Incl Price </th>
+                                  <th> Excl Price </th>
+                                  <th>Incl Total</th>
+                                  <th>Excl Total</th>
+                                  <th>Quantity</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for eachorder_details in order_details %}
+                                <tr>
+                                  <td class="align-middle"> {{eachorder_details.description}}</td>
+                                  <td class="align-middle">ZAR {{eachorder_details.incl}}.00</td>
+                                  <td class="align-middle">ZAR {{eachorder_details.excl}}.00</td>
+                                  <td class="align-middle">ZAR {{eachorder_details.incltotal}}.00 </td>
+                                  <td class="align-middle">ZAR {{eachorder_details.excltotal}}.00 </td>
+
+                                  <td class="align-middle text-left">
+                                    {{eachorder_details.quantity}}
+                                  </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div><!-- /.table-responsive -->
+                        </div><!-- /.card-body -->
+                        <!-- .card-footer -->
+                        <br><br>
+                        <hr>
+                        <div class="table-responsive">
+                            <!-- .table -->
+                            <table class="table">
+                              <!-- thead -->
+                              <thead>
+                                <tr>
+                                  <th style="min-width:200px">INVOICE NOTICE </th>
+                                  <th> INCL TOTAL  </th>
+                                  <th> EXCL TOTAL   </th>
+                                  
+                                </tr>
+                              </thead><!-- /thead -->
+                              <!-- tbody -->
+                              <tbody>
+                                <!-- tr -->
+            
+                                <tr>
+                            
+                                  <td class="align-middle"><span>DELIVERY WILL COMMENSE ONCE PAYMENT IS CONFIRMED </span>
+                                </td>
+              
+                                  <td class="align-middle">
+                                    <span>ZAR {{incl}}</span>
+                                </td>
+                                  <td class="align-middle">
+                                    <span>ZAR {{excl}}</span>
+                                  </td>
+                                  
+                                  
+                                </tr>
+              
+                                <!-- /tr -->
+                                <!-- tr -->
+                              </tbody><!-- /tbody -->
+                            </table><!-- /.table -->
+                          </div><!-- /.table-responsive -->
+
+                      </div><!-- /.card -->
+                    </div><!-- /.tab-pane -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

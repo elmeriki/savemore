@@ -1,0 +1,106 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Admin Order List | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <button type="button" class="btn btn-secondary" aria-expanded="false">
+                CUSTOMER ORDER LIST 
+              </button> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a href="#" class="btn btn-primary ml-auto">New Order</a>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Order ID </th>
+                    <th> Order Payment </th>
+                    <th> Dates</th>
+                    <th> Order Status </th>
+                    <th> Action </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for order_list in order_list %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="/admin_order_detail/{{order_list.orderid}}" class="tile bg-pink text-white mr-2">SP</a>
+                        <div class="media-body">
+                          <a href="/admin_order_detail/{{order_list.orderid}}">{{order_list.orderid}}</a> <small class="d-block text-muted">{{all_expenses.message}}</small>
+                        </div>
+                      </div>
+                    </td>
+                    {% if order_list.adminstatus == "2" or order_list.adminstatus == "3" or order_list.adminstatus == "4"   %}
+                    <td class="align-middle"> 
+                        <span class="badge badge-success">PAID</span>
+                         </td>
+                    {% else %}
+                    <td class="align-middle">
+                        <span class="badge badge-warning">UNPAID</span>
+                        </td>
+                    {% endif %}
+
+                    <td class="align-middle"> {{order_list.created_at | timesince}} ago </td>
+                    
+                    {% if order_list.adminstatus == "0" %}
+                        <td class="align-middle"> 
+                            <span class="badge badge-warning">PENDING</span>
+                            </td>
+                        {% elif order_list.adminstatus == "1"  %}
+                        <td class="align-middle">
+                            <span class="badge badge-warning">PROCESSING</span>
+                            </td>
+                            {% elif order_list.adminstatus == "2"  %}
+                            <td class="align-middle">
+                                <span class="badge badge-warning">PAYMENR CONFIRED</span>
+                                </td>
+
+                                {% elif order_list.adminstatus == "3"  %}
+                                <td class="align-middle">
+                                    <span class="badge badge-warning">DELIVEYR IN PROGRESS</span>
+                                    </td>
+                                    {% elif order_list.adminstatus == "4"  %}
+                                    <td class="align-middle">
+                                        <span class="badge badge-success">ORDER COMPLETED</span>
+                                        </td>
+                        {% endif %}
+                        
+                        <td class="align-middle">
+                          <a href="/process_order/{{order_list.orderid}}">
+                            <span class="btn btn-danger">Process</span>
+                          </a>
+                            </td>
+                    </td>
+
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+{% endblock %}

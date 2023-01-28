@@ -15,5 +15,8 @@ urlpatterns = [
     path('save_daily_sales', views.save_daily_SalesView, name='save_daily_SalesView'),
     path('search_product', views.search_productView, name='search_productView'),
     path('add_to_cart/<int:id>', views.add_to_cartView, name='add_to_cartView'),
-
+    path('admin_order_list', views.admin_order_listView, name='admin_order_listView'),
+    path('admin_order_detail/<int:order_id>', views.admin_order_detailView, name='admin_order_detailView'),
+    path('process_order/<int:order_id>', views.process_orderView, name='process_orderView'),
+    path('update_order_status', views.update_order_statusView, name='update_order_statusView'),
 ]

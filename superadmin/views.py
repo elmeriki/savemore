@@ -49,7 +49,8 @@ def promotionView(request):
 def send_promoView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
         return render(request,'customer/send_promo.html')
-    
+
+@transaction.atomic
 @login_required(login_url='/')  
 def send_to_all_customer_promoView(request):
     if request.method =="POST" and request.POST['title'] and request.POST['message'] and request.POST['slogan'] and request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
@@ -96,7 +97,7 @@ def expenses_displayView(request):
 @login_required(login_url='/')  
 def dailysales_displayView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
-        all_sales = Sales.objects.filter(status=0)
+        all_sales=Sales.objects.filter(status=0)
         if all_sales:
             data = {
             'all_sales':all_sales 
@@ -148,7 +149,7 @@ def save_daily_expensesView(request):
 
 @login_required(login_url='/')  
 def dailysalesView(request):
-    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin and request.user.is_customer:
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
         return render(request,'customer/daily_sales.html')
     
 
@@ -187,4 +188,58 @@ def add_to_cartView(request,id):
     else:
         return redirect('/invoice')
     
+@login_required(login_url='/')  
+def admin_order_listView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        order_list = Order.objects.all()
+        if order_list:
+            data = {
+            'order_list':order_list 
+            }
+            return render(request,'customer/admin_order_list.html',context=data)
+        else:
+            return redirect('/')
     
+    
+@login_required(login_url='/')  
+def admin_order_detailView(request,order_id):
+    if request.user.is_authenticated and request.user.is_customer or request.user.is_admin:
+        order_details = Myorders.objects.filter(orderid=order_id,status=0)
+        incl = Myorders.objects.filter(orderid=order_id,status__gte=0).aggregate(Sum('incltotal'))['incltotal__sum']
+        excl = Myorders.objects.filter(orderid=order_id,status__gte=0).aggregate(Sum('excltotal'))['excltotal__sum']
+        order_status=Order.objects.values_list('status',flat=True).get(orderid=order_id)
+        if order_details:
+            data ={
+                'order_details':order_details,
+                'incl':incl,
+                'excl':excl,
+                'fetch_order_id':order_id,
+                'order_status':order_status
+            }
+            
+        return render(request,'customer/admin_order_details.html',context=data)
+    else:
+        return redirect('/')
+    
+
+@login_required(login_url='/')  
+def process_orderView(request,order_id):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        data = {
+        'order_id':Order.objects.values_list('orderid', flat=True).get(orderid=order_id)
+        }
+        return render(request,'customer/process_order.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def update_order_statusView(request):
+    if request.user.is_authenticated and request.method == "POST" and request.user.is_ceo or request.user.is_admin:
+        order_id = request.POST['order_id']
+        status =request.POST['order_status_from_form']
+        update_status = Order.objects.filter(orderid=order_id).update(adminstatus=status)
+        if update_status:
+                messages.info(request,'Successful')
+                return redirect('/admin_order_list')
+        else:
+            return redirect('/')

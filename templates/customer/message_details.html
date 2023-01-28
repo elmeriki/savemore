@@ -14,9 +14,6 @@
           <div class="nav-scroller">
             <!-- .nav -->
             <div class="nav nav-tabs">
-              <a class="nav-link active show" data-toggle="tab" href="#tab1">All Message <span class="badge">(0)</span></a> 
-              {% comment %} <a class="nav-link" data-toggle="tab" href="#tab2">Sales</a> 
-              <a class="nav-link" data-toggle="tab" href="#tab3">Promo</a> {% endcomment %}
             </div><!-- /.nav -->
           </div><!-- /.nav-scroller -->
         </nav><!-- /.page-navs -->
@@ -44,30 +41,63 @@
                   <!-- grid column -->
                   <div class="col-lg-12">
                     <!-- .card -->
-                    <div class="card card-fluid">
 
                       <!-- .list-group -->
                       <div class="list-group list-group-flush list-group-divider">
-                        
-                        {% for eachpromo_messages in promo_messages %}
-                        <a href="#" class="list-group-item list-group-item-action">
-                          <div class="list-group-item-figure">
-                            <div class="user-avatar">
-                              <img src="{% static 'assets/images/avatars/profile.jpg' %}" alt="">
-                            </div>
-                          </div>
-                          <div class="list-group-item-body">
-                            <h4 class="list-group-item-title"> {{eachpromo_messages.title}} </h4>
-                            <p class="list-group-item-text text-truncate">
-                              <span class="text-dark">{{eachpromo_messages.created_at | timesince}} ago </span> – {{eachpromo_messages.message}} </p>
-                          </div>
-                        </a> 
-                        {% endfor %}
-                        
 
-
+                        {% for message_details in message_details %}
                         
-                      </div><!-- /.list-group -->
+                        <div class="feed">
+                            <!-- .feed-post -->
+                            <div class="feed-post card">
+                              <!-- .card-header -->
+                              <div class="card-header card-header-fluid">
+                                <a href="#" class="btn-account" role="button">
+                                  <div class="user-avatar user-avatar-lg">
+                                    <img src="{% static 'assets/images/avatars/uifaces18.jpg' %}" alt="">
+                                  </div>
+                                  <div class="account-summary">
+                                    <p class="account-name"> {{message_details.title}} </p>
+                                    <p class="account-description"> {{message_details.created_at | timesince }} ago </p>
+                                  </div>
+                                </a> <!-- .dropdown -->
+                                <div class="dropdown align-self-start ml-auto">
+                                  <button class="btn btn-icon btn-light text-muted" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-v"></i></button>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-arrow"></div>
+                                    <a href="/delete_promotional_message/{{message_details.id}}" class="dropdown-item">Delete</a>
+                                  </div>
+                                </div><!-- /.dropdown -->
+                              </div><!-- /.card-header -->
+                              <!-- .card-body -->
+                              <div class="card-body">
+                                {% comment %} <p class="mb-2"> Hey there! this is a post with outbound link, <a href="#" class="mention">@stilearning</a> ratione doloremque eos <a href="#" class="hashtag">#looper</a> aliquid ipsam, molestias cumque asperiores mollitia nam corrupti dolore recusandae nihil? </p><!-- .outbound-link --> {% endcomment %}
+                                <a href="#" class="outbound-link">
+                                  {% comment %} <h5 class="outbound-title"> Expanding Your Home Network’s Reach </h5> {% endcomment %}
+                                  <p class="outbound-text">{{message_details.message}} </p>
+                                </a> <!-- /.outbound-link -->
+                                <!-- .feed-summary -->
+                                <div class="feed-summary">
+                                  <a href="#" class="feed-summary-item mr-auto">6.3K likes</a> <a href="#" class="feed-summary-item">826 comments</a> <a href="#" class="feed-summary-item">·</a> <a href="#" class="feed-summary-item">2.9K shares</a>
+                                </div><!-- .feed-summary -->
+                              </div><!-- /.card-body -->
+                              <!-- .card-footer -->
+                              <div class="card-footer">
+                                <div class="card-footer-item">
+                                  <button type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-heart"></i> Like</button>
+                                </div>
+                                <div class="card-footer-item">
+                                  <button type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-comment"></i> Comment</button>
+                                </div>
+                                <div class="card-footer-item">
+                                  <button type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-share"></i> Share</button>
+                                </div>
+                              </div><!-- /.card-footer -->
+                            </div><!-- /.feed-post -->
+                          </div><!-- /.feed -->
+
+                          {% endfor %}
+                        
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
             </div><!-- /.card -->

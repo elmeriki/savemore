@@ -44,7 +44,7 @@ def track_orderView(request):
 
 @login_required(login_url='/')  
 def track_my_orderView(request):
-    if request.user.is_authenticated  and request.user.is_customer:
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_admin:
         if request.method=="POST":
             order_id = request.POST['orderid']
             username=request.user.username
@@ -116,7 +116,7 @@ def customer_promo_messageView(request):
     
 @login_required(login_url='/')  
 def order_detailView(request,order_id):
-    if request.user.is_authenticated and request.user.is_customer:
+    if request.user.is_authenticated and request.user.is_customer or request.user.is_admin:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
         order_details = Myorders.objects.filter(orderid=order_id,status=0)
@@ -162,7 +162,7 @@ def delete_single_orderView(request,order_id,id):
     
 @login_required(login_url='/')  
 def update_quantityView(request,order_id,id):
-    if request.user.is_authenticated  and request.user.is_customer:
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_admin:
         quantity = int(request.POST['quantity'])
         username=request.user.username
         customer_instance =User.objects.get(username=username)
@@ -191,7 +191,7 @@ def update_quantityView(request,order_id,id):
     
 @login_required(login_url='/')  
 def update_order_statusView(request,order_id):
-    if request.user.is_authenticated  and request.user.is_customer:
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_admin:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
         update_order_status = Order.objects.filter(customer=customer_instance,orderid=order_id).update(status=1)
@@ -228,10 +228,66 @@ def delete_chat_messageView(request,id):
         return redirect('/conversation')
 
 @login_required(login_url='/')  
-def message_detailView(request):
+def message_detailView(request,id):
     if request.user.is_authenticated  and request.user.is_customer:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        return render(request,'customer/message_details.html')
+        message_details = Promotion.objects.filter(customer=customer_instance,id=id)
+        if message_details:
+            data = {
+                'message_details':message_details
+            }
+        return render(request,'customer/message_details.html',context=data)
     else:
         return render(request,'customer/message_details.html')
+    
+@login_required(login_url='/')  
+def delete_promotional_messageView(request,id):
+    if request.user.is_authenticated  and request.user.is_customer:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        delete_single_message = Promotion.objects.filter(customer=customer_instance,id=id).delete()
+        if delete_single_message:
+            return redirect('/customer_promo_message')
+    else:
+       return redirect('/customer_promo_message')
+   
+   
+@login_required(login_url='/')  
+def myinvoiceView(request):
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_admin:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        order_list = Order.objects.filter(customer=customer_instance,status=1)
+        if order_list:
+            data ={
+             'order_list':order_list   
+            }
+            return render(request,'customer/myinvoice.html',context=data)
+        else:
+            return redirect('/customer_promo_message')
+        
+        
+
+@login_required(login_url='/')  
+def my_invoice_detailView(request,order_id):
+    if request.user.is_authenticated and request.user.is_customer or request.user.is_admin:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        order_details = Myorders.objects.filter(orderid=order_id,status=0)
+        incl = Myorders.objects.filter(customer=customer_instance,status=0).aggregate(Sum('incltotal'))['incltotal__sum']
+        excl = Myorders.objects.filter(customer=customer_instance,status=0).aggregate(Sum('excltotal'))['excltotal__sum']
+        order_status=Order.objects.values_list('status',flat=True).get(orderid=order_id)
+
+        if order_details:
+            data ={
+                'order_details':order_details,
+                'incl':incl,
+                'excl':excl,
+                'fetch_order_id':order_id,
+                'order_status':order_status
+            }
+            
+        return render(request,'customer/my_invoice_details.html',context=data)
+    else:
+        return redirect('/')

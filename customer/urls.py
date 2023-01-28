@@ -4,6 +4,7 @@ from customer import views
 urlpatterns = [
     path('new_order', views.new_orderView, name='new_orderView'),
     path('invoice', views.invoiceView, name='invoiceView'),
+    path('myinvoice', views.myinvoiceView, name='myinvoiceView'),
     path('conversation', views.conversationView, name='conversationView'),
     path('list_customers', views.list_customersView, name='list_customersView'),
     path('order_list', views.order_listView, name='order_listView'),
@@ -17,6 +18,8 @@ urlpatterns = [
     path('delete_chat_message/<int:id>', views.delete_chat_messageView, name='delete_chat_messageView'),
     path('track_order', views.track_orderView, name='track_orderView'),
     path('track_my_order', views.track_my_orderView, name='track_my_orderView'),
-    path('message_detail', views.message_detailView, name='message_detailView'),
+    path('message_detail/<int:id>', views.message_detailView, name='message_detailView'),
+    path('delete_promotional_message/<int:id>', views.delete_promotional_messageView, name='delete_promotional_messageView'),
+    path('my_invoice_detail/<int:order_id>', views.my_invoice_detailView, name='my_invoice_detailView'),
 
 ]

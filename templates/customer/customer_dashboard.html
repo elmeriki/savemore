@@ -128,7 +128,7 @@
                         <!-- .lits-group-item-body -->
                         <div class="list-group-item-body">
                           <h5 class="card-title">
-                            <a href="#"> {{eachorder_list.orderid}}</a>
+                            <a href="/order_detail/{{eachorder_list.orderid}}"> {{eachorder_list.orderid}}</a>
                           </h5>
                           <p class="card-subtitle text-muted mb-1"> {{eachorder_list.orderid}} - {{eachorder_list.created_at | timesince }} </p><!-- .progress -->
                           <div class="progress progress-xs bg-transparent">
@@ -158,7 +158,7 @@
                         <div class="todo">
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" > 
-                            <label class="custom-control-label" for="todo1"><a href="#">{{eachpromo_messages.title}} {{eachpromo_messages.created_at | timesince }} ago </a></label>
+                            <label class="custom-control-label" for="todo1"><a href="/message_detail/{{eachpromo_messages.id}}">{{eachpromo_messages.title}} {{eachpromo_messages.created_at | timesince }} ago </a></label>
                           </div><!-- /.custom-control -->
                         </div><!-- /.todo -->
                         

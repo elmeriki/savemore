@@ -37,7 +37,13 @@ def customer_profileView(request):
     
 def super_admin_dashboard(request):
     if request.user.is_authenticated and request.user.is_admin:
-        return render(request,'customer/admin_dashboard.html',{})
+        customer_orders = Order.objects.all()
+        promo_messages = Promotion.objects.all()[:5]
+        data = {
+        'customer_orders':customer_orders,
+        'promo_messages':promo_messages
+        }
+        return render(request,'customer/admin_dashboard.html',context=data)
     
     else:
         return redirect('/')

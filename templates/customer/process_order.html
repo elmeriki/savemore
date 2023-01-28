@@ -1,0 +1,44 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Process customer Order | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="container">
+        <br><br><br>
+        <form action="/update_order_status" method="POST">
+            {% csrf_token %}
+                  <div class="">
+                    <label for="tf1">ORDER ID</label> 
+                    <input type="number" class="form-control" name="order_id" readonly id="tf1" aria-describedby="tf1Help" value="{{order_id}}"> 
+                  </div>
+                  <br>
+                         <!-- grid column -->
+                            <div class="form-group">
+                              <label for="sel2">Update Status</label> 
+                              <select class="custom-select" name="order_status_from_form" id="sel2" required="">
+                                <option value=""> Choose... </option>
+                                <option value="1"> Processing </option>
+                                <option value="2"> Payment Confirm </option>
+                                <option value="3"> Delivery in progress  </option>
+                                <option value="4"> Order Completed </option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                        <input class="btn btn-lg btn-primary btn-block" value="Confirm" type="submit">
+                    </div>
+                </div><!-- /grid column -->
+              </form>
+            </div>
+            </div>
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}

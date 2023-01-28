@@ -1,5 +1,5 @@
 {% extends "customer/core_m.html" %}
-{% block title %} Order Detail | SaveMore Group  {% endblock %}
+{% block title %} Admin Order Detail | SaveMore Group  {% endblock %}
 {% load static %}
 {% block content %}
 
@@ -13,11 +13,10 @@
             <div class="card-header d-flex">
               <!-- .dropdown -->
               <div class="dropdown">
-                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i></button> <!-- .dropdown-menu -->
-                <div class="dropdown-menu stop-propagation">
-                  <div class="dropdown-arrow"></div>
-                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
-                </div><!-- /.dropdown-menu -->
+                <button type="button" class="btn btn-secondary"  aria-expanded="false">
+                 ORDER INVOICES
+                </button> <!-- .dropdown-menu -->
+              
               </div><!-- /.dropdown -->
               {% if reques.user.is_admin %}
               {% if order_status == "0" %}
@@ -42,7 +41,6 @@
                     <th> Incl Total </th>
                     <th> Excl Total </th>
                     <th> Quantity</th>
-                    <th> Action </th>
                   </tr>
                 </thead><!-- /thead -->
                 <!-- tbody -->
@@ -66,34 +64,9 @@
                     <td class="align-middle"><span>ZAR {{each_order_details.incltotal}}.00</span></td>
 
                     <td class="align-middle"><span>ZAR {{each_order_details.excltotal}}.00</span></td>
-                    <td class="align-middle">
-                        <form action="/update_quantity/{{each_order_details.orderid}}/{{each_order_details.id}}" method="POST">
-                        {% csrf_token %}
-                        <div class="btn-group ml-auto">
-                            <div class="custom-number">
-                              <input type="number" name="quantity" class="form-control"  min="1" max="1000" value="{{each_order_details.quantity}}">
-                            </div>  
-                            {% if order_status == "0" %}
-                            <input class="btn btn-success" type="submit" value="OK">
-                            {% elif order_status == "1" %}
-
-                            {% endif %}
-                            </form
-                    </td>
                     
-                    <td class="align-middle">
-                    <div class="btn-group ml-auto">
-                    {% if order_status == "0" %} 
-                    <a href="/delete_single_order/{{each_order_details.orderid}}/{{each_order_details.id}}" >
-                    <button class="btn btn-sm btn-secondary" hx-confirm="Are you sure?"><i class="far fa-trash-alt"></i></button></a>
-                    {% elif order_status == "1" %}
-                    <a href="#" >
-                        <button class="btn btn-sm btn-secondary" hx-confirm="Are you sure?"><i class="far fa-trash-alt"></i></button></a>
-                    {% endif %}
-                    </div>     
-       
-                </td>
-                    </td>
+                    <td class="align-left"><span>{{each_order_details.quantity}}</span></td>
+                   
                   </tr>
                   {% endfor %}
 
@@ -121,14 +94,14 @@
 
                     <tr>
                 
-                      <td class="align-middle"><span>Total prices is subject to change </span>
+                      <td class="align-middle"><span><strong>GRAND TOTAL </strong></span>
                     </td>
   
                       <td class="align-middle">
-                        <span>ZAR {{incl}}</span>
+                        <span><strong>ZAR {{incl}}</strong></span>
                     </td>
                       <td class="align-middle">
-                        <span>ZAR {{excl}}</span>
+                        <span><strong> ZAR {{excl}}</strong></span>
                       </td>
                       
                       

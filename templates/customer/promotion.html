@@ -14,7 +14,9 @@
           <div class="nav-scroller">
             <!-- .nav -->
             <div class="nav nav-tabs">
-              <a class="nav-link active show" data-toggle="tab" href="#tab1">All <span class="badge">(7)</span></a> <a class="nav-link" data-toggle="tab" href="#tab2">Starred</a> <a class="nav-link" data-toggle="tab" href="#tab3">Trash</a>
+              <a class="nav-link active show" data-toggle="tab" href="#tab1">All Message <span class="badge">(7)</span></a> 
+              {% comment %} <a class="nav-link" data-toggle="tab" href="#tab2">Starred</a> 
+              <a class="nav-link" data-toggle="tab" href="#tab3">Trash</a> {% endcomment %}
             </div><!-- /.nav -->
           </div><!-- /.nav-scroller -->
         </nav><!-- /.page-navs -->
@@ -35,10 +37,10 @@
                   <!-- .input-group-append -->
                   <div class="input-group-append">
                     <select class="custom-select">
-                      <option selected> Filter By </option>
-                      <option value="1"> Team </option>
-                      <option value="3"> Project </option>
-                      <option value="2"> People </option>
+                      <option selected> Days </option>
+                      <option value="1"> Weeks </option>
+                      <option value="3"> Months </option>
+                      <option value="2"> Years </option>
                     </select>
                   </div><!-- /.input-group-append -->
                 </div><!-- /.input-group -->
@@ -56,6 +58,7 @@
 
               {% for eachmessage  in promo_messages %}
               <!-- .list-group-messages -->
+              {% ifchanged %}
               <div class="list-group list-group-messages list-group-flush list-group-bordered">
                 <!-- message item -->
                 <div class="list-group-item unread">
@@ -101,6 +104,7 @@
                   </div><!-- /message actions -->
                 </div><!-- /message item -->
               </div><!-- /.list-group-messages -->
+              {% endifchanged %}
               {% endfor %}
               {% else %}
 

@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from savemauth.models import *
 
 
+
+
+    
 # Create your models here.
 class Promotion(models.Model):
     customer = models.ForeignKey(User,on_delete=models.CASCADE)
