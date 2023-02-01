@@ -48,10 +48,10 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        verbose_name_plural = "Order IDs"
+        verbose_name_plural = "ORDER NUMBERS"
         
     def __str__(self):
-        return self.customer.first_name
+        return self.orderid
     
 # Create your models here.
 class Myorders(models.Model):

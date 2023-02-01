@@ -37,7 +37,7 @@ def customer_profileView(request):
     
 def super_admin_dashboard(request):
     if request.user.is_authenticated and request.user.is_admin:
-        customer_orders = Order.objects.all()
+        customer_orders = Order.objects.all()[:5]
         promo_messages = Promotion.objects.all()[:5]
         data = {
         'customer_orders':customer_orders,
@@ -68,12 +68,18 @@ def customer_dashboardView(request):
     if request.user.is_authenticated and request.user.is_customer:
         username =request.user.username 
         customer_instance = User.objects.get(username=username)
-        promo_messages=Promotion.objects.filter(customer=customer_instance,status=0)
-        order_list = Order.objects.filter(customer=customer_instance)
+        promo_messages=Promotion.objects.filter(customer=customer_instance,status=0).order_by('-created_at')[:5]
+        order_list = Order.objects.filter(customer=customer_instance).order_by('-created_at')[:5]
+        order_count_total =Order.objects.filter(customer=customer_instance).count()
+        invoice_count_total =Order.objects.filter(customer=customer_instance,adminstatus=1).count()
+        paid_count_total =Order.objects.filter(customer=customer_instance,adminstatus=4).count()
 
         data ={
             'order_list':order_list,
-            'promo_messages':promo_messages
+            'order_count_total':order_count_total,
+            'promo_messages':promo_messages,
+            'invoice_count_total':invoice_count_total,
+            'paid_count_total':paid_count_total
         }
         return render(request,'customer/customer_dashboard.html',context=data)
     else:

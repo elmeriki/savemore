@@ -49,24 +49,36 @@
                     </td>
                     {% if order_list.status == "0" %}
                     <td class="align-middle"> 
-                        <span class="badge badge-danger">Incomplete</span>
+                        <span class="badge badge-danger">Pending</span>
                          </td>
                     {% else %}
                     <td class="align-middle">
-                        <span class="badge badge-success">Completed</span>
+                        <span class="badge badge-success">Confirmed</span>
                         </td>
                     {% endif %}
 
                     <td class="align-middle"> {{order_list.created_at | timesince}} ago </td>
                     
-                    {% if order_list.status == "0" %}
+                    {% if order_list.adminstatus == "0" %}
                         <td class="align-middle"> 
-                            <span class="badge badge-warning">Pending Confirmation</span>
+                            <span class="badge badge-warning">Pending</span>
                             </td>
-                        {% elif order_list.status == "1"  %}
+                        {% elif order_list.adminstatus == "1"  %}
                         <td class="align-middle">
-                            <span class="badge badge-success">Processing</span>
+                            <span class="badge badge-warning">Processing</span>
                             </td>
+                        {% elif order_list.adminstatus == "2"  %}
+                        <td class="align-middle">
+                        <span class="badge badge-success">Payment Confirm</span>
+                          </td>
+                          {% elif order_list.adminstatus == "3"  %}
+                          <td class="align-middle">
+                          <span class="badge badge-primary">Delivery In Progress</span>
+                            </td>
+                            {% elif order_list.adminstatus == "4"  %}
+                            <td class="align-middle">
+                            <span class="badge badge-success">Order Completed</span>
+                              </td>
                         {% endif %}
                     </td>
 

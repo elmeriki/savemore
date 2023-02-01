@@ -243,3 +243,9 @@ def update_order_statusView(request):
                 return redirect('/admin_order_list')
         else:
             return redirect('/')
+        
+@login_required(login_url='/')  
+def chat_roomView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        return render(request,'customer/chat_room.html')
+    

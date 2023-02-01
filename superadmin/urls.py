@@ -19,4 +19,5 @@ urlpatterns = [
     path('admin_order_detail/<int:order_id>', views.admin_order_detailView, name='admin_order_detailView'),
     path('process_order/<int:order_id>', views.process_orderView, name='process_orderView'),
     path('update_order_status', views.update_order_statusView, name='update_order_statusView'),
+    path('chat_room', views.chat_roomView, name='chat_roomView'),
 ]

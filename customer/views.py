@@ -258,10 +258,12 @@ def myinvoiceView(request):
     if request.user.is_authenticated  and request.user.is_customer or request.user.is_admin:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
+        promo_messages=Promotion.objects.filter(customer=customer_instance,status=0).order_by('-created_at')[:5]
         order_list = Order.objects.filter(customer=customer_instance,status=1)
         if order_list:
             data ={
-             'order_list':order_list   
+             'order_list':order_list,
+             'promo_messages':promo_messages
             }
             return render(request,'customer/myinvoice.html',context=data)
         else:

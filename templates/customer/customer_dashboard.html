@@ -17,40 +17,6 @@
                     <span class="font-weight-bold">Hi, {{request.user.shopname}}.</span> <span class="d-block text-muted">Here’s what’s happening with your business today.</span>
                   </p>
                   <div class="ml-auto">
-                    <!-- .dropdown -->
-                    <div class="dropdown">
-                      <button class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>This Week</span> <i class="fa fa-fw fa-caret-down"></i></button> <!-- .dropdown-menu -->
-                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-md stop-propagation">
-                        <div class="dropdown-arrow"></div><!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpToday" name="dpFilter" data-start="2019/03/27" data-end="2019/03/27"> <label class="custom-control-label d-flex justify-content-between" for="dpToday"><span>Today</span> <span class="text-muted">Mar 27</span></label>
-                        </div><!-- /.custom-control -->
-                        <!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpYesterday" name="dpFilter" data-start="2019/03/26" data-end="2019/03/26"> <label class="custom-control-label d-flex justify-content-between" for="dpYesterday"><span>Yesterday</span> <span class="text-muted">Mar 26</span></label>
-                        </div><!-- /.custom-control -->
-                        <!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpWeek" name="dpFilter" data-start="2019/03/21" data-end="2019/03/27" checked> <label class="custom-control-label d-flex justify-content-between" for="dpWeek"><span>This Week</span> <span class="text-muted">Mar 21-27</span></label>
-                        </div><!-- /.custom-control -->
-                        <!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpMonth" name="dpFilter" data-start="2019/03/01" data-end="2019/03/27"> <label class="custom-control-label d-flex justify-content-between" for="dpMonth"><span>This Month</span> <span class="text-muted">Mar 1-31</span></label>
-                        </div><!-- /.custom-control -->
-                        <!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpYear" name="dpFilter" data-start="2019/01/01" data-end="2019/12/31"> <label class="custom-control-label d-flex justify-content-between" for="dpYear"><span>This Year</span> <span class="text-muted">2019</span></label>
-                        </div><!-- /.custom-control -->
-                        <!-- .custom-control -->
-                        <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="dpCustom" name="dpFilter" data-start="2019/03/27" data-end="2019/03/27"> <label class="custom-control-label" for="dpCustom">Custom</label>
-                          <div class="custom-control-hint my-1">
-                            <!-- datepicker:range -->
-                            <input type="text" class="form-control" id="dpCustomInput" data-toggle="flatpickr" data-mode="range" data-disable-mobile="true" data-date-format="Y-m-d"> <!-- /datepicker:range -->
-                          </div>
-                        </div><!-- /.custom-control -->
-                      </div><!-- /.dropdown-menu -->
-                    </div><!-- /.dropdown -->
                   </div>
                 </div>
               </header><!-- /.page-title-bar -->
@@ -66,9 +32,9 @@
                         <div class="col">
                           <!-- .metric -->
                           <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> My Order </h2>
+                            <h2 class="metric-label"> Processed Order </h2>
                             <p class="metric-value h3">
-                              <sub><i class="oi oi-people"></i></sub> <span class="value">8</span>
+                              <sub><i class="oi oi-people"></i></sub> <span class="value">{{order_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
@@ -76,9 +42,9 @@
                         <div class="col">
                           <!-- .metric -->
                           <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> My Invoices </h2>
+                            <h2 class="metric-label"> Completed Order </h2>
                             <p class="metric-value h3">
-                              <sub><i class="oi oi-fork"></i></sub> <span class="value">12</span>
+                              <sub><i class="oi oi-dollar"></i></sub> <span class="value">{{paid_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
@@ -86,9 +52,9 @@
                         <div class="col">
                           <!-- .metric -->
                           <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> New Promo </h2>
+                            <h2 class="metric-label"> Paid Invoices </h2>
                             <p class="metric-value h3">
-                              <sub><i class="fa fa-tasks"></i></sub> <span class="value">64</span>
+                              <sub><i class="fa fa-tasks"></i></sub> <span class="value">{{paid_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
@@ -101,7 +67,7 @@
                           <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> PENDING PAYMENT</span>
                         </div>
                         <p class="metric-value h3">
-                          <sub><i class="oi oi-timer"></i></sub> <span class="value">3</span>
+                          <sub><i class="oi oi-timer"></i></sub> <span class="value">{{invoice_count_total}}</span>
                         </p>
                       </a> <!-- /.metric -->
                     </div><!-- /metric column -->
@@ -109,74 +75,125 @@
                 </div><!-- /.section-block -->
                 <!-- grid row -->
 
+
+                <!-- grid row -->
+                <div class="row">
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <!-- .card -->
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> Order Status </h3>
+                          <div class="dropdown-menu stop-propagation">
+                            <div class="dropdown-arrow"></div>
+                            <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6>
+                          </div><!-- /.dropdown-menu -->
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px"> Order ID </th>
+                              <th> Date </th>
+                              <th> Status </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+      
+                            <!-- tr -->
+                            {% for eachcustomer_orders in order_list %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="/order_detail/{{eachcustomer_orders.orderid}}">{{eachcustomer_orders.orderid}}</a> <small class="d-block text-muted">Invoice #{{eachcustomer_orders.orderid}}</small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle">{{eachcustomer_orders.created_at | timesince}}</td>
+                              {% if eachcustomer_orders.adminstatus == "0" %}
+                              <td class="align-middle"> 
+                                  <span class="badge badge-warning">PENDING</span>
+                                  </td>
+                              {% elif eachcustomer_orders.adminstatus == "1"  %}
+                              <td class="align-middle">
+                                  <span class="badge badge-warning">PROCESSING</span>
+                                  </td>
+                                  {% elif eachcustomer_orders.adminstatus == "2"  %}
+                                  <td class="align-middle">
+                                      <span class="badge badge-warning">PAYMENT CONFIRED</span>
+                                      </td>
+      
+                                      {% elif eachcustomer_orders.adminstatus == "3"  %}
+                                      <td class="align-middle">
+                                          <span class="badge badge-warning">DELIVEYR IN PROGRESS</span>
+                                          </td>
+                                          {% elif eachcustomer_orders.adminstatus == "4"  %}
+                                          <td class="align-middle">
+                                              <span class="badge badge-success">ORDER COMPLETED</span>
+                                              </td>
+                              {% endif %}
+                            </tr><!-- /tr -->
+                            {% endfor %}
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> Promotional Message </h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th> Title </th>
+                              <th> Message </th>
+                              <th> Date </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for eachpromo_messages in promo_messages %}
+                            <tr>
+                              <td class="align-middle"><a href="/message_detail/{{eachpromo_messages.id}}">{{eachpromo_messages.title | truncatechars:18}}</a></td>
+                              <td class="align-middle"> {{eachpromo_messages.message | truncatechars:55}} </td>
+                              <td class="align-middle">{{eachpromo_messages.created_at |timesince }} ago</td>
+                            </tr><!-- /tr -->
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+
+                </div><!-- /grid row -->
                 <!-- card-deck-xl -->
-                <div class="card-deck-xl">
-                  <!-- .card -->
-                  <div class="card card-fluid pb-3">
-                    <div class="card-header"> My Order History </div><!-- .lits-group -->
-                    <div class="lits-group list-group-flush">
-                      <!-- .lits-group-item -->
-                      {% for eachorder_list in order_list%}
-
-                      <div class="list-group-item">
-                        <!-- .lits-group-item-figure -->
-                        <div class="list-group-item-figure">
-                          <div class="has-badge">
-                            <a href="#" class="tile tile-md bg-purple">O</a> <a href="#team" class="user-avatar user-avatar-xs"><img src="{% static 'assets/images/avatars/team4.jpg' %}" alt=""></a>
-                          </div>
-                        </div><!-- .lits-group-item-figure -->
-                        <!-- .lits-group-item-body -->
-                        <div class="list-group-item-body">
-                          <h5 class="card-title">
-                            <a href="/order_detail/{{eachorder_list.orderid}}"> {{eachorder_list.orderid}}</a>
-                          </h5>
-                          <p class="card-subtitle text-muted mb-1"> {{eachorder_list.orderid}} - {{eachorder_list.created_at | timesince }} </p><!-- .progress -->
-                          <div class="progress progress-xs bg-transparent">
-                            <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="2181" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                              <span class="sr-only">74% Complete</span>
-                            </div>
-                          </div><!-- /.progress -->
-                        </div><!-- .lits-group-item-body -->
-                      </div><!-- /.lits-group-item -->
-                      <!-- .lits-group-item -->
-                      {% endfor %}
-                      
-
-                    </div><!-- /.lits-group -->
-                  </div><!-- /.card -->
-                  <!-- .card -->
-                  <div class="card card-fluid">
-                    <div class="card-header"> Promotional Messages </div><!-- .card-body -->
-                    <div class="card-body">
-                      <!-- .todo-list -->
-                      <div class="todo-list">
-                        <!-- .todo-header -->
-                        <div class="todo-header"> Weekly update and ongoing sales </div><!-- /.todo-header -->
-                        <!-- .todo -->
-
-                        {% for eachpromo_messages in promo_messages %}
-                        <div class="todo">
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" > 
-                            <label class="custom-control-label" for="todo1"><a href="/message_detail/{{eachpromo_messages.id}}">{{eachpromo_messages.title}} {{eachpromo_messages.created_at | timesince }} ago </a></label>
-                          </div><!-- /.custom-control -->
-                        </div><!-- /.todo -->
-                        
-                        {% endfor %}
-   
-                     
-
-                      </div><!-- /.todo-list -->
-                    </div><!-- /.card-body -->
-
-                    
-
-                    <!-- .card-footer -->
-                    <div class="card-footer">
-                      <a href="/customer_promo_message" class="card-footer-item">View all <i class="fa fa-fw fa-angle-right"></i></a>
-                    </div><!-- /.card-footer -->
-                  </div><!-- /.card -->
-                </div><!-- /card-deck-xl -->
               </div><!-- /.page-section -->
             </div><!-- /.page-inner -->
           </div><!-- /.page -->

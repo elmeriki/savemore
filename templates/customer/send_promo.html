@@ -37,7 +37,11 @@
 
               {% if messages %}
               {% for message in messages %}
-              <h5 class="text-success"> {{message}} </h5>
+
+              <div class="col-lg-12">
+                <div class="alert alert-success alert-dismissible fade show">
+                  <button type="button" class="close" data-dismiss="alert">×</button> <strong>Well done!</strong> {{message}} </div>
+              </div><!-- /grid column -->
               {% endfor %}
               {% else %}
 
