@@ -1,0 +1,129 @@
+
+{% extends "customer/core_m.html" %}
+{% block title %} Dialy Expenses Filter  | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+     <!-- .app-main -->
+     <main class="app-main">
+        <div class="card-body border-top">
+                  <!-- .card-body -->
+                  <div class="card-body">
+                    <!-- .form -->
+                    <form action="/fetch_daily_expenses" method="POST">
+                    {% csrf_token %}
+                      <!-- .fieldset -->
+                      <fieldset>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <legend class="text-warning">{{message}}</legend> <!-- grid row -->
+                        {% endfor %}
+                        {% else %}
+                        <legend>BUSINESS DIALY EXPENSES SUMMARY</legend> <!-- grid row -->
+                        {% endif %}
+                        <div class="row">
+                          <!-- grid column -->
+                          <div class="col-md-4">
+                            <!-- .form-group -->
+                            <div class="form-group">
+                              <label for="sel1">SELECT BRANCH</label> <select class="custom-select" name="branch" id="sel1" required="">
+                                <option value="" selected disabled> Choose Branch </option>
+                                <option value="Pretoria"> Pretoria </option>
+                                <option value="King Town Eastern Cape">King Town Eastern Cape</option>
+                                <option value="Port Elizabeth">Port Elizabeth </option>
+                                <option value="Uitenhage Eastern Cape">Uitenhage Eastern Cape</option>
+                                <option value="allbranches">All Branches</option>
+                              </select>
+                            </div><!-- /.form-group -->
+                          </div><!-- /grid column -->
+                          <!-- grid column -->
+                          <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">FROM DATE  <span class="badge badge-secondary"></span></label> 
+                                <input type="date" name="startdate" required class="form-control">
+                              </div><!-- /.form-group -->
+                          </div><!-- /grid column -->
+                          <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">TO DATE  <span class="badge badge-secondary"></span></label> 
+                                <input type="date" class="form-control" required name="enddate">
+                              </div><!-- /.form-group -->
+                          </div><!-- /grid column -->
+                        </div><!-- /grid row -->
+                      </fieldset><!-- /.fieldset -->
+                      <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+                    </div>
+                    </form><!-- /.form -->
+                   
+{% if fetch_expenses %}
+    <!-- .page -->
+    <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <p  aria-expanded="false">
+                  DIALY EXPENSES RECORD | GRAND TOTAL ZAR <strong class="text-danger">{{total_expenses}}.00</strong>
+                </p> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px">Branch Name </th>
+                    <th> Title </th>
+                    <th> Amount </th>
+                    <th> Date</th>
+                    <th> Note</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for fetch_expenses in fetch_expenses %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">SP</a>
+                        <div class="media-body">
+                          <a href="#">{{fetch_expenses.branch}}</a> <small class="d-block text-muted">{{fetch_expenses.message}}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle">{{fetch_expenses.title}} </td>
+                    <td class="align-middle">
+                      <span class="badge badge-success">ZAR{{fetch_expenses.amount}}.00</span>
+                    </td>
+                    <td class="align-middle">{{fetch_expenses.created_at}} </td>
+                    <td class="align-middle">{{fetch_expenses.message}} </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+              
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+        <!-- .card-body -->
+{% else %}
+
+
+
+{% endif %}
+
+</div><!-- /.card-body -->
+    </main><!-- /.app-main -->
+{% endblock %}

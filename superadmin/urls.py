@@ -20,4 +20,13 @@ urlpatterns = [
     path('process_order/<int:order_id>', views.process_orderView, name='process_orderView'),
     path('update_order_status', views.update_order_statusView, name='update_order_statusView'),
     path('chat_room', views.chat_roomView, name='chat_roomView'),
+    path('admin_chat_reply/<int:chatid>', views.admin_chat_replyView, name='admin_chat_replyView'),
+    path('admin_response_message/<int:chatid>', views.admin_response_messageView, name='admin_response_messageView'),
+    path('expenses_filter', views.expenses_filterView, name='expenses_filterView'),
+    path('dialysales_filter', views.dialysales_filterView, name='dialysales_filterView'),
+    path('fetch_daily_Sales', views.fetch_daily_SalesView, name='fetch_daily_SalesView'),
+    path('fetch_daily_expenses', views.fetch_daily_expensesView, name='fetch_daily_expensesView'),
+    path('search_customers', views.search_customersView, name='search_customersView'),
+    path('customer_search', views.customer_searchView, name='customer_searchView'),
+
 ]

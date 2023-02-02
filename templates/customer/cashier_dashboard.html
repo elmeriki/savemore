@@ -1,5 +1,5 @@
 {% extends "customer/core_m.html" %}
-{% block title %} Top Management Dashboard | SaveMore Group  {% endblock %}
+{% block title %} Cashier Management Dashboard | SaveMore Group  {% endblock %}
 {% load static %}
 {% block content %}
        <!-- .app-main -->
@@ -24,54 +24,6 @@
               <div class="page-section">
                 <!-- .section-block -->
                 <div class="section-block">
-                  <!-- metric row -->
-                  <div class="metric-row">
-                    <div class="col-lg-9">
-                      <div class="metric-row metric-flush">
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Processed Order </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="oi oi-people"></i></sub> <span class="value">{{order_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Completed Order </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="oi oi-dollar"></i></sub> <span class="value">{{paid_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Paid Invoices </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="fa fa-tasks"></i></sub> <span class="value">{{paid_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                      </div>
-                    </div><!-- metric column -->
-                    <div class="col-lg-3">
-                      <!-- .metric -->
-                      <a href="#" class="metric metric-bordered">
-                        <div class="metric-badge">
-                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> PENDING PAYMENT</span>
-                        </div>
-                        <p class="metric-value h3">
-                          <sub><i class="oi oi-timer"></i></sub> <span class="value">{{invoice_count_total}}</span>
-                        </p>
-                      </a> <!-- /.metric -->
-                    </div><!-- /metric column -->
-                  </div><!-- /metric row -->
                 </div><!-- /.section-block -->
                 <!-- grid row -->
 

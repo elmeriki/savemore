@@ -21,5 +21,4 @@ urlpatterns = [
     path('message_detail/<int:id>', views.message_detailView, name='message_detailView'),
     path('delete_promotional_message/<int:id>', views.delete_promotional_messageView, name='delete_promotional_messageView'),
     path('my_invoice_detail/<int:order_id>', views.my_invoice_detailView, name='my_invoice_detailView'),
-
 ]

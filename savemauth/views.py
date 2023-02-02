@@ -39,9 +39,17 @@ def super_admin_dashboard(request):
     if request.user.is_authenticated and request.user.is_admin:
         customer_orders = Order.objects.all()[:5]
         promo_messages = Promotion.objects.all()[:5]
+        order_list = Order.objects.all()
+        order_count_total =Order.objects.all().count()
+        invoice_count_total =Order.objects.filter(adminstatus=1).count()
+        paid_count_total =Order.objects.filter(adminstatus=4).count()
         data = {
         'customer_orders':customer_orders,
-        'promo_messages':promo_messages
+        'promo_messages':promo_messages,
+        'order_list':order_list,
+        'order_count_total':order_count_total,
+        'invoice_count_total':invoice_count_total,
+        'paid_count_total':paid_count_total
         }
         return render(request,'customer/admin_dashboard.html',context=data)
     
@@ -52,7 +60,20 @@ def super_admin_dashboard(request):
 @login_required(login_url='/')  
 def admin_dashboardView(request):
     if request.user.is_authenticated and request.user.is_ceo:
-        return render(request,'customer/ceo_dashboard.html',{})
+        order_count_total =Order.objects.all().count()
+        invoice_count_total =Order.objects.filter(adminstatus=1).count()
+        paid_count_total =Order.objects.filter(adminstatus=4).count()
+        all_customers =User.objects.filter(is_customer=True).exclude(is_superuser=True)
+        order_list = Order.objects.all().order_by('-created_at')[:10]
+
+        data = {
+        'order_count_total':order_count_total,
+        'invoice_count_total':invoice_count_total,
+        'paid_count_total':paid_count_total,
+        'all_customers':all_customers,
+        'order_list':order_list
+        }
+        return render(request,'customer/ceo_dashboard.html',context=data)
     else:
         return redirect('/')
     
@@ -160,6 +181,11 @@ def customer_loginView(request):
             auth.login(request, userlog)
             if request.user.is_authenticated and request.user.is_admin:
                 return redirect('/super_admin_dashboard')
+            
+        if userlog is not None:
+            auth.login(request, userlog)
+            if request.user.is_authenticated and request.user.is_cashier:
+                return redirect('/cashier_dashboard')
     else:
         return redirect('/')  
     

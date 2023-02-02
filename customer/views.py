@@ -229,7 +229,7 @@ def delete_chat_messageView(request,id):
 
 @login_required(login_url='/')  
 def message_detailView(request,id):
-    if request.user.is_authenticated  and request.user.is_customer:
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_ceo:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
         message_details = Promotion.objects.filter(customer=customer_instance,id=id)
@@ -282,6 +282,7 @@ def my_invoice_detailView(request,order_id):
         order_status=Order.objects.values_list('status',flat=True).get(orderid=order_id)
 
         if order_details:
+            
             data ={
                 'order_details':order_details,
                 'incl':incl,

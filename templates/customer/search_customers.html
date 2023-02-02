@@ -1,0 +1,119 @@
+
+{% extends "customer/core_m.html" %}
+{% block title %} Search Customers  | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+     <!-- .app-main -->
+     <main class="app-main">
+        <div class="card-body border-top">
+                  <!-- .card-body -->
+                  <div class="card-body">
+                    <!-- .form -->
+                    <form action="/customer_search" method="POST">
+                    {% csrf_token %}
+                      <!-- .fieldset -->
+                      <fieldset>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <legend class="text-warning">{{message}}</legend> <!-- grid row -->
+                        {% endfor %}
+                        {% else %}
+                        <legend>SEARCH CUSTOMERS BASE ON CITY</legend> <!-- grid row -->
+                        {% endif %}
+                        <div class="row">
+                          <!-- grid column -->
+                          <div class="col-md-12">
+                            <!-- .form-group -->
+                            <div class="form-group">
+                              <select class="custom-select" name="city" id="sel1" required>
+                                <option value="" selected disabled> Choose city </option>
+                                <option value="Pretoria"> Pretoria </option>
+                                <option value="Johannesburg">Johannesburg</option>
+                                <option value="Port Elizabeth">Port Elizabeth</option>
+                                <option value="Pretoria West">Pretoria West</option>
+                                <option value="Pretoria CBD">Pretoria CBD</option>
+                              </select>
+                            </div><!-- /.form-group -->
+                          </div><!-- /grid column -->
+                        </div><!-- /grid row -->
+                      </fieldset><!-- /.fieldset -->
+                      <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+                    </div>
+                    </form><!-- /.form -->
+                   
+{% if customer_list %}
+    <!-- .page -->
+    <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <p  aria-expanded="false">
+                 CUSTOMER DETAILS <strong class="text-danger"></strong>
+                </p> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+            </div><!-- /.card-header -->
+            <div class="table-responsive">
+                <!-- .table -->
+                <table class="table">
+                  <!-- thead -->
+                  <thead>
+                    <tr>
+                      <th style="min-width:256px"> Business Name </th>
+                      <th></th>
+                      <th> Business Address </th>
+                      <th> City </th>
+                      <th> Cell Phone </th>
+                      <th> Date Join </th>
+                      <th>Status</th>
+                    </tr>
+                  </thead><!-- /thead -->
+                  <!-- tbody -->
+                  <tbody>
+                    <!-- tr -->
+                    {% for customer_list in customer_list %}
+                    <tr>
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <a href="#" class="tile bg-pink text-white mr-2">SP</a>
+                          <div class="media-body">
+                            <a href="#">{{customer_list.shopname}}</a> <small class="d-block text-muted">Invoice #9463</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle"></td>
+                      <td class="align-middle"> {{customer_list.shopaddress}} </td>
+                      <td class="align-middle"> {{customer_list.city}} </td>
+                      <td class="align-middle"> {{customer_list.username}} </td>
+                      <td class="align-middle">
+                        <span class="badge badge-success">{{customer_list.date_joined}}</span>
+                      </td>
+                      <td class="align-middle text-left">
+                          <span class="badge badge-success">Active</span>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- /tr -->
+                    <!-- tr -->
+                  </tbody><!-- /tbody -->
+                </table><!-- /.table -->
+              </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+        <!-- .card-body -->
+
+{% else %}
+
+
+{% endif %}
+</div><!-- /.card-body -->
+    </main><!-- /.app-main -->
+{% endblock %}

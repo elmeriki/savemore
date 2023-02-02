@@ -133,7 +133,7 @@ def save_daily_SalesView(request):
 def save_daily_expensesView(request):
     if request.user.is_authenticated and request.method =="POST" and request.POST['branch'] and request.POST['title']  and request.POST['amount']  and request.POST['message'] and request.user.is_ceo or request.user.is_admin:
         branch = request.POST['branch']
-        title = request.POST['amount']
+        title = request.POST['title']
         amount = float(request.POST['amount'])
         message = request.POST['message']
         save_daily_expenses=Expenses(customer=request.user,branch=branch,amount=amount,title=title,message=message)
@@ -247,5 +247,139 @@ def update_order_statusView(request):
 @login_required(login_url='/')  
 def chat_roomView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
-        return render(request,'customer/chat_room.html')
+        customer_chat_message =Chatmessage.objects.filter(status=0).order_by('-created_at')
+        if customer_chat_message:
+            data = {
+                'customer_chat_message':customer_chat_message
+            }
+        return render(request,'customer/chat_room.html',context=data)
+    else:
+        return redirect('/')
+
+@login_required(login_url='/')  
+def admin_chat_replyView(request,chatid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        get_single_chat_message = Chatmessage.objects.filter(id=chatid,status=0)
+        for get_single_chat_message  in get_single_chat_message:
+            data= {
+            'message':get_single_chat_message.message,
+            'chatid':get_single_chat_message.id
+            }
+        return render(request,'customer/admin_message_reply.html',context=data)
+    else:
+        return redirect('/')
+
+@login_required(login_url='/')  
+def admin_response_messageView(request,chatid):
+    if request.user.is_authenticated and request.method == "POST" and request.user.is_ceo or request.user.is_admin:
+        message = request.POST['message']
+        Chatmessage.objects.filter(id=chatid).update(response=message)
+        update_status = Chatmessage.objects.filter(id=chatid).update(status=1)
+        if update_status:
+            return redirect('/chat_room')
+    else:
+        return redirect('/')
     
+@login_required(login_url='/')  
+def expenses_filterView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        return render(request,'customer/expenses_filter.html')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def dialysales_filterView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        fetch_branches = Sales.objects.filter()
+        data = {
+        'fetch_branches':fetch_branches
+        }
+        return render(request,'customer/daily_sales_filter.html',context=data)
+    else:
+        return redirect('/')
+    
+
+@login_required(login_url='/')  
+def fetch_daily_SalesView(request):
+    if request.user.is_authenticated and request.method=="POST" and request.user.is_ceo or request.user.is_admin:
+        branchname = request.POST['branch']
+        startdate = request.POST['startdate']
+        enddate = request.POST['enddate']
+        fetch_sales = Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate).filter(branch=branchname)
+        total_sales = Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate).filter(branch=branchname).aggregate(Sum('amount'))['amount__sum']
+        all_Sales_from_branches =Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate)
+        total_Sales_from_allbranches = Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate).aggregate(Sum('amount'))['amount__sum']
+        
+        if request.POST['branch'] == "allbranches":
+            data={
+            'fetch_sales':all_Sales_from_branches,
+            'total_sales':total_Sales_from_allbranches
+            }
+            return render(request,'customer/daily_sales_filter.html',context=data)
+        
+        if not fetch_sales or all_Sales_from_branches:
+            messages.info(request,'No Data Found')
+            return redirect('/dialysales_filter')
+        
+        elif fetch_sales:
+            data = {
+            'fetch_sales':fetch_sales,
+            'total_sales':total_sales
+            }
+            return render(request,'customer/daily_sales_filter.html',context=data)
+    else:
+        return redirect('/')
+    
+    
+
+@login_required(login_url='/')  
+def fetch_daily_expensesView(request):
+    if request.user.is_authenticated and request.method=="POST" and request.user.is_ceo or request.user.is_admin:
+        branchname = request.POST['branch']
+        startdate = request.POST['startdate']
+        enddate = request.POST['enddate']
+        fetch_expenses = Expenses.objects.filter(created_at__gte=startdate,created_at__lt=enddate).filter(branch=branchname)
+        total_expenses = Expenses.objects.filter(created_at__gte=startdate,created_at__lt=enddate).filter(branch=branchname).aggregate(Sum('amount'))['amount__sum']
+        all_expenses_from_branches =Expenses.objects.filter(created_at__gte=startdate,created_at__lt=enddate)
+        total_expenses_from_allbranches = Expenses.objects.filter(created_at__gte=startdate,created_at__lt=enddate).aggregate(Sum('amount'))['amount__sum']
+        
+        if request.POST['branch'] == "allbranches":
+            data={
+            'fetch_sales':all_expenses_from_branches,
+            'total_sales':total_expenses_from_allbranches
+            }
+            return render(request,'customer/expenses_filter.html',context=data)
+        
+        if not fetch_expenses :
+            messages.info(request,'No Data Found')
+            return redirect('/expenses_filter')
+        
+        elif fetch_expenses:
+            data = {
+            'fetch_expenses':fetch_expenses,
+            'total_expenses':total_expenses
+            }
+            return render(request,'customer/expenses_filter.html',context=data)
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def search_customersView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        return render(request,'customer/search_customers.html')
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def customer_searchView(request):
+    if request.user.is_authenticated and request.method=="POST" and request.user.is_ceo or request.user.is_admin:
+        city = request.POST['city']
+        customer_list = User.objects.filter(is_customer=True,city=city)
+        data = {
+            'customer_list':customer_list
+        }
+        return render(request,'customer/search_customers.html',context=data)
+    else:
+        return redirect('/')

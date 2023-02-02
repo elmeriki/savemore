@@ -71,7 +71,7 @@
      
 
 
-
+{% for eachmessage in customer_chat_message %}
               <!-- .card -->
               <div class="card mb-2">
                 <!-- .card-body -->
@@ -80,14 +80,14 @@
                   <div class="row align-items-center">
                     <!-- grid column -->
                     <div class="col-auto">
-                      <a href="#" class="user-avatar user-avatar-lg"><img src="{% static 'assets/images/avatars/uifaces13.jpg' %}" alt=""> <span class="avatar-badge busy" title="busy"></span></a>
+                      <a href="/admin_chat_reply/{{eachmessage.id}}" class="user-avatar user-avatar-lg"><img src="{% static 'assets/images/avatars/team4.jpg' %}" alt=""> <span class="avatar-badge busy" title="busy"></span></a>
                     </div><!-- /grid column -->
                     <!-- grid column -->
                     <div class="col">
                       <h3 class="card-title">
-                        <a href="#">Bryan Hayes</a> <small class="text-muted">@bhayes</small>
+                        <a href="/admin_chat_reply/{{eachmessage.id}}">{{eachmessage.customer.first_name}}</a> <small class="text-muted">{{eachmessage.created_at | timesince}}</small>
                       </h3>
-                      <h6 class="card-subtitle text-muted"> Computer Systems Analyst </h6>
+                      <h6 class="card-subtitle text-muted"> {{eachmessage.message}} </h6>
                     </div><!-- /grid column -->
                     <!-- /grid column -->
                     <div class="col-auto">
@@ -104,7 +104,7 @@
                 </div><!-- /.card-body -->
               </div><!-- /.card -->
 
-
+{% endfor %}
 
             </div><!-- /.section-block -->
           </div><!-- /.page-section -->

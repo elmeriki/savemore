@@ -63,9 +63,7 @@
                     <a href="/stock" class="menu-link"><span class="menu-icon far fa-file"></span> <span class="menu-text">Load Products</span> <span class="badge badge-warning">New</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
                   <!-- .menu-item -->
-                  <li class="menu-item has-child">
-                    <a href="/invoice" class="menu-link"><span class="menu-icon oi oi-wrench"></span> <span class="menu-text">New Order</span></a> <!-- child menu -->
-                  </li><!-- /.menu-item -->
+            
                   <!-- .menu-item -->
                   <li class="menu-item has-child">
                     <a href="/list_customers" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Customer</span></a> <!-- child menu -->
@@ -76,14 +74,19 @@
                   </li><!-- /.menu-item -->
                   <!-- .menu-item -->
                   <li class="menu-item">
-                    <a href="#" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Promotion</span></a>
+                    <a href="/customer_promo_message" class="menu-link"><span class="menu-icon fas fa-rocket"></span> <span class="menu-text">Promotion</span></a>
                   </li><!-- /.menu-item -->
                   <!-- .menu-header -->
                   <li class="menu-header">OTHERS </li><!-- /.menu-header -->
                   <!-- .menu-item -->
                   <li class="menu-item has-child">
-                    <a href="#" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Settings</span></a> <!-- child menu -->
+                    <a href="/search_customers" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Search Customers</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
+
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Complains</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+
                   <li class="menu-item has-child">
                   <a href="/approve_account" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Aprove Account</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
@@ -91,11 +94,11 @@
 
                   <!-- .menu-item -->
                   <li class="menu-item has-child">
-                    <a href="#" class="menu-link"><span class="menu-icon oi oi-bar-chart"></span> <span class="menu-text">Coming Soon</span></a> <!-- child menu -->
+                    <a href="/expenses_filter" class="menu-link"><span class="menu-icon oi oi-bar-chart"></span> <span class="menu-text">Expenses</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
                   <!-- .menu-item -->
                   <li class="menu-item has-child">
-                    <a href="#" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Coming Soon</span></a> <!-- child menu -->
+                    <a href="/dialysales_filter" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Daily Sales</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
                 </ul><!-- /.menu -->
               </nav><!-- /.stacked-menu -->
@@ -149,6 +152,48 @@
                   <li class="menu-item has-child">
                     <a href="/chat_room" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">Support Room</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
+                </ul><!-- /.menu -->
+              </nav><!-- /.stacked-menu -->
+            </div><!-- /.aside-menu -->
+
+
+            {% elif request.user.is_activation and request.user.is_cashier %}
+            <!-- .aside-menu -->
+            <div class="aside-menu overflow-hidden">
+              <!-- .stacked-menu -->
+              <nav id="stacked-menu" class="stacked-menu">
+                <!-- .menu -->
+                <ul class="menu">
+                  <!-- .menu-item -->
+                  <li class="menu-item has-active">
+                    <a href="/cashier_dashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+                  </li><!-- /.menu-item -->
+          
+                
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Add Qadadic</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+          
+                  <!-- .menu-item -->
+                  <li class="menu-item">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Add Notes</span></a>
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-header -->
+                  <li class="menu-header">OTHERS </li><!-- /.menu-header -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Add Swipes</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+    
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Add STS</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+                  <!-- .menu-item -->
+                  <li class="menu-item has-child">
+                    <a href="#" class="menu-link"><span class="menu-icon oi oi-dollar"></span> <span class="menu-text">Add Other Papers</span> <span class="badge badge-subtle badge-success">+4</span></a> <!-- child menu -->
+                  </li><!-- /.menu-item -->
+          
                 </ul><!-- /.menu -->
               </nav><!-- /.stacked-menu -->
             </div><!-- /.aside-menu -->
