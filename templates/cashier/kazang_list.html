@@ -1,0 +1,91 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Kazang | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <p >
+                KAZANG LIST 
+                </p> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a href="/confirm_creating_order/Kazang" class="btn btn-primary ml-auto">START NEW KAZANG</a>
+            </div><!-- /.card-header -->
+            <div class="table-responsive">
+                <!-- .table -->
+                <table class="table">
+                  <!-- thead -->
+                  <thead>
+                    <tr>
+                      <th style="min-width:256px"> KAZANG NO </th>
+                      <th> REVIEWS</th>
+                      <th> TOTAL</th>
+                      <th> ACTUAL COUNT</th>
+                      <th> DATES </th>
+                      <th> ACTION </th>
+                    </tr>
+                  </thead><!-- /thead -->
+                  <!-- tbody -->
+                  <tbody>
+                    <!-- tr -->
+                    {% for kazang_values_list in kazang_values_list %}
+                    <tr>
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <a href="/add_kazang/{{kazang_values_list.cashierorid}}">{{kazang_values_list.cashierorid}}</a> <small class="d-block text-muted"></small>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle"> 
+                        {% if kazang_values_list.adminstatus == "0" %} 
+                        <strong>Pending</strong>
+                      {% else %}
+                      <span>Success</span>
+                      {% endif %}                     
+      
+                      <td class="align-middle"> 
+                              <span class="badge badge-success">ZAR{{kazang_values_list.amount}}</span>
+                           </td>
+                        
+                           <td class="align-middle"> 
+                            <span class="badge badge-success">ZAR{{kazang_values_list.actualamount}}</span>
+                        </td>
+                      
+                      <td class="align-middle"> 
+                              <span >{{kazang_values_list.created_at | date}} </span>
+                   </td>
+                      </td>
+                        <td class="align-middle text-truncate">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <a href="/add_kazang/{{kazang_values_list.cashierorid}}">{% if kazang_values_list.adminstatus == "0" %} Process {% else %} View {% endif %}</a> <small class="d-block text-muted"></small>
+                            </div>
+                          </div>
+             </td>
+                </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- /tr -->
+                    <!-- tr -->
+                  </tbody><!-- /tbody -->
+                </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

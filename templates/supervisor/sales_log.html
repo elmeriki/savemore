@@ -1,0 +1,73 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Processed Sales | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+<main class="app-main">
+  <!-- .wrapper -->
+  <div class="wrapper">
+    <!-- .page -->
+    <div class="page">
+      <!-- .page-inner -->
+      <div class="page-inner">
+        <!-- .page-title-bar -->
+        <header class="page-title-bar">
+          <div class="d-flex justify-content-between">
+            {% if messages %}
+            {% for message in messages %}
+            <h1 class="page-title"> {{message}} </h1>
+            {% endfor %}
+            {% else %}
+            <h1 class="page-title"> SUMMARY REPORT </h1>
+            {% endif %}
+            <div class="btn-toolbar">
+              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
+            </div>
+          </div>
+        </header><!-- /.page-title-bar -->
+
+        <!-- .page-section -->
+        <div class="page-section">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header">
+            <!-- .card-body -->
+            <div class="card-body">
+              <!-- .table -->
+              <table id="invoicesTable" class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width: 180px"> GRAND TOTAL (QADADIC,STS,NOTES,PAPERS,SWIPES,KAZANG)</th>
+                    <th>SALES TOTAL</th>
+                    <th>DATE</th>
+                    <th>COMMENT</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- create empty row to passing html validator -->
+                  {% for sales_log in sales_log %}
+                  <tr>
+                    <td>R {{sales_log.totalpertype}}.00</td>
+                    <td>R {{sales_log.grandtotal}}.00</td>
+                    <td>{{sales_log.created_at}}</td>
+                    <td>{{sales_log.comment}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
+        </div><!-- /.page-section -->
+
+      </div><!-- /.page-inner -->
+    </div><!-- /.page -->
+  </div><!-- /.wrapper -->
+</main><!-- /.app-main -->
+</div><!-- /.app -->
+
+
+{% endblock %}

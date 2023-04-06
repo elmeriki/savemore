@@ -13,9 +13,9 @@
             <div class="card-header d-flex">
               <!-- .dropdown -->
               <div class="dropdown">
-                <button type="button" class="btn btn-secondary" aria-expanded="false">
+                <p>
                 CUSTOMER ORDER LIST 
-              </button> <!-- .dropdown-menu -->
+                </p> <!-- .dropdown-menu -->
                 <div class="dropdown-menu stop-propagation">
                   <div class="dropdown-arrow"></div>
                   <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
@@ -30,11 +30,12 @@
                 <!-- thead -->
                 <thead>
                   <tr>
-                    <th style="min-width:256px"> Order ID </th>
-                    <th> Order Payment </th>
-                    <th> Dates</th>
-                    <th> Order Status </th>
-                    <th> Action </th>
+                    <th style="min-width:256px"> ORDER ID </th>
+                    <th> ORDER PAYMENT</th>
+                    <th> INVOICE DATE </th>
+                    <th> ORDER STATUS  </th>
+                    <th> ACTION </th>
+                    <th> MORE </th>
                   </tr>
                 </thead><!-- /thead -->
                 <!-- tbody -->
@@ -46,7 +47,7 @@
                       <div class="media align-items-center">
                         <a href="/admin_order_detail/{{order_list.orderid}}" class="tile bg-pink text-white mr-2">SP</a>
                         <div class="media-body">
-                          <a href="/admin_order_detail/{{order_list.orderid}}">{{order_list.orderid}}</a> <small class="d-block text-muted">{{all_expenses.message}}</small>
+                          <a href="/admin_order_detail/{{order_list.orderid}}">{{order_list.orderid}}</a><small class="d-block text-muted">{{all_expenses.message}}</small>
                         </div>
                       </div>
                     </td>
@@ -60,7 +61,7 @@
                         </td>
                     {% endif %}
 
-                    <td class="align-middle"> {{order_list.created_at | timesince}} ago </td>
+                    <td class="align-middle"> {{order_list.created_at.date}}</td>
                     
                     {% if order_list.adminstatus == "0" %}
                         <td class="align-middle"> 
@@ -91,7 +92,11 @@
                           </a>
                             </td>
                     </td>
-
+                    <td class="align-middle">
+                      <a href="/admin_edith_order_detail/{{order_list.orderid}}">
+                        <span class="btn btn-warning">Edith</span>
+                      </a>
+                        </td>
                   </tr>
                   {% endfor %}
                   <!-- /tr -->

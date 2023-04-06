@@ -13,9 +13,9 @@
             <div class="card-header d-flex">
               <!-- .dropdown -->
               <div class="dropdown">
-                <button type="button" class="btn btn-secondary"  aria-expanded="false">
+                <p>
                  ORDER INVOICES
-                </button> <!-- .dropdown-menu -->
+                </p> <!-- .dropdown-menu -->
               
               </div><!-- /.dropdown -->
               {% if reques.user.is_admin %}
@@ -35,12 +35,10 @@
                 <!-- thead -->
                 <thead>
                   <tr>
-                    <th style="min-width:256px">Description</th>
-                    <th> Incl Price </th>
-                    <th> Excl Price </th>
-                    <th> Incl Total </th>
-                    <th> Excl Total </th>
-                    <th> Quantity</th>
+                    <th style="min-width:256px">Product Desc</th>
+                    <th> Total Quantity </th>
+                    <th> Total Price Incl</th>
+                    <th> Total Price Incl</th>
                   </tr>
                 </thead><!-- /thead -->
                 <!-- tbody -->
@@ -56,16 +54,13 @@
                         </div>
                       </div>
                     </td>
-            
+                    <td class="align-left"><span>{{each_order_details.quantity}}</span></td>
                     <td class="align-middle"><span>ZAR {{each_order_details.incl}}.00</span></td>
 
-                    <td class="align-middle"><span>ZAR {{each_order_details.excl}}.00</span></td>
 
                     <td class="align-middle"><span>ZAR {{each_order_details.incltotal}}.00</span></td>
 
-                    <td class="align-middle"><span>ZAR {{each_order_details.excltotal}}.00</span></td>
                     
-                    <td class="align-left"><span>{{each_order_details.quantity}}</span></td>
                    
                   </tr>
                   {% endfor %}
@@ -75,16 +70,14 @@
                 </tbody><!-- /tbody -->
               </table><!-- /.table -->
             </div><!-- /.table-responsive -->
-            <br><br>
+            
             <div class="table-responsive">
                 <!-- .table -->
                 <table class="table">
                   <!-- thead -->
                   <thead>
                     <tr>
-                      <th style="min-width:200px">INVOICE NOTICE </th>
-                      <th> INCL TOTAL  </th>
-                      <th> EXCL TOTAL   </th>
+                      <th style="min-width:200px">GRAND TOTAL INCL: ZAR {{incl}}</th>
                       
                     </tr>
                   </thead><!-- /thead -->
@@ -94,15 +87,9 @@
 
                     <tr>
                 
-                      <td class="align-middle"><span><strong>GRAND TOTAL </strong></span>
-                    </td>
-  
-                      <td class="align-middle">
-                        <span><strong>ZAR {{incl}}</strong></span>
-                    </td>
-                      <td class="align-middle">
-                        <span><strong> ZAR {{excl}}</strong></span>
-                      </td>
+                      {% comment %} <td class="align-middle"><span><strong>GRAND TOTAL </strong></span>
+                    </td> {% endcomment %}
+
                       
                       
                     </tr>

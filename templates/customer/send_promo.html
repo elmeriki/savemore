@@ -7,25 +7,25 @@
     <!-- .wrapper -->
     <div class="wrapper">
       <!-- .page -->
-      <div class="page container">
+      <div class="page container-fluid">
         <!-- .page-navs -->
-        <br><br>
+        <br>
             <form action="/send_to_all_customer_promo" method="POST">
             {% csrf_token %}
                 <fieldset>
                   <div class="form-group">
-                    <label for="tf1">Promo Title</label> 
+                    <label for="tf1">Message title</label> 
                     <input type="text" class="form-control" name="title" id="tf1" aria-describedby="tf1Help" required placeholder="Summer Sales"> 
                   </div>
                   <!-- .form-group -->
                   <div class="form-group">
-                    <label for="tf1">Sales Slogan</label> 
+                    <label for="tf1">Promo slogan</label> 
                     <input type="text" class="form-control" id="tf1" name="slogan" aria-describedby="tf1Help" required placeholder="Valid for 10 days"> 
                   </div><!-- /.form-group -->
        
                   <!-- .form-group -->
                   <div class="form-group">
-                    <label for="tf6">Promo Message</label>
+                    <label for="tf6">Promo message</label>
                     <textarea class="form-control" name="message" placeholder="Promotional message" required id="tf6" rows="3"></textarea>
                   </div><!-- /.form-group -->
 

@@ -24,27 +24,32 @@
           <!-- .form-group -->
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" name="businessname" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Business Name/Shop Name</label>
+              <input type="text" name="businessname" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Business name</label>
             </div>
           </div><!-- /.form-group -->
 
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" name="city" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Enter City</label>
+              <input type="text" name="city" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Enter city</label>
+            </div>
+          </div><!-- /.form-group -->
+
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="text" name="subburb" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Enter subburb</label>
+            </div>
+          </div><!-- /.form-group -->
+
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="text" name="businessaddress" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Shop address</label>
             </div>
           </div><!-- /.form-group -->
 
 
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" name="businessaddress" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Shop Address</label>
-            </div>
-          </div><!-- /.form-group -->
-
-
-          <div class="form-group">
-            <div class="form-label-group">
-              <input type="text" name="fullnames" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Full Names</label>
+              <input type="text" name="fullnames" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Full names</label>
             </div>
           </div><!-- /.form-group -->
 
@@ -52,7 +57,7 @@
 
           <div class="form-group">
             <div class="form-label-group">
-              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Email Address</label>
+              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus=""> <label for="inputEmail">Email address</label>
             </div>
           </div><!-- /.form-group -->
 
@@ -65,7 +70,7 @@
 
           <div class="form-group">
             <div class="form-label-group">
-              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required=""> <label for="inputPassword">5 Digi PIN</label>
+              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required=""> <label for="inputPassword">5 digit PIN</label>
             </div>
           </div><!-- /.form-group -->
           <!-- .form-group -->
@@ -75,13 +80,13 @@
           <!-- .form-group -->
           <div class="form-group text-center">
             <div class="custom-control custom-control-inline custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="newsletter"> <label class="custom-control-label" for="newsletter">Accept terms and conditions</label>
+              <input type="checkbox" class="custom-control-input" id="newsletter"> <label class="custom-control-label" for="newsletter">Acept terms & conditions</label>
             </div>
           </div><!-- /.form-group -->
           <!-- recovery links -->
-          <p class="text-center text-muted mb-0">By clicking you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>. </p><!-- /recovery links -->
+          {% comment %} <p class="text-center text-muted mb-0">By clicking T&Cs you agree to the <a href="#">Terms of use</a> </p> {% endcomment %}
         </form><!-- /.auth-form -->
         <!-- copyright -->
-        <footer class="auth-footer"> © 2023 SaveMore Groups All Rights Reserved. </footer>
+        <footer class="auth-footer"> ©2023 SaveMore Groups All Rights Reserved. </footer>
       </main>
 {% endblock %}

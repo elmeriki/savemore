@@ -31,30 +31,30 @@
                         <!-- metric column -->
                         <div class="col">
                           <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Processed Order </h2>
+                          <a href="#" class="metric metric-bordered bg-primary align-items-center">
+                            <h2 class="metric-label text-white"> Processed Order </h2>
                             <p class="metric-value h3">
-                              <sub><i class="oi oi-people"></i></sub> <span class="value">{{order_count_total}}</span>
+                              <sub><i class="oi oi-people"></i></sub> <span class="value text-white">{{order_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
                         <!-- metric column -->
                         <div class="col">
                           <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Completed Order </h2>
+                          <a href="#" class="metric bg-success metric-bordered align-items-center">
+                            <h2 class="metric-label text-white"> Completed Order </h2>
                             <p class="metric-value h3">
-                              <sub><i class="oi oi-dollar"></i></sub> <span class="value">{{paid_count_total}}</span>
+                              <sub><i class="oi oi-dollar"></i></sub> <span class="value text-white">{{paid_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
                         <!-- metric column -->
                         <div class="col">
                           <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Paid Invoices </h2>
+                          <a href="#" class="metric bg-danger metric-bordered align-items-center">
+                            <h2 class="metric-label text-white"> Paid Invoices </h2>
                             <p class="metric-value h3">
-                              <sub><i class="fa fa-tasks"></i></sub> <span class="value">{{paid_count_total}}</span>
+                              <sub><i class="fa fa-tasks"></i></sub> <span class="value text-white">{{paid_count_total}}</span>
                             </p>
                           </a> <!-- /.metric -->
                         </div><!-- /metric column -->
@@ -62,12 +62,12 @@
                     </div><!-- metric column -->
                     <div class="col-lg-3">
                       <!-- .metric -->
-                      <a href="#" class="metric metric-bordered">
+                      <a href="#" class="metric bg-primary metric-bordered">
                         <div class="metric-badge">
-                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> PENDING PAYMENT</span>
+                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record text-white pulse mr-1"></span> PENDING PAYMENT</span>
                         </div>
                         <p class="metric-value h3">
-                          <sub><i class="oi oi-timer"></i></sub> <span class="value">{{invoice_count_total}}</span>
+                          <sub><i class="oi oi-timer"></i></sub> <span class="value text-white">{{invoice_count_total}}</span>
                         </p>
                       </a> <!-- /.metric -->
                     </div><!-- /metric column -->
@@ -85,7 +85,7 @@
                       <div class="card-header d-flex">
                         <!-- .dropdown -->
                         <div class="dropdown">
-                          <h3 id="client-tasks-tab" class="card-title"> Order Status </h3>
+                          <h3 id="client-tasks-tab" class="card-title"> ORDER STATUS </h3>
                           <div class="dropdown-menu stop-propagation">
                             <div class="dropdown-arrow"></div>
                             <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6>
@@ -99,9 +99,9 @@
                           <!-- thead -->
                           <thead>
                             <tr>
-                              <th style="min-width:256px"> Order ID </th>
-                              <th> Date </th>
-                              <th> Status </th>
+                              <th style="min-width:256px"> ORDER ID </th>
+                              <th> ORDER DATE </th>
+                              <th> ORDEE STATUS </th>
                             </tr>
                           </thead><!-- /thead -->
                           <!-- tbody -->
@@ -113,11 +113,11 @@
                               <td class="align-middle text-truncate">
                                 <div class="media align-items-center">
                                   <div class="media-body">
-                                    <a href="/order_detail/{{eachcustomer_orders.orderid}}">{{eachcustomer_orders.orderid}}</a> <small class="d-block text-muted">Invoice #{{eachcustomer_orders.orderid}}</small>
+                                    <a href="/admin_order_detail/{{eachcustomer_orders.orderid}}">{{eachcustomer_orders.orderid}}</a> <small class="d-block text-muted">Invoice #{{eachcustomer_orders.orderid}}</small>
                                   </div>
                                 </div>
                               </td>
-                              <td class="align-middle">{{eachcustomer_orders.created_at | timesince}}</td>
+                              <td class="align-middle">{{eachcustomer_orders.created_at.date}}</td>
                               {% if eachcustomer_orders.adminstatus == "0" %}
                               <td class="align-middle"> 
                                   <span class="badge badge-warning">PENDING</span>
@@ -156,7 +156,7 @@
                       <div class="card-header d-flex">
                         <!-- .dropdown -->
                         <div class="dropdown">
-                          <h3 id="client-tasks-tab" class="card-title">Promo </h3>
+                          <h3 id="client-tasks-tab" class="card-title">NEW CUSTOMERS </h3>
                         </div><!-- /.dropdown -->
                       </div><!-- /.card-header -->
                       <!-- .table-responsive -->
@@ -166,21 +166,25 @@
                           <!-- thead -->
                           <thead>
                             <tr>
-                              <th> Title </th>
-                              <th> Message </th>
-                              <th> Date </th>
+                              <th> BUSINESS NAME </th>
+                              <th> ADDRESS </th>
+                              <th> DATE JOINED </th>
                             </tr>
                           </thead><!-- /thead -->
                           <!-- tbody -->
                           <tbody>
                             <!-- tr -->
-                            {% for eachpromo_messages in promo_messages %}
+                            {% for eachcustomer_list in customer_list %}
+                            {% ifchanged %}
                             <tr>
-                              <td class="align-middle"><a href="/message_detail/{{eachpromo_messages.id}}">{{eachpromo_messages.title | truncatechars:18}}</a></td>
-                              <td class="align-middle"> {{eachpromo_messages.message | truncatechars:55}} </td>
-                              <td class="align-middle">{{eachpromo_messages.created_at |timesince }} ago</td>
+                              <td class="align-middle"><a href="#">{{eachcustomer_list.shopname}}</a>
+                              </td>
+
+                              <td class="align-middle"> {{eachcustomer_list.shopaddress}} </td>
+
+                              <td class="align-middle">{{eachcustomer_list.date_joined | timesince}} ago</td>
                             </tr><!-- /tr -->
-                          
+                            {% endifchanged %}
                             {% endfor %}
                             <!-- tr -->
                             <!-- tr -->

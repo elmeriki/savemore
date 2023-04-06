@@ -8,11 +8,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th style="min-width:256px"> Description </th>
-                    <th> Stock Code </th>
-                    <th> Incl</th>
-                    <th> Excl</th>
-                    <th> Action</th>
+                    <th style="min-width:256px"> DESCRIPTION </th>
+                    <th> STOCK CODE </th>
+                    <th> PRICE INCL</th>
+                    <th> ACTION</th>
                   </tr>
                 </thead><!-- /thead -->
                 <!-- tbody -->
@@ -32,13 +31,11 @@
                     <td class="align-middle">{{eachsearch_result.stockcode}}</td>
   
                     <td class="align-middle">
-                      <span class="badge badge-success">ZAR{{eachsearch_result.incl}}.00</span>
+                      <span class="badge badge-danger">ZAR{{eachsearch_result.incl}}.00</span>
   
                     </td>
   
-                    <td class="align-middle">
-                      <span class="badge badge-danger">ZAR{{eachsearch_result.excl}}.00</span>
-                    </td>
+          
   
                      </td>
                     <td class="align-middle">
@@ -47,7 +44,7 @@
                     hx-post="/add_to_cart/{{eachsearch_result.auto_increment_id}}"
                     hx-swap="outerHTML"                    
                     hx-trigger="click"
-                    class="btn btn-success">Add to Cart</button>
+                    class="btn btn-success">Add to cart</button>
                 </td>
                   </tr>
                 {% endfor %}

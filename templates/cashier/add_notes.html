@@ -1,0 +1,123 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Add Notes | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <p >
+                NOTES RECORDS  
+                </p> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a href="/notes_list" class="btn btn-primary ml-auto">Close Note</a>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            {% if admin_status == 0 %}
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Amount </th>
+                    <th> Action </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+
+                  <form action="/save_add_notes/{{id}}" method="POST">
+                    {% csrf_token %}
+                  <tr>
+                    <td class="align-middle"> 
+                      <div class="form-group">
+                        <input type="number" class="form-control" id="tf1" name="amount" aria-describedby="tf1Help" required placeholder="Enter Amount"> 
+                      </div><!-- /.form-group -->
+                    </td>
+              
+                 
+
+                 <td class="align-middle"> 
+                  <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+                </div>
+                </td>
+
+                  </tr>
+                </form>
+
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+{% else %}
+
+
+{% endif %}
+<br><br>
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px">AMOUNT </th>
+                    <th> DATE </th>
+                    {% if admin_status == 0 %}
+                    <th> ACTIONS </th>
+                    {% else %}
+                    {% endif %}
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for notes_list in notes_list %}
+                  <tr>
+       
+                    <td class="align-middle"> 
+                            <span class="badge badge-success">ZAR{{notes_list.amount}}.00</span>
+                         </td>
+
+                    <td class="align-middle"> 
+                            <span >{{notes_list.created_at | date}} </span>
+                 </td>
+                    </td>
+                    {% if admin_status == 0 %}
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <a href="/delete_notes/{{id}}/{{notes_list.id}}" class="text-primary" >Delete</a>  |  <a href="/update_notes/{{id}}/{{notes_list.id}}" class="text-danger">Eith</a> <small class="d-block text-muted"></small>
+                          </div>
+                        </div>
+                      </td>
+                      {% else %}
+
+                      {% endif %}
+                    </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

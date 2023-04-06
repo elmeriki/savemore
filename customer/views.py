@@ -54,7 +54,6 @@ def track_my_orderView(request):
                 messages.info(request,'Incorrect Order Number')
                 return redirect('/track_order')
             else:
-                
                 data = {
                     'order_status':order_status
                 }
@@ -229,15 +228,15 @@ def delete_chat_messageView(request,id):
 
 @login_required(login_url='/')  
 def message_detailView(request,id):
-    if request.user.is_authenticated  and request.user.is_customer or request.user.is_ceo:
+    if request.user.is_authenticated  and request.user.is_customer or request.user.is_ceo or request.user.is_admin:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        message_details = Promotion.objects.filter(customer=customer_instance,id=id)
+        message_details = Promotion.objects.filter(id=id)
         if message_details:
-            data = {
+            messagedata = {
                 'message_details':message_details
             }
-        return render(request,'customer/message_details.html',context=data)
+        return render(request,'customer/message_details.html',context=messagedata)
     else:
         return render(request,'customer/message_details.html')
     

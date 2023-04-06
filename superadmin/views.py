@@ -39,7 +39,7 @@ def approve_accountView(request):
 @login_required(login_url='/')  
 def promotionView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin or request.user.is_customer:
-        promo_messages = Promotion.objects.filter(status=0)
+        promo_messages = Promotion.objects.filter(status=0).order_by('-created_at')[:6]
         data = {
             'promo_messages':promo_messages
         }
@@ -63,7 +63,7 @@ def send_to_all_customer_promoView(request):
                 customer_instance = User.objects.get(id=each_customer.id)
                 send_single_promo_message = Promotion(customer=customer_instance,title=title,message=message,salestitle=slogan)
                 send_single_promo_message.save()
-                
+               
         messages.info(request,'Promo message sent successfully')
         return redirect('/send_promo')
     else:
@@ -221,6 +221,37 @@ def admin_order_detailView(request,order_id):
     else:
         return redirect('/')
     
+@login_required(login_url='/')  
+def admin_edith_order_detailView(request,order_id):
+    if request.user.is_authenticated and request.user.is_customer or request.user.is_admin:
+        order_details = Myorders.objects.filter(orderid=order_id,status=0)
+        incl = Myorders.objects.filter(orderid=order_id,status__gte=0).aggregate(Sum('incltotal'))['incltotal__sum']
+        excl = Myorders.objects.filter(orderid=order_id,status__gte=0).aggregate(Sum('excltotal'))['excltotal__sum']
+        order_status=Order.objects.values_list('status',flat=True).get(orderid=order_id)
+        if order_details:
+            data ={
+                'order_details':order_details,
+                'incl':incl,
+                'excl':excl,
+                'fetch_order_id':order_id,
+                'order_status':order_status
+            }
+            
+        return render(request,'customer/admin_edith_order.html',context=data)
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def admin_update_order_detailView(request,id,qty,orderid):
+    if request.user.is_authenticated and request.user.is_customer or request.user.is_admin and request.method =="POST" and request.POST['priceincl']:
+        priceincl = int(request.POST['priceincl'])
+        newpriceinc = priceincl * qty 
+        update_inc_unit_price = Myorders.objects.filter(id=id,orderid=orderid).update(incl=priceincl)
+        update_inc_new_total = Myorders.objects.filter(id=id,orderid=orderid).update(incltotal=newpriceinc)
+        return redirect(f'/admin_edith_order_detail/{orderid}')
+    else:
+        return redirect('/')
 
 @login_required(login_url='/')  
 def process_orderView(request,order_id):
@@ -309,7 +340,7 @@ def fetch_daily_SalesView(request):
         total_sales = Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate).filter(branch=branchname).aggregate(Sum('amount'))['amount__sum']
         all_Sales_from_branches =Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate)
         total_Sales_from_allbranches = Sales.objects.filter(created_at__gte=startdate,created_at__lt=enddate).aggregate(Sum('amount'))['amount__sum']
-        
+
         if request.POST['branch'] == "allbranches":
             data={
             'fetch_sales':all_Sales_from_branches,

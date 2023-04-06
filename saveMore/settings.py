@@ -22,7 +22,7 @@ DEBUG = True
 # if DEBUG:
 #     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # During development only
     
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'savemauth.User'
 swappable = 'AUTH_USER_MODEL'
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'superadmin',
     'stock',
     'import_export',
+    'supervisor',
 ]
 
 MIDDLEWARE = [
@@ -159,6 +160,5 @@ EMAIL_HOST = 'mail.srsschools.com'
 EMAIL_HOST_USER ='admin@srsschools.com'
 EMAIL_HOST_PASSWORD ='Fifa@2020'
 
-
-# TIME_ZONE ='Africa/Johanesburg'
-# USE_TZ = True
+TIME_ZONE = 'Africa/Harare'
+USE_TZ =True

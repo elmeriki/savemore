@@ -9,37 +9,11 @@
       <!-- .page -->
       <div class="page">
         <!-- .page-navs -->
-        <nav class="page-navs">
-          <!-- .nav-scroller -->
-          <div class="nav-scroller">
-            <!-- .nav -->
-            <div class="nav nav-tabs">
-              <a class="nav-link active show" data-toggle="tab" href="#tab1">PROMOTIONAL MESSAGE LOG </a> 
-              {% comment %} <a class="nav-link" data-toggle="tab" href="#tab2">Starred</a> 
-              <a class="nav-link" data-toggle="tab" href="#tab3">Trash</a> {% endcomment %}
-            </div><!-- /.nav -->
-          </div><!-- /.nav-scroller -->
-        </nav><!-- /.page-navs -->
-        <!-- .page-inner -->
-        <div class="page-inner">
-          <!-- .page-title-bar -->
-          <header class="page-title-bar">
-            <div class="d-flex justify-content-between">
-              <div class="d-md-inline-block">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                  <!-- .input-group -->
-                </div><!-- /.input-group -->
-              </div>
-              <a href="/send_promo"><button type="button" class="btn btn-success d-none d-sm-inline-block">New Message</button></a>
-            </div><button type="button" class="btn btn-success btn-floated d-block d-sm-none"><span class="fa fa-plus"></span></button>
-          </header><!-- /.page-title-bar -->
-
+        <div class="page-inner container-fluid">
           <!-- .page-section -->
           <div class="page-section">
             <!-- .card -->
             <div class="card">
-
               {% if promo_messages %}
 
               {% for eachmessage  in promo_messages %}

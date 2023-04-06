@@ -14,4 +14,7 @@ urlpatterns = [
     path('admin_dashboard', views.admin_dashboardView, name='admin_dashboardView'),
     path('logout', views.logoutView, name='logoutView'),
     path('super_admin_dashboard', views.super_admin_dashboard, name='super_admin_dashboard'),
+    path('fetch_sales_log', views.fetch_sales_logView, name='fetch_sales_logView'),
+    path('fetch_sales_log_cashier/<str:selected_date>', views.fetch_sales_log_cashierView, name='fetch_sales_log_cashierView'),
+
 ]

@@ -24,58 +24,10 @@
               <div class="page-section">
                 <!-- .section-block -->
                 <div class="section-block">
-                  <!-- metric row -->
-                  <div class="metric-row">
-                    <div class="col-lg-9">
-                      <div class="metric-row metric-flush">
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Processed Order </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="oi oi-people"></i></sub> <span class="value">{{order_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Completed Order </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="oi oi-dollar"></i></sub> <span class="value">{{paid_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                        <!-- metric column -->
-                        <div class="col">
-                          <!-- .metric -->
-                          <a href="#" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Paid Invoices </h2>
-                            <p class="metric-value h3">
-                              <sub><i class="fa fa-tasks"></i></sub> <span class="value">{{paid_count_total}}</span>
-                            </p>
-                          </a> <!-- /.metric -->
-                        </div><!-- /metric column -->
-                      </div>
-                    </div><!-- metric column -->
-                    <div class="col-lg-3">
-                      <!-- .metric -->
-                      <a href="#" class="metric metric-bordered">
-                        <div class="metric-badge">
-                          <span class="badge badge-lg badge-success"><span class="oi oi-media-record pulse mr-1"></span> PENDING PAYMENT</span>
-                        </div>
-                        <p class="metric-value h3">
-                          <sub><i class="oi oi-timer"></i></sub> <span class="value">{{invoice_count_total}}</span>
-                        </p>
-                      </a> <!-- /.metric -->
-                    </div><!-- /metric column -->
-                  </div><!-- /metric row -->
+  
+
                 </div><!-- /.section-block -->
                 <!-- grid row -->
-
-
                 <!-- grid row -->
                 <div class="row">
                   <div class="col-12 col-lg-6 col-xl-6">
@@ -85,7 +37,7 @@
                       <div class="card-header d-flex">
                         <!-- .dropdown -->
                         <div class="dropdown">
-                          <h3 id="client-tasks-tab" class="card-title"> Order Status </h3>
+                          <h3 id="client-tasks-tab" class="card-title">SALES REPORT </h3>
                           <div class="dropdown-menu stop-propagation">
                             <div class="dropdown-arrow"></div>
                             <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6>
@@ -99,47 +51,35 @@
                           <!-- thead -->
                           <thead>
                             <tr>
-                              <th style="min-width:256px"> Order ID </th>
-                              <th> Date </th>
-                              <th> Status </th>
+                              <th style="min-width:256px"> GRAND TOTAL </th>
+                              <th> SALES TOTAL </th>
+                              <th> DATE </th>
+                              <th> ACTION </th>
                             </tr>
                           </thead><!-- /thead -->
                           <!-- tbody -->
                           <tbody>
       
                             <!-- tr -->
-                            {% for eachcustomer_orders in order_list %}
+                            {% for sales_log in sales_log %}
                             <tr>
                               <td class="align-middle text-truncate">
                                 <div class="media align-items-center">
                                   <div class="media-body">
-                                    <a href="#">{{eachcustomer_orders.orderid}}</a> <small class="d-block text-muted">Invoice #{{eachcustomer_orders.orderid}}</small>
+                                    <a href="#">R {{sales_log.totalpertype}}</a> <small class="d-block text-muted">Comment {{sales_log.comment}}</small>
                                   </div>
                                 </div>
                               </td>
-                              <td class="align-middle">{{eachcustomer_orders.created_at | timesince}}</td>
-                              {% if eachcustomer_orders.adminstatus == "0" %}
                               <td class="align-middle"> 
-                                  <span class="badge badge-warning">PENDING</span>
-                                  </td>
-                              {% elif eachcustomer_orders.adminstatus == "1"  %}
-                              <td class="align-middle">
-                                  <span class="badge badge-warning">PROCESSING</span>
-                                  </td>
-                                  {% elif eachcustomer_orders.adminstatus == "2"  %}
-                                  <td class="align-middle">
-                                      <span class="badge badge-warning">PAYMENT CONFIRED</span>
-                                      </td>
-      
-                                      {% elif eachcustomer_orders.adminstatus == "3"  %}
-                                      <td class="align-middle">
-                                          <span class="badge badge-warning">DELIVEYR IN PROGRESS</span>
-                                          </td>
-                                          {% elif eachcustomer_orders.adminstatus == "4"  %}
-                                          <td class="align-middle">
-                                              <span class="badge badge-success">ORDER COMPLETED</span>
-                                              </td>
-                              {% endif %}
+                                  <span class="badge badge-primary">R {{sales_log.grandtotal}}</span>
+                              </td> 
+                         
+                              <td class="align-middle"> 
+                                <span>{{sales_log.created_at}}</span>
+                            </td> 
+                            <td class="align-middle"> 
+                              <span class="badge badge-primary"><a href="#">View</a></span>
+                          </td>            
                             </tr><!-- /tr -->
                             {% endfor %}
                           </tbody><!-- /tbody -->
@@ -156,7 +96,7 @@
                       <div class="card-header d-flex">
                         <!-- .dropdown -->
                         <div class="dropdown">
-                          <h3 id="client-tasks-tab" class="card-title">Customers </h3>
+                          <h3 id="client-tasks-tab" class="card-title">CUSTOMER LISTS </h3>
                         </div><!-- /.dropdown -->
                       </div><!-- /.card-header -->
                       <!-- .table-responsive -->

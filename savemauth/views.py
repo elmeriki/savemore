@@ -20,6 +20,16 @@ from django.core.mail import EmailMultiAlternatives
 from django.views.generic import View
 from savemauth.models import *
 from customer.models import *
+from cashiers.models import *
+import threading
+
+class Emailthread(threading.Thread):
+    def __init__(self,msg):
+        self.msg=msg
+        threading.Thread.__init__(self)
+    def run(self):
+        self.msg.send(fail_silently=False)
+        
 
 def landPageView(request):
     return render(request,'customer/login.html',{})
@@ -38,14 +48,14 @@ def customer_profileView(request):
 def super_admin_dashboard(request):
     if request.user.is_authenticated and request.user.is_admin:
         customer_orders = Order.objects.all()[:5]
-        promo_messages = Promotion.objects.all()[:5]
-        order_list = Order.objects.all()
+        customer_list = User.objects.filter(is_customer=True).order_by('-date_joined')[:10]
+        order_list = Order.objects.all().order_by('-created_at')[:10]
         order_count_total =Order.objects.all().count()
         invoice_count_total =Order.objects.filter(adminstatus=1).count()
         paid_count_total =Order.objects.filter(adminstatus=4).count()
         data = {
         'customer_orders':customer_orders,
-        'promo_messages':promo_messages,
+        'customer_list':customer_list,
         'order_list':order_list,
         'order_count_total':order_count_total,
         'invoice_count_total':invoice_count_total,
@@ -64,18 +74,37 @@ def admin_dashboardView(request):
         invoice_count_total =Order.objects.filter(adminstatus=1).count()
         paid_count_total =Order.objects.filter(adminstatus=4).count()
         all_customers =User.objects.filter(is_customer=True).exclude(is_superuser=True)
-        order_list = Order.objects.all().order_by('-created_at')[:10]
-
+        sales_log=Saleslog.objects.all().order_by('-created_at')[:10]
         data = {
         'order_count_total':order_count_total,
         'invoice_count_total':invoice_count_total,
         'paid_count_total':paid_count_total,
         'all_customers':all_customers,
-        'order_list':order_list
+        'sales_log':sales_log
         }
         return render(request,'customer/ceo_dashboard.html',context=data)
     else:
         return redirect('/')
+
+@login_required(login_url='/')  
+def fetch_sales_logView(request):
+    if request.user.is_authenticated and request.user.is_ceo:
+        sales_log=Saleslog.objects.all().order_by('-created_at')[:10]
+        data = {
+        'sales_log':sales_log
+        }
+        return render(request,'customer/sales_log.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def fetch_sales_log_cashierView(request,selected_date):
+    if request.user.is_authenticated and request.user.is_ceo:
+        cashier_list =CashierOrders.objects.filter(created_at=selected_date)
+        data  = {
+        'cashier_list':cashier_list
+        }
+        return render(request,'customer/sales_fetch_data.html',context=data)
     
 @login_required(login_url='/')  
 def admin_profileView(request):
@@ -112,8 +141,9 @@ def createAccountManagementView(request):
 
 @transaction.atomic
 def create_new_accountView(request):
-    if request.method =="POST" and request.POST['businessname'] and  request.POST['city'] and request.POST['businessaddress'] and request.POST['fullnames'] and request.POST['email'] and request.POST['cellphone'] and request.POST['password']:
+    if request.method =="POST" and request.POST['businessname'] and request.POST['subburb'] and  request.POST['city'] and request.POST['businessaddress'] and request.POST['fullnames'] and request.POST['email'] and request.POST['cellphone'] and request.POST['password']:
         businessname = request.POST['businessname']
+        subburb = request.POST['subburb']
         city = request.POST['city']
         fullnames = request.POST['fullnames']
         email = request.POST['email']
@@ -122,25 +152,30 @@ def create_new_accountView(request):
         businessaddress = request.POST['businessaddress']
                 
         if User.objects.filter(email=email).exists():
-            messages.info(request,'Email has been used already.')
+            messages.info(request,'Email has been taken already.')
             return redirect('/register')  
         
         if User.objects.filter(username=cellphone).exists():
-            messages.info(request,'Cellphone has been used already.')
+            messages.info(request,'Cellphone has been taken already.')
             return redirect('/register')  
         
-        create_new_customer_account = User.objects.create_user(username=cellphone,first_name=fullnames,last_name=fullnames,password=password,is_customer=True,email=email,shopname=businessname,shopaddress=businessaddress,city=city,is_activation=True)
+        create_new_customer_account = User.objects.create_user(username=cellphone,first_name=fullnames,last_name=fullnames,password=password,is_customer=True,email=email,shopname=businessname,shopaddress=businessaddress,city=city,is_activation=True,subburb=subburb)
         if create_new_customer_account:
             create_new_customer_account.save()
-            #customer email notications for creating new school account
-            subject = 'New Customer Profile'
+
+            subject = 'New customer profile'
             from_email='SaveMore Groups <admin@srsschools.com>'
             sento = email
             messagbody = '#'
-            html_content =f'<p><strong>Dear {fullnames} </strong> <br><br>  This email serves to confirm that your account has been created successfully, Login and starting placing orders now at the conform of your home.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
+            html_content =f'''<p><strong>Dear {fullnames} </strong> <br><br>  This email serves to confirm that your savaMore Groups account has been created successfully, 
+            Login and starting placing orders at the confort of your sofas.
+            <br> <strong>Login Credentials:</strong><br> 
+            Username:{cellphone} <br> Password: {password} <br><br> 
+            Our mission is to provide saveMore customers with an easy and flexible means of shoping or ordering online at the confort of their homes. 
+            <br><hr> Best Regards <br> SaveMore Group </p>'''
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         return render(request,'customer/reg_management.html',{})
@@ -154,7 +189,7 @@ def customer_loginView(request):
         password =request.POST['password']
                 
         if not User.objects.filter(username=username).exists():
-            messages.info(request,'Incorrect username.')
+            messages.info(request,'Incorrect credentials.')
             return redirect('/')  
         
         userlog = auth.authenticate(username=username,password=password)
@@ -165,7 +200,10 @@ def customer_loginView(request):
             auth.login(request, userlog)
             if request.user.is_authenticated and request.user.is_customer:
                 return redirect('/customer_dashboard')
-            
+        else:
+            messages.info(request,"Incorrect credentials.")
+            return redirect('/')
+                
         if userlog is not None:
             auth.login(request, userlog)
             if request.user.is_authenticated and not request.user.is_activation:
@@ -176,16 +214,31 @@ def customer_loginView(request):
             auth.login(request, userlog)
             if request.user.is_authenticated and request.user.is_ceo:
                 return redirect('/admin_dashboard')
+        else:
+            messages.info(request,"Incorrect credentials.")
+            return redirect('/')
             
         if userlog is not None:
             auth.login(request, userlog)
             if request.user.is_authenticated and request.user.is_admin:
                 return redirect('/super_admin_dashboard')
+        else:
+            messages.info(request,"Incorrect credentials.")
+            return redirect('/')
             
         if userlog is not None:
             auth.login(request, userlog)
             if request.user.is_authenticated and request.user.is_cashier:
                 return redirect('/cashier_dashboard')
+            
+        if userlog is not None:
+            auth.login(request, userlog)
+            if request.user.is_authenticated and request.user.is_supervisor:
+                return redirect('/supervisor_dashboard')
+            
+        else:
+            messages.info(request,"Incorrect credentials.")
+            return redirect('/')
     else:
         return redirect('/')  
     
@@ -213,19 +266,19 @@ def create_new_manage_accountView(request):
         
         if branch == "":
             messages.info(request,'Select a branch')
-            return redirect('/register') 
+            return redirect('/reg_management') 
         
         if decination == "":
             messages.info(request,'Select a decination')
-            return redirect('/register') 
+            return redirect('/reg_management') 
         
         if User.objects.filter(email=email).exists():
             messages.info(request,'Email has been used already.')
-            return redirect('/register')  
+            return redirect('/reg_management')  
         
         if User.objects.filter(username=cellphone).exists():
             messages.info(request,'Cellphone has been used already.')
-            return redirect('/register')  
+            return redirect('/reg_management')  
         
         if decination == "1":
             create_new_admin_account = User.objects.create_user(username=cellphone,first_name=fullnames,last_name=fullnames,password=password,is_ceo=True,email=email,branch=branch)
@@ -238,7 +291,7 @@ def create_new_manage_accountView(request):
             html_content =f'<p><strong>Dear {fullnames} (CEO) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         if decination == "2":
@@ -252,7 +305,7 @@ def create_new_manage_accountView(request):
             html_content =f'<p><strong>Dear {fullnames} (Administrator) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         if decination == "3":
@@ -266,7 +319,7 @@ def create_new_manage_accountView(request):
             html_content =f'<p><strong>Dear {fullnames} (Marketing) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         if decination == "4":
@@ -280,7 +333,7 @@ def create_new_manage_accountView(request):
             html_content =f'<p><strong>Dear {fullnames} (Cashier) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         if decination == "5":
@@ -294,7 +347,21 @@ def create_new_manage_accountView(request):
             html_content =f'<p><strong>Dear {fullnames} (Stock Management) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            Emailthread(msg).start()
+            messages.info(request,'Account Created Successfully')
+            return redirect('/')  
+        if decination == "6":
+            create_new_admin_account = User.objects.create_user(username=cellphone,first_name=fullnames,last_name=fullnames,password=password,is_supervisor=True,email=email,branch=branch)
+            create_new_admin_account.save()
+            #admin email notications for creating new account
+            subject = 'New Supervisor Profile'
+            from_email='SaveMore Groups <admin@srsschools.com>'
+            sento = email
+            messagbody = '#'
+            html_content =f'<p><strong>Dear {fullnames} (Supervisor) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
+            msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
+            msg.attach_alternative(html_content, "text/html")
+            Emailthread(msg).start()
             messages.info(request,'Account Created Successfully')
             return redirect('/')  
         return render(request,'customer/reg_management.html',{})

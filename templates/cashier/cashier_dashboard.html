@@ -1,0 +1,383 @@
+{% extends "../customer/core_m.html" %}
+{% block title %} Cashier Management Dashboard | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+       <!-- .app-main -->
+       <main class="app-main">
+        <!-- .wrapper -->
+        <div class="wrapper">
+          <!-- .page -->
+          <div class="page">
+            <!-- .page-inner -->
+            <div class="page-inner">
+              <!-- .page-title-bar -->
+              <header class="page-title-bar">
+                <div class="d-flex flex-column flex-md-row">
+                  <p class="lead">
+                    <span class="font-weight-bold">Hi, {{request.user.first_name}}.</span> <span class="d-block text-muted">Here’s what’s happening with your business today.</span>
+                  </p>
+                  <div class="ml-auto">
+                  </div>
+                </div>
+              </header><!-- /.page-title-bar -->
+              <!-- .page-section -->
+              <div class="page-section">
+                <!-- .section-block -->
+                <div class="section-block">
+                </div><!-- /.section-block -->
+                <!-- grid row -->
+
+
+                <!-- grid row -->
+                <div class="row">
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <!-- .card -->
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> QADADIC RECORDS</h3>
+                          <div class="dropdown-menu stop-propagation">
+                            <div class="dropdown-arrow"></div>
+                            <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6>
+                          </div><!-- /.dropdown-menu -->
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> TOTAL </th>
+                              <th> ACTUAL TOTAL </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+      
+                            <!-- tr -->
+                            {% for eachqadadic_values in qadadic_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#" class="text-primary">{% if eachqadadic_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Qadadic Ref <a href="/add_qadadic/{{eachqadadic_values.cashierorid}}">{{eachqadadic_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                            
+                              <td class="align-middle">
+                              <span>ZAR{{eachqadadic_values.amount}}.00
+                              </td>
+
+                              {% if eachqadadic_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{eachqadadic_values.actualamount}} </td>
+                              {% endif %}  
+
+                              <td class="align-middle">
+                              {{eachqadadic_values.created_at}}
+                                </td>
+                                                        
+                            </tr><!-- /tr -->
+                            {% endfor %}
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title">STS RECORDS</h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> TOTAL </th>
+                              <th> ACTUAL TOTAL </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for eachsts_values in sts_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if eachsts_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Sts Ref <a href="/add_sts/{{eachsts_values.cashierorid}}">{{eachsts_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle">ZAR {{eachsts_values.amount}}.00</td>
+                              {% if eachsts_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{eachsts_values.actualamount}} </td>
+                              {% endif %}                               
+                              <td class="align-middle">{{eachsts_values.created_at}}</td>
+                            </tr><!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title">PAPERS RECORDS </h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> TOTAL </th>
+                              <th> ACTUAL COUNT </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for papers_values in papers_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if papers_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Paper Ref <a href="/add_paper/{{papers_values.cashierorid}}">{{papers_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle"> ZAR {{papers_values.amount}}.00 </td>
+                              {% if papers_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{papers_values.actualamount}} </td>
+                              {% endif %}                              
+                              <td class="align-middle">{{papers_values.created_at}}</td>
+                            </tr><!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> NOTES RECORDS</h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> AMOUNT </th>
+                              <th> ACTUAL COUNT </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for notes_values in notes_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if notes_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Notes Ref <a href="/add_notes/{{notes_values.cashierorid}}">{{notes_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle"> ZAR{{notes_values.amount}} </td>
+                              {% if notes_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{notes_values.actualamount}} </td>
+                              {% endif %}
+                              <td class="align-middle">{{notes_values.created_at}}</td>
+                            </tr><!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> SWIPES RECORDS</h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> AMOUNT </th>
+                              <th> ACTUAL COUNT </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for swipes_values in swipes_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if swipes_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Swipes Ref <a href="/add_swipes/{{swipes_values.cashierorid}}">{{swipes_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle"> ZAR{{swipes_values.amount}} </td>
+                              {% if swipes_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{swipes_values.actualamount}} </td>
+                              {% endif %}
+                              <td class="align-middle">{{swipes_values.created_at}}</td>
+                            </tr><!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> KAZANG RECORDS</h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> AMOUNT </th>
+                              <th> ACTUAL COUNT </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for kazang_values in kazang_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if kazang_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Qadadic Ref <a href="/add_kazang/{{kazang_values.cashierorid}}">{{kazang_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle"> ZAR{{kazang_values.amount}} </td>
+                              {% if kazang_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> ZAR{{kazang_values.actualamount}} </td>
+                              {% endif %}
+                              
+                              <td class="align-middle">{{kazang_values.created_at}}</td>
+                            </tr>
+                            <!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
+                </div><!-- /grid row -->
+                <!-- card-deck-xl -->
+              </div><!-- /.page-section -->
+            </div><!-- /.page-inner -->
+          </div><!-- /.page -->
+        </div><!-- .app-footer -->
+      </main>
+{% endblock %}

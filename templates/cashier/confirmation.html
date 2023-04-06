@@ -1,0 +1,73 @@
+{% extends "customer/core_m.html" %}
+{% block title %}  Confirmation | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+  
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow">
+  
+                  </div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+            </div><!-- /.card-header -->
+            <div class="container">
+          </div><!-- /form col -->
+          <!-- form col -->
+          <form action="/track_my_order" method="POST">
+          {% csrf_token %}
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="form-label-group">
+                <br><br>
+                {% if messages %}
+                {% for message in messages %}
+                <center><strong class="text-danger"> {{message | upper}} </strong></center>
+                {% endfor %}
+            {% else %}
+            <center><strong> YOU ARE ABOUT TO CREATE A NEW {{type | upper}} ORDER </strong></center>
+
+            {% endif %}
+              </div>
+            </div>
+            <div class="col-md-12">
+              <!-- you can change attribute type to type="submit" on your real project -->
+              <a href="/new_cashier_order/{{type}}" class="btn btn-lg btn-primary btn-block">Confirm</a>
+            </div><!-- /form col -->
+            <br>
+          </div><!-- /form col -->
+        </div><!-- /form row -->
+      </form>
+
+  
+        <!-- form row -->
+          <!-- form col -->
+        </div><!-- /form row -->
+      </div><!-- /.custom-control-hint -->
+    </div><!-- /.custom-control -->
+    </div><!-- /.form-group -->
+  
+  
+  <div id="searchresult"> 
+  
+  
+  </div>
+            </div>
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+  
+
+
+{% endblock %}

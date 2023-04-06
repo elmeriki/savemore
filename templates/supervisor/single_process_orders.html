@@ -1,0 +1,156 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Process Single Order | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+
+                <p >
+                PROCESSED {{type | upper }} RECORDS  
+                </p> 
+                <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a onclick="history.back()" class="btn btn-primary ml-auto text-white">Close {{types }}</a>
+            </div><!-- /.card-header -->
+
+
+          {% if processed_data_single %}
+<br><br><br>
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> QADADIC NO </th>
+                    <th> REVIEWS</th>
+                    <th> TOTAL</th>
+                    <th> ACTUAL COUNT</th>
+                    <th> DATE </th>
+                    <th> ACTION </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for qadadic_orders in qadadic_orders %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <a href="/add_qadadic/{{qadadic_orders.cashierorid}}">#{{qadadic_orders.cashierorid}}</a> <small class="d-block text-muted"></small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      {% if qadadic_orders.adminstatus == "0" %} 
+                        <span>N/A</span>
+                      {% else %}
+                      <span>Success</span>
+                      {% endif %}
+    
+                    <td class="align-middle"> 
+                            <span class="badge badge-success">ZAR{{qadadic_orders.amount}}</span>
+                         </td>
+
+                         <td class="align-middle"> 
+                          <span class="badge badge-success">ZAR{{qadadic_orders.actualamount}}</span>
+                       </td>
+                    
+                    <td class="align-middle"> 
+                            <span >{{qadadic_orders.created_at | date}} </span>
+                 </td>
+                    </td>
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <a href="/add_qadadic/{{qadadic_orders.cashierorid}}"> {% if qadadic_orders.adminstatus == "0" %} Process {% else %} View {% endif %} </a> <small class="d-block text-muted"></small>
+                          </div>
+                        </div>
+           </td>
+              </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+{% else %}
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> {{type | upper }} REF </th>
+                    <th> AMOUNT</th>
+                    <th> ACTUAL AMOUNT</th>
+                    <th> DATES</th>
+                    <th> SUPERVISOR REVIEW </th>
+                    <th> ACTION </th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for fetch_data_single_cashier in fetch_data_single_cashier %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <a href="#">#{{fetch_data_single_cashier.cashierorid}}</a> <small class="d-block text-muted"></small>
+                        </div>
+                      </div>
+                    </td>
+       
+                    <td class="align-middle"> 
+                            <span>R {{fetch_data_single_cashier.amount}}.00</span>
+                         </td>
+
+                     <td class="align-middle"> 
+                          <span >R {{fetch_data_single_cashier.actualamount}}.00</span>
+                      </td>
+
+                    <td class="align-middle"> 
+                            <span >{{fetch_data_single_cashier.created_at | date}} </span>
+                 </td>
+                 <td class="align-middle"> 
+                  <span class="badge badge-success"> {% if fetch_data_single_cashier.adminstatus == "0"  %} NA {% else %} Supervised Successful {% endif %} </span>
+              </td>
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <a href="#" class="text-primary">View</a>  
+                          </div>
+                        </div>
+                      </td>
+
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+
+{% endif %}
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

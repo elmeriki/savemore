@@ -23,6 +23,9 @@
           {% csrf_token %}
             <!-- .form-group -->
             <!-- .form-group -->
+          {% for message in messages %}
+          <center><h6 class="text-primary"> {{message}} </h6></center>
+          {% endfor %}
             <div class="form-group">
                 <label class="control-label" for="bss1">DECINATION</label> <select id="bss1" name="decination" data-toggle="selectpicker" required="" data-width="100%">
                   <optgroup label="Choose One">
@@ -32,6 +35,7 @@
                     <option value="3"> Sales </option>
                     <option value="4">Cashier </option>
                     <option value="5">Stock </option>
+                    <option value="6"> Supervisor </option>
                   </optgroup>
                 </select>
               </div><!-- /.form-group -->
@@ -87,7 +91,7 @@
             </div>
           </div><!-- /.form-group -->
           <!-- recovery links -->
-          <p class="text-center text-muted mb-0">By clicking you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>. </p><!-- /recovery links -->
+          {% comment %} <p class="text-center text-muted mb-0">By clicking you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>. </p><!-- /recovery links --> {% endcomment %}
         </form><!-- /.auth-form -->
         <!-- copyright -->
         <footer class="auth-footer"> © 2023 SaveMore Groups All Rights Reserved. </footer>

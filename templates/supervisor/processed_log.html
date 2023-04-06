@@ -1,0 +1,126 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Processed Log | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+          <!-- .card-header -->
+          <div class="card-header d-flex">
+            <!-- .dropdown -->
+            <div class="dropdown">
+              {% if messages %}
+              {% for message in messages %}
+              <p class="text-danger"> {{message}} </p> 
+              {% endfor %}
+        
+              {% else %}
+              <p class="text-primary"> PROCESS LOG HISTORY </p> 
+        
+              {% endif %}
+        
+              <!-- .dropdown-menu -->
+              <div class="dropdown-menu stop-propagation">
+                <div class="dropdown-arrow"></div>
+              </div><!-- /.dropdown-menu -->
+            </div><!-- /.dropdown -->
+            <a href="/supervisor_dashboard" class="btn btn-primary ml-auto">Close</a>
+          </div><!-- /.card-header -->
+
+{% if processed_orders %}
+
+
+
+            <!-- .card-header -->
+            <div class="card-header">
+            </div><!-- /.card-header -->
+            <!-- .card-body -->
+            <div class="card-body">
+              <!-- .table -->
+              <table id="invoicesTable" class="table">
+                  {% for processed_orders in processed_orders %}
+                  <tr>
+                    {% ifchanged %}
+                      <br>
+                    <h6><a href="#" class="text-danger">{{processed_orders.customer.first_name| upper}} <hr></a></h6>
+                    {% endifchanged %}
+                    
+                    <li><a href="/processed_single_order/{{processed_orders.cashierorid}}/{{processed_orders.types}}">{{processed_orders.types}}</a></li>
+
+                  </tr>
+                  {% endfor %}
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
+
+
+
+
+
+{% else %}
+  <!-- .table-responsive -->
+  <div class="table-responsive">
+    <!-- .table -->
+    <table class="table">
+      <!-- thead -->
+      <thead>
+        <tr>
+          <th style="min-width:256px"> SELECT START DATES</th>
+          <th style="min-width:256px"> SELECT END DATES </th>
+          <th> ACTION </th>
+        </tr>
+      </thead><!-- /thead -->
+      <!-- tbody -->
+      <tbody>
+        <!-- tr -->
+
+        <form action="/search_processed_log" method="POST">
+          {% csrf_token %}
+        <tr>
+          <td class="align-middle text-truncate">
+            <div class="media align-items-center">
+              <div class="media-body">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="tf1" name="startdate"  aria-describedby="tf1Help"> 
+              </div><!-- /.form-group -->
+              </div>
+            </div>
+          </td>
+          <td class="align-middle text-truncate">
+            <div class="media align-items-center">
+              <div class="media-body">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="tf1" name="enddate"  aria-describedby="tf1Help"> 
+              </div><!-- /.form-group -->
+              </div>
+            </div>
+          </td>
+       <td class="align-middle"> 
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+      </div>
+      </td>
+
+        </tr>
+      </form>
+
+        <!-- /tr -->
+        <!-- tr -->
+      </tbody><!-- /tbody -->
+    </table><!-- /.table -->
+  </div><!-- /.table-responsive -->
+</div><!-- /.card -->
+
+{% endif %}
+
+          </div><!-- /.card -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

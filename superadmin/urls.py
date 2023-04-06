@@ -28,5 +28,7 @@ urlpatterns = [
     path('fetch_daily_expenses', views.fetch_daily_expensesView, name='fetch_daily_expensesView'),
     path('search_customers', views.search_customersView, name='search_customersView'),
     path('customer_search', views.customer_searchView, name='customer_searchView'),
+    path('admin_edith_order_detail/<int:order_id>', views.admin_edith_order_detailView, name='admin_edith_order_detailView'),
+    path('admin_update_order_detail/<int:id>/<int:qty>/<int:orderid>', views.admin_update_order_detailView, name='admin_update_order_detailView'),
 
 ]

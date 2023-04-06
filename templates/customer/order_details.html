@@ -13,7 +13,10 @@
             <div class="card-header d-flex">
               <!-- .dropdown -->
               <div class="dropdown">
-                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i>ORDER DETAILS <i class="fa fa-caret-down"></i></button> <!-- .dropdown-menu -->
+                <p>
+                  ORDER DETAILS 
+                </p> 
+                  <!-- .dropdown-menu -->
                 <div class="dropdown-menu stop-propagation">
                   <div class="dropdown-arrow"></div>
                   <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
@@ -41,11 +44,9 @@
                 <thead>
                   <tr>
                     <th style="min-width:256px">Description</th>
-                    <th> Incl Price </th>
-                    <th> Excl Price </th>
-                    <th> Incl Total </th>
-                    <th> Excl Total </th>
-                    <th> Quantity</th>
+                    <th> Unit Price Incl </th>
+                    <th> Total Price Incl </th>
+                    <th> Confirm Quantity</th>
                     <th> Action </th>
                   </tr>
                 </thead><!-- /thead -->
@@ -65,11 +66,10 @@
             
                     <td class="align-middle"><span>ZAR {{each_order_details.incl}}.00</span></td>
 
-                    <td class="align-middle"><span>ZAR {{each_order_details.excl}}.00</span></td>
+                    {% comment %} <td class="align-middle"><span>ZAR {{each_order_details.excl}}.00</span></td> {% endcomment %}
 
                     <td class="align-middle"><span>ZAR {{each_order_details.incltotal}}.00</span></td>
 
-                    <td class="align-middle"><span>ZAR {{each_order_details.excltotal}}.00</span></td>
                     <td class="align-middle">
                         <form action="/update_quantity/{{each_order_details.orderid}}/{{each_order_details.id}}" method="POST">
                         {% csrf_token %}
@@ -113,9 +113,8 @@
                   <!-- thead -->
                   <thead>
                     <tr>
-                      <th style="min-width:200px">INVOICE NOTICE </th>
-                      <th> INCL TOTAL  </th>
-                      <th> EXCL TOTAL   </th>
+                      <th style="min-width:200px">INCL GRAND TOTAL </th>
+                      {% comment %} <th> INVOICE NOTE   </th> {% endcomment %}
                       
                     </tr>
                   </thead><!-- /thead -->
@@ -125,15 +124,12 @@
 
                     <tr>
                 
-                      <td class="align-middle"><span>Total prices is subject to change </span>
+                      <td class="align-middle text-success"><span><strong>ZAR {{incl}}</strong></span>
                     </td>
-  
-                      <td class="align-middle">
-                        <span>ZAR {{incl}}</span>
-                    </td>
-                      <td class="align-middle">
-                        <span>ZAR {{excl}}</span>
-                      </td>
+
+                      {% comment %} <td class="align-middle">
+                        <span>FINAL PRICE MIGHT CHANGE BEFORE CONFIRMATION</span>
+                      </td> {% endcomment %}
                       
                       
                     </tr>

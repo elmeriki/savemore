@@ -1,0 +1,118 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Admin Edith Order Detail | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <p>
+                 EDITH CUSTOMER INVOICE
+                </p> <!-- .dropdown-menu -->
+              
+              </div><!-- /.dropdown -->
+              {% if reques.user.is_admin %}
+              {% if order_status == "0" %}
+              <a href="/update_order_status/{{fetch_order_id}}" class="btn btn-danger ml-auto">Confirm</a>
+              {% elif order_status == "1" %}
+              <a href="#" class="btn btn-success ml-auto">Confirmed Already</a>
+              {% endif %}
+              {% else %}
+            
+              {% endif %}
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px">PRODUCT DESC</th>
+                    <th> TOTAL QUANTITY </th>
+                    <th> TOTAL PRICE INCL</th>
+                    <th> TOTAL PRICE INCL</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for each_order_details in order_details %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">D</a>
+                        <div class="media-body">
+                          <a href="#">{{each_order_details.orderid}}</a> <small class="d-block text-muted">{{each_order_details.description}}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-left"><span>{{each_order_details.quantity}}</span></td>
+
+                    <td class="align-middle">
+                        <form action="/admin_update_order_detail/{{each_order_details.id}}/{{each_order_details.quantity}}/{{each_order_details.orderid}}" method="POST">
+                        {% csrf_token %}
+                        <div class="btn-group ml-auto">
+                            <div class="custom-number">
+                            <input type="number" name="priceincl" class="form-control"  min="1" max="1000000" value="{{each_order_details.incl}}">
+                            </div>  
+                            <input class="btn btn-success" type="submit" value="OK">
+                            </form
+                    </td>
+
+
+                    <td class="align-middle"><span>ZAR {{each_order_details.incltotal}}.00</span></td>
+
+                    
+                   
+                  </tr>
+                  {% endfor %}
+
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+            
+            <div class="table-responsive">
+                <!-- .table -->
+                <table class="table">
+                  <!-- thead -->
+                  <thead>
+                    <tr>
+                        {% comment %} <td class="align-middle"><span><a href=""> <strong class="btn btn-danger">Process</strong></a></span> {% endcomment %}
+                    </tr>
+                  </thead><!-- /thead -->
+                  <!-- tbody -->
+                  <tbody>
+                    <!-- tr -->
+
+                    <tr>
+                
+                    <th style="min-width:200px">GRAND TOTAL INCL: ZAR {{incl}}</th>
+                    </td> 
+
+                      
+                      
+                    </tr>
+  
+                    <!-- /tr -->
+                    <!-- tr -->
+                  </tbody><!-- /tbody -->
+                </table><!-- /.table -->
+              </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+
+{% endblock %}
