@@ -11,10 +11,12 @@ urlpatterns = [
     path('processed_log', views.processed_logView, name='processed_logView'),
     path('search_processed_log', views.search_processed_logView, name='search_processed_logView'),
     path('processed_sales', views.processed_salesView, name='processed_salesView'),
+    path('single_processed_sales/<int:userid>', views.single_processed_salesView, name='single_processed_salesView'),
+
     path('view_single_processed_order/<str:cashierorid>>', views.view_single_processed_orderView, name='view_single_processed_orderView'),
     path('processed_single_order/<int:cashierorid>/<str:types>', views.processed_single_orderView, name='processed_single_orderView'),
     path('processed_qadadic/<int:cashierorid>/<str:type>', views.processed_qadadicView, name='processed_qadadicView'),
-    path('record_sales', views.record_salesView, name='record_salesView'),
-    path('record_salessave/<int:gt>', views.record_salessaveView, name='record_salessaveView'),
+    path('record_sales/<int:userid>/<int:grand_total>', views.record_salesView, name='record_salesView'),
+    path('record_salessave/<int:userid>/<int:gt>', views.record_salessaveView, name='record_salessaveView'),
     path('sales_log', views.sales_logView, name='sales_logView'),
 ]

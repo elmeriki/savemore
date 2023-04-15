@@ -136,6 +136,7 @@ def processed_salesView(request):
         papers_total_sum = Papers.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
         swipes_total_sum = Swipes.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
         kazang_total_sum = Kazang.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        cashier_list =User.objects.filter(is_cashier=True)
         if qadadic_total_sum is None:
             data = {
             'supervisor_response_check':supervisor_response_check,
@@ -147,6 +148,7 @@ def processed_salesView(request):
             'papers_total_sum':papers_total_sum,
             'kazang_total_sum':kazang_total_sum,
             'swipes_total_sum':swipes_total_sum,
+            'cashier_list':cashier_list
             }
             return render(request,'supervisor/processed_sales.html',context=data)
         else:
@@ -161,12 +163,46 @@ def processed_salesView(request):
             'papers_total_sum':papers_total_sum,
             'kazang_total_sum':kazang_total_sum,
             'swipes_total_sum':swipes_total_sum,
-            'grand_total':grand_total
+            'grand_total':grand_total,
+            'cashier_list':cashier_list
             }
             return render(request,'supervisor/processed_sales.html',context=data)
     else:
         return redirect('/')
     
+@login_required(login_url='/')  
+def single_processed_salesView(request,userid):
+    if request.user.is_authenticated and request.user.is_supervisor:
+        date_from = datetime.datetime.now() - datetime.timedelta(days=1)
+        supervisor_response_check=CashierOrders.objects.filter(adminstatus=0,created_at__gt=date_from).count()
+        supervisor_salesrecod_check=CashierOrders.objects.filter(adminstatus=1,created_at__gt=date_from).count()
+        supervisor_salesrecod_check_=CashierOrders.objects.filter(adminstatus=2,created_at__gt=date_from).count()
+        qadadic_total_sum=Qadadic.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        sts_total_sum =Sts.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        note_total_sum = Notes.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        papers_total_sum = Papers.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        swipes_total_sum = Swipes.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        kazang_total_sum = Kazang.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        if qadadic_total_sum is None:
+            return render(request,'supervisor/single_sales_log.html')
+        else:
+            grand_total = qadadic_total_sum + sts_total_sum + note_total_sum + papers_total_sum + swipes_total_sum + kazang_total_sum
+            data = {
+            'supervisor_response_check':supervisor_response_check,
+            'supervisor_salesrecod_check':supervisor_salesrecod_check,
+            'supervisor_salesrecod_check_':supervisor_salesrecod_check_,
+            'qadadic_total_sum':qadadic_total_sum,
+            'sts_total_sum':sts_total_sum ,
+            'note_total_sum':note_total_sum,
+            'papers_total_sum':papers_total_sum,
+            'kazang_total_sum':kazang_total_sum,
+            'swipes_total_sum':swipes_total_sum,
+            'grand_total':grand_total,
+            'userid':userid
+            }
+            return render(request,'supervisor/single_sales_log.html',context=data)
+    else:
+        return redirect('/')
     
 @login_required(login_url='/')  
 def search_processed_logView(request):
@@ -220,54 +256,62 @@ def processed_qadadicView(request,cashierorid,type):
         return redirect('/')
     
 @login_required(login_url='/')  
-def record_salesView(request):
+def record_salesView(request,userid,grand_total):
     if request.user.is_authenticated and request.user.is_supervisor:
         date_from = datetime.datetime.now() - datetime.timedelta(days=1)
         supervisor_response_check=CashierOrders.objects.filter(adminstatus=0,created_at__gt=date_from).count()
         supervisor_salesrecod_check=CashierOrders.objects.filter(adminstatus=1,created_at__gt=date_from).count()
         supervisor_salesrecod_check_=CashierOrders.objects.filter(adminstatus=2,created_at__gt=date_from).count()
-        qadadic_total_sum = Qadadic.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
-        sts_total_sum =Sts.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
-        note_total_sum = Notes.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
-        papers_total_sum = Papers.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
-        swipes_total_sum = Swipes.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
-        kazang_total_sum = Kazang.objects.filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        qadadic_total_sum = Qadadic.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        sts_total_sum =Sts.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        note_total_sum = Notes.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        papers_total_sum = Papers.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        swipes_total_sum = Swipes.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
+        kazang_total_sum = Kazang.objects.filter(customer=userid).filter(status=1,created_at__gt=date_from).aggregate(Sum('amount'))['amount__sum']
         grand_total = qadadic_total_sum + sts_total_sum + note_total_sum + papers_total_sum + swipes_total_sum + kazang_total_sum
         data = {
         'supervisor_response_check':supervisor_response_check,
         'supervisor_salesrecod_check':supervisor_salesrecod_check,
         'supervisor_salesrecod_check_':supervisor_salesrecod_check_,
-        'qadadic_total_sum':qadadic_total_sum,
-        'sts_total_sum':sts_total_sum ,
-        'note_total_sum':note_total_sum,
-        'papers_total_sum':papers_total_sum,
-        'kazang_total_sum':kazang_total_sum,
-        'swipes_total_sum':swipes_total_sum,
-        'grand_total':grand_total
+        'grand_total':grand_total,
+        'userid':userid
         }
-        return render(request,'supervisor/record_Sales.html',context=data)
+        return render(request,'supervisor/record_sales.html',context=data)
     else:
         return redirect('/')
     
 @transaction.atomic
 @login_required(login_url='/')  
-def record_salessaveView(request,gt):
+def record_salessaveView(request,userid,gt):
     if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
-        username=request.user.username
-        gross_total = request.POST['amount']
+        sales_total = int(request.POST['amount'])
         comment = request.POST['comment']
-        customer_instance =User.objects.get(username=username)
-        record_Sales=Saleslog(customer=customer_instance,grandtotal=gross_total,totalpertype=gt,comment=comment)
-        if record_Sales:
-            record_Sales.save()
-            CashierOrders.objects.filter(types="Qadadic").update(adminstatus=2)
-            CashierOrders.objects.filter(types="Sts").update(adminstatus=2)
-            CashierOrders.objects.filter(types="Papers").update(adminstatus=2)
-            CashierOrders.objects.filter(types="Note").update(adminstatus=2)
-            CashierOrders.objects.filter(types="Swipes").update(adminstatus=2)
-            CashierOrders.objects.filter(types="Kazang").update(adminstatus=2)
-            messages.info(request,f'SALES HAS BEEN RECORDED SUCCESSFULLY')
-            return redirect('/processed_sales')
+        customer_instance =User.objects.get(id=userid)
+        diff_amount = sales_total - gt 
+        if sales_total > gt:
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Short",totalpertype=gt,comment=comment)
+            if record_Sales:
+                record_Sales.save()
+                CashierOrders.objects.filter(types="Qadadic").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Sts").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Papers").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Note").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Swipes").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Kazang").update(adminstatus=2)
+                messages.info(request,f'SALES HAS BEEN RECORDED SUCCESSFULLY')
+                return redirect('/processed_sales')
+        if sales_total < gt:
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Over",totalpertype=gt,comment=comment)
+            if record_Sales:
+                record_Sales.save()
+                CashierOrders.objects.filter(types="Qadadic").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Sts").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Papers").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Note").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Swipes").update(adminstatus=2)
+                CashierOrders.objects.filter(types="Kazang").update(adminstatus=2)
+                messages.info(request,f'SALES HAS BEEN RECORDED SUCCESSFULLY')
+                return redirect('/processed_sales') 
     else:
         return redirect('/')
     

@@ -17,6 +17,8 @@ urlpatterns = [
     path('kazang_list', views.kazang_listView, name='kazang_listView'),
     path('swipe_list', views.swipe_listView, name='swipe_listView'),
     
+    path('cashier_review', views.cashier_reviewView, name='cashier_reviewView'),
+
     
     path('update_add_qadadic/<int:id>/<int:cashierorderid>', views.update_add_qadadicView, name='update_add_qadadicView'),
     path('update_add_sts/<int:id>/<int:cashierorderid>', views.update_add_stsView, name='update_add_stsView'),

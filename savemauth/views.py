@@ -163,15 +163,15 @@ def create_new_accountView(request):
         if create_new_customer_account:
             create_new_customer_account.save()
 
-            subject = 'New customer profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            subject = 'Welcome to Savemore Groups'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'''<p><strong>Dear {fullnames} </strong> <br><br>  This email serves to confirm that your savaMore Groups account has been created successfully, 
             Login and starting placing orders at the confort of your sofas.
             <br> <strong>Login Credentials:</strong><br> 
             Username:{cellphone} <br> Password: {password} <br><br> 
-            Our mission is to provide saveMore customers with an easy and flexible means of shoping or ordering online at the confort of their homes. 
+            Our Mission: Making Online Shopping Convenient and Flexible for SaveMore Customers. 
             <br><hr> Best Regards <br> SaveMore Group </p>'''
             msg=EmailMultiAlternatives(subject, messagbody, from_email,[sento])
             msg.attach_alternative(html_content, "text/html")
@@ -285,7 +285,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Administrator Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (CEO) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
@@ -299,7 +299,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Administrator Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (Administrator) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
@@ -313,7 +313,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Administrator Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (Marketing) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
@@ -327,7 +327,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Administrator Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (Cashier) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
@@ -341,7 +341,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Administrator Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (Stock Management) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'
@@ -355,7 +355,7 @@ def create_new_manage_accountView(request):
             create_new_admin_account.save()
             #admin email notications for creating new account
             subject = 'New Supervisor Profile'
-            from_email='SaveMore Groups <admin@srsschools.com>'
+            from_email='SaveMore Groups <no_reply@savemoregroup.com>'
             sento = email
             messagbody = '#'
             html_content =f'<p><strong>Dear {fullnames} (Supervisor) </strong> <br><br>  This email serves to confirm that your account has been created successfully, You can only login once your account is activated.<br> Login Credentials:<br> Username:{cellphone} <br> Password: {password} <br><br> Our mission is to provide saveMore Groups customers with an easy and accurate means of placing orders online at the confort of their Home. <br><hr> Best Regards <br> SaveMore Group </p>'

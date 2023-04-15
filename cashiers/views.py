@@ -345,6 +345,19 @@ def notes_listView(request):
         return redirect('/notes_list')
     
 
+@login_required(login_url='/')  
+def cashier_reviewView(request):
+    if request.user.is_authenticated and request.user.is_cashier:
+        username=request.user.username
+        customer_instance=User.objects.get(username=username)
+        cashier_review = Saleslog.objects.filter(cashier=customer_instance)
+        data = {
+        'cashier_review':cashier_review
+        }
+        return render(request,'cashier/cashier_reviews.html',context=data)
+    else:
+        return redirect('/')
+
 
 @login_required(login_url='/')  
 def sts_listView(request):

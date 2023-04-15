@@ -4,123 +4,79 @@
 {% block content %}
 
 
-<main class="app-main">
-  <!-- .wrapper -->
-  <div class="wrapper">
-    <!-- .page -->
-    <div class="page">
-      <!-- .page-inner -->
-      <div class="page-inner">
-        <!-- .page-title-bar -->
-        <header class="page-title-bar">
-          <div class="d-flex justify-content-between">
-            {% if messages %}
-            {% for message in messages %}
-            <h1 class="page-title"> {{message}} </h1>
-            {% endfor %}
-            {% else %}
-            <h1 class="page-title"> SUMMARY REPORT </h1>
-            {% endif %}
-            <div class="btn-toolbar">
-              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
-            </div>
-          </div>
-        </header><!-- /.page-title-bar -->
-
-        {% if supervisor_salesrecod_check > 0 and supervisor_salesrecod_check > 0 %}
-
-        <!-- .page-section -->
-        <div class="page-section">
-          <!-- .card -->
-          <div class="card card-fluid">
-            <!-- .card-header -->
-            <div class="card-header">
-            <!-- .card-body -->
-            <div class="card-body">
-              <!-- .table -->
-              <table id="invoicesTable" class="table">
-                <!-- thead -->
-                <thead>
-                  <tr>
-                    <th style="min-width: 180px"> CASHIN CATEGORY </th>
-                    <th>TOTAL</th>
-                    <th>SALES</th>
-                  </tr>
-                </thead><!-- /thead -->
-                <!-- tbody -->
-                <tbody>
-                  <!-- create empty row to passing html validator -->
-                  <tr>
-                    <td>QADADIC</td>
-                    <td>R {{qadadic_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td>STS </td>
-                    <td>R {{sts_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td>PAPERS </td>
-                    <td>R {{papers_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td>NOTES</td>
-                    <td>R {{note_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td>KAZANG </td>
-                    <td>R {{kazang_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td>SWIPES </td>
-                    <td>R {{swipes_total_sum}}</td>
-                    <td>NA</td>
-                  </tr>
-                  <tr class="text-primary">
-                    <td><h6>TOTAL</h6></td>
-                    <td><h6>R {{grand_total}}</h6></td>
-                    <td><h6><a class="btn btn-primary" href="/record_sales">Process</a></h6></td>
-                  </tr>
-                </tbody><!-- /tbody -->
-              </table><!-- /.table -->
-            </div><!-- /.card-body -->
-          </div><!-- /.card -->
-        </div><!-- /.page-section -->
-
-{% else %}
+        <!-- .app-main -->
+        <main class="app-main">
+          <!-- .wrapper -->
+          <div class="wrapper">
+            <!-- .page -->
+            <div class="page">
+              <!-- .page-inner -->
+              <div class="page-inner">
+                <!-- .page-title-bar -->
+                <header class="page-title-bar">
+                  <div class="d-flex flex-column flex-md-row">
+                    <p class="lead">
+                      <span class="font-weight-bold">Hi, {{request.user.first_name}}.</span> <span class="d-block text-primary">Record sales for each listed Cashier</span>
+                    </p>
+                    <div class="ml-auto">
+                    </div>
+                  </div>
+                </header><!-- /.page-title-bar -->
                 <!-- .page-section -->
                 <div class="page-section">
-                  <!-- .card -->
-                  <div class="card card-fluid">
-                    <!-- .card-header -->
-                    <div class="card-header">
-                    <!-- .card-body -->
-                    <div class="card-body">
-                      <!-- .table -->
-                      <table id="invoicesTable" class="table">
-                        <!-- thead -->
-                        <thead>
-                          <tr>
-                            <th style="min-width: 180px" class="text-primary">EITHER SALES SUMMARY CANNOT BE PROCESS IF THE CASHIER REVIEW IS NOT COMPLETED OR THERE IS NOT SUMMARY TO PROCESS </th>
-                          </tr>
-                        </thead><!-- /thead -->
-                      </table><!-- /.table -->
-                    </div><!-- /.card-body -->
-                  </div><!-- /.card -->
-                </div><!-- /.page-section -->
-
-{% endif %}
-
-
-      </div><!-- /.page-inner -->
-    </div><!-- /.page -->
-  </div><!-- /.wrapper -->
-</main><!-- /.app-main -->
-</div><!-- /.app -->
-
+                  <!-- grid row -->
+                  <div class="row">
+                    <!-- grid column -->
+  
+                    {% for cashier_list in cashier_list %}
+  
+                    <div class="col-lg-6 col-xl-4">
+                      <!-- .card -->
+                      <div class="card card-fluid">
+                        <!-- .card-header -->
+                        <!-- .card-body -->
+                        <div class="card-body text-center">
+                          <!-- avatars -->
+                          <div class="has-badge mb-3">
+                            <a href="/single_processed_sales/{{cashier_list.id}}" class="tile tile-lg bg-purple">CS</a> <a href="#team" class="user-avatar user-avatar-xs"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></a>
+                          </div><!-- /avatars -->
+                          <!-- /.media -->
+                          <h5 class="card-title">
+                            <a href="/single_processed_sales/{{cashier_list.id}}">{{cashier_list.first_name}}</a>
+                          </h5>
+                          <p class="card-subtitle text-muted"> Last Login {{cashier_list.last_login | timesince }} ago </p><!-- .my-3 -->
+                          <div class="my-3">
+                            <!-- team members -->
+                            <div class="avatar-group">
+                            </div><!-- /team members -->
+                          </div><!-- /.my-3 -->
+                          <!-- grid row -->
+                          <div class="row">
+                            <!-- grid column -->
+                            <div class="col">
+                              <strong>Branch</strong> <span class="d-block">{{cashier_list.branch | upper }}</span>
+                            </div><!-- /grid column -->
+                            <!-- grid column -->
+                            <div class="col">
+                              <strong>Email</strong> <span class="d-block">{{cashier_list.email}}</span>
+                            </div><!-- /grid column -->
+                          </div><!-- /grid row -->
+                        </div><!-- /.card-body -->
+                        <!-- .progress -->
+                        <div class="progress progress-xs" data-toggle="tooltip" title="74%">
+                          <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="2181" aria-valuemin="0" aria-valuemax="100" style="width: 74%">
+                            <span class="sr-only">74% Complete</span>
+                          </div>
+                        </div><!-- /.progress -->
+                      </div><!-- /.card -->
+                    </div><!-- /grid column -->
+                    <!-- grid column -->
+    
+                      {% endfor %}
+                    
+              </div><!-- /.page-inner -->
+            </div><!-- /.page -->
+          </div><!-- .app-footer -->
+        </main>
 
 {% endblock %}

@@ -79,8 +79,10 @@ def conversationView(request):
 def list_customersView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
         customer_list = User.objects.filter(is_customer=True)
+        customer_list_count = User.objects.filter(is_customer=True).count()
         data = {
-        'customer_list':customer_list
+        'customer_list':customer_list,
+        'customer_list_count':customer_list_count
         }
         return render(request,'customer/customer_list.html',context=data)
     else:

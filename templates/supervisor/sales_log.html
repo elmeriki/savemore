@@ -19,7 +19,7 @@
             <h1 class="page-title"> {{message}} </h1>
             {% endfor %}
             {% else %}
-            <h1 class="page-title"> SUMMARY REPORT </h1>
+            <h1 class="page-title">CASHIERS SUMMARY REPORT </h1>
             {% endif %}
             <div class="btn-toolbar">
               <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
@@ -40,8 +40,11 @@
                 <!-- thead -->
                 <thead>
                   <tr>
+                    <th>CASHIER'S NAMES</th>
                     <th style="min-width: 180px"> GRAND TOTAL (QADADIC,STS,NOTES,PAPERS,SWIPES,KAZANG)</th>
                     <th>SALES TOTAL</th>
+                    <th>DIFF TOTAL</th>
+                    <th>STATUS</th>
                     <th>DATE</th>
                     <th>COMMENT</th>
                   </tr>
@@ -51,8 +54,11 @@
                   <!-- create empty row to passing html validator -->
                   {% for sales_log in sales_log %}
                   <tr>
+                    <td>{{sales_log.cashier.first_name}} ({{sales_log.cashier.branch}} Branch)</td>
                     <td>R {{sales_log.totalpertype}}.00</td>
                     <td>R {{sales_log.grandtotal}}.00</td>
+                    <td>R {{sales_log.diff}}.00</td>
+                    <td>{{sales_log.status | upper}}</td>
                     <td>{{sales_log.created_at}}</td>
                     <td>{{sales_log.comment}}</td>
                   </tr>

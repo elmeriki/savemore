@@ -109,9 +109,10 @@ class Kazang(models.Model):
         return self.cashierorid
     
 class Saleslog(models.Model):
-    customer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,default=0)
-    grandtotal = models.CharField(max_length=200,default=0,null=True,blank=True)
-    totalpertype = models.CharField(max_length=200,default=0,null=True,blank=True)
+    cashier = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,default=0)
+    grandtotal=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
+    totalpertype=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
+    diff=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
     comment = models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
@@ -120,4 +121,4 @@ class Saleslog(models.Model):
         verbose_name_plural = "SALES LOG"
         
     def __str__(self):
-        return self.customer.first_name
+        return self.cashier.first_name

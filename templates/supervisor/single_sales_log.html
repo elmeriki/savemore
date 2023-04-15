@@ -1,0 +1,126 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Single sales log process  | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+  <!-- .wrapper -->
+  <div class="wrapper">
+    <!-- .page -->
+    <div class="page">
+      <!-- .page-inner -->
+      <div class="page-inner">
+        <!-- .page-title-bar -->
+        <header class="page-title-bar">
+          <div class="d-flex justify-content-between">
+            {% if messages %}
+            {% for message in messages %}
+            <h1 class="page-title"> {{message}} </h1>
+            {% endfor %}
+            {% else %}
+            <h1 class="page-title">REPORT SUMMARY  {{cashier_name.first_name | upper}} </h1>
+            {% endif %}
+            <div class="btn-toolbar">
+              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
+            </div>
+          </div>
+        </header><!-- /.page-title-bar -->
+
+        {% if supervisor_salesrecod_check > 0 and supervisor_salesrecod_check > 0 %}
+
+        <!-- .page-section -->
+        <div class="page-section">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <!-- .card-header -->
+            <div class="card-header">
+            <!-- .card-body -->
+            <div class="card-body">
+              <!-- .table -->
+              <table id="invoicesTable" class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width: 180px"> CASHIN CATEGORY </th>
+                    <th>TOTAL</th>
+                    <th>SALES</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- create empty row to passing html validator -->
+                  <tr>
+                    <td>QADADIC</td>
+                    <td>R {{qadadic_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr>
+                    <td>STS </td>
+                    <td>R {{sts_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr>
+                    <td>PAPERS </td>
+                    <td>R {{papers_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr>
+                    <td>NOTES</td>
+                    <td>R {{note_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr>
+                    <td>KAZANG </td>
+                    <td>R {{kazang_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr>
+                    <td>SWIPES </td>
+                    <td>R {{swipes_total_sum}}</td>
+                    <td>NA</td>
+                  </tr>
+                  <tr class="text-primary">
+                    <td><h6>TOTAL</h6></td>
+                    <td><h6>R {{grand_total}}</h6></td>
+                    <td><h6><a class="btn btn-primary" href="/record_sales/{{userid}}/{{grand_total}}">Process</a></h6></td>
+                  </tr>
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
+        </div><!-- /.page-section -->
+
+{% else %}
+                <!-- .page-section -->
+                <div class="page-section">
+                  <!-- .card -->
+                  <div class="card card-fluid">
+                    <!-- .card-header -->
+                    <div class="card-header">
+                    <!-- .card-body -->
+                    <div class="card-body">
+                      <!-- .table -->
+                      <table id="invoicesTable" class="table">
+                        <!-- thead -->
+                        <thead>
+                          <tr>
+                            <th style="min-width: 180px" class="text-primary">EITHER SALES SUMMARY CANNOT BE PROCESS IF THE CASHIER REVIEW IS NOT COMPLETED OR THERE IS NOT SUMMARY TO PROCESS </th>
+                          </tr>
+                        </thead><!-- /thead -->
+                      </table><!-- /.table -->
+                    </div><!-- /.card-body -->
+                  </div><!-- /.card -->
+                </div><!-- /.page-section -->
+
+{% endif %}
+
+
+      </div><!-- /.page-inner -->
+    </div><!-- /.page -->
+  </div><!-- /.wrapper -->
+</main><!-- /.app-main -->
+</div><!-- /.app -->
+
+
+
+{% endblock %}
