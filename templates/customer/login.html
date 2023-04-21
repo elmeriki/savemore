@@ -5,19 +5,13 @@
     <main class="auth auth-floated">
         <!-- form -->
         <form class="auth-form" action="/customer_login" method="POST">
-            {% csrf_token %}
+          {% csrf_token %}
           <div class="mb-4">
             <div class="mb-3">
-              <a href="#"><img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="72"/>
+              <a href="/"><img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="72"/>
               </a>
             </div>
-            {% if messages %}
-            {% for message in messages %}
-            <h5 class="text-primary"> {{message}} </h5>
-            {% endfor %}
-            {% else %}
             <h1 class="h3 text-primary"> Login </h1>
-            {% endif %}
           </div>
           </p><!-- .form-group -->
           <div class="form-group mb-4">
@@ -34,13 +28,14 @@
           <!-- .form-group -->
           <div class="form-group text-center">
             <div class="custom-control custom-control-inline custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="remember-me"> <label class="custom-control-label" for="remember-me">Keep me sign in</label>
+              {% for message in messages %}
+              <h6 style="color:red">{{message | upper}}</h5>              
+              {% endfor %}
+
             </div>
           </div><!-- /.form-group -->
           <!-- recovery links -->
-          {% comment %} <p class="py-2">
-            <a href="/reg_management" class="link">Administrator?</a> <span class="mx-2">·</span> <a href="#" class="link">Forgot Password?</a>
-          </p><!-- /recovery links --> {% endcomment %}
+  <br>  <br>  <br>  <br>
           <p class="text-left mb-4"> Don't have a account? <a href="/register">Create One</a>
 
           <!-- copyright -->
@@ -50,7 +45,7 @@
         <!-- .auth-announcement -->
         <div id="announcement" class="auth-announcement" style="background-image: url('{% static 'assets/images/illustration/img-1.png'  %}');">
           <div class="announcement-body">
-            <h2 class="announcement-title"> Shop Online with Ease:Your Convenient Way to SaveMore  </h2><a href="#" class="btn btn-warning"><i class="fa fa-fw fa-angle-right"></i> Download App</a>
+            <h2 class="announcement-title"> Shop Online with Ease:Your Convenient Way to SaveMore  </h2><a href="https://savemoregroup.com/" target="_blank" class="btn btn-warning"><i class="fa fa-fw fa-angle-right"></i> Visit Our Website</a>
           </div>
         </div>
       </main>

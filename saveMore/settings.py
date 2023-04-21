@@ -162,3 +162,5 @@ EMAIL_HOST_PASSWORD ='Fifa@2020'
 
 TIME_ZONE = 'Africa/Harare'
 USE_TZ =True
+
+DEFAULT_CHARSET = 'utf-8'
