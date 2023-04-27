@@ -36,7 +36,8 @@
                     <th> Date Join </th>
                     <th> Branch </th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Activate</th>
+                    <th>Diactivate</th>
                   </tr>
                 </thead><!-- /thead -->
                 <!-- tbody -->
@@ -88,8 +89,17 @@
 
                         {% endif %}
                       </form>
-                      
                   </td>
+                  <td class="align-middle" class="btn btn-primary"> 
+                    <form action="/diactivate_account/{{new_account_list.id}}"  method="POST">
+                      {% csrf_token %}
+                      {% if new_account_list.is_activation == True  %}
+                      <input type="submit" class="btn btn-danger" value="Diactivate">
+                      {% else %}
+                      <input type="submit" disabled class="btn btn-danger" value="Diactivate">
+                      {% endif %}
+                    </form>
+                </td>
                   </tr>
                   {% endfor %}
                   <!-- /tr -->

@@ -299,7 +299,7 @@ def save_paperView(request,id):
         booknoleng = len(str(bookno))
         if booknoleng < 4 or booknoleng > 4:
             messages.info(request,'Book Number must 4 Numbers')
-            return redirect(f'/add_qadadic/{id}')
+            return redirect(f'/add_paper/{id}')
         if booknoleng == 4:
             save_papers_values=Papers(customer=customer_instance,bookno=bookno,amount=amount,cashierorid=id)
             if save_papers_values:
@@ -319,8 +319,8 @@ def add_paperView(request,id):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        paper_list = Papers.objects.filter(customer=customer_instance,cashierorid=id)
-        admin_status = int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
+        paper_list =Papers.objects.filter(customer=customer_instance,cashierorid=id)
+        admin_status=int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
         data={
         'id':id,
         'paper_list':paper_list,
@@ -469,7 +469,7 @@ def save_add_stsView(request,id):
         booknoleng = len(str(bookno))
         if booknoleng < 4 or booknoleng > 4:
             messages.info(request,'Book Number must 4 Numbers')
-            return redirect(f'/add_qadadic/{id}')
+            return redirect(f'/add_sts/{id}')
         if booknoleng == 4:
             save_sts_values=Sts(customer=customer_instance,bookno=bookno,amount=amount,cashierorid=id)
             if save_sts_values:

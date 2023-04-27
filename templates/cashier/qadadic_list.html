@@ -53,17 +53,17 @@
                     </td>
                     <td class="align-middle">
                       {% if qadadic_orders.adminstatus == "0" %} 
-                      <strong>Pending</strong>
+                      <span>Pending</span>
                       {% else %}
                       <span>Success</span>
                       {% endif %}
     
                     <td class="align-middle"> 
-                            <span class="badge badge-success">ZAR{{qadadic_orders.amount}}</span>
+                            <h6>R{{qadadic_orders.amount}}</h6>
                          </td>
 
                          <td class="align-middle"> 
-                          <span class="badge badge-success">ZAR{{qadadic_orders.actualamount}}</span>
+                          <h6>R{{qadadic_orders.actualamount}}</h6>
                        </td>
                     
                     <td class="align-middle"> 

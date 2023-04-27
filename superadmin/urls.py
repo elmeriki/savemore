@@ -4,6 +4,7 @@ from superadmin import views
 urlpatterns = [
     path('approve_account', views.approve_accountView, name='approve_accountView'),
     path('activate_account/<int:id>', views.approved_accountView, name='approved_accountView'),
+    path('diactivate_account/<int:id>', views.diactivate_accountView, name='diactivate_accountView'),
     path('promotion', views.promotionView, name='promotionView'),
     path('send_promo', views.send_promoView, name='send_promoView'),
     path('send_to_all_customer_promo', views.send_to_all_customer_promoView, name='send_to_all_customer_promoView'),

@@ -30,7 +30,7 @@ from random_id import random_id
 @login_required(login_url='/')  
 def approve_accountView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
-        new_account_list = User.objects.filter(is_activation=False,is_customer=False).exclude(is_superuser=True) | User.objects.filter(is_activation=True,is_customer=False).exclude(is_superuser=True)
+        new_account_list = User.objects.filter(is_activation=False,is_customer=False).exclude(is_superuser=True).exclude(is_ceo=True) | User.objects.filter(is_activation=True,is_customer=False).exclude(is_superuser=True).exclude(is_ceo=True)
         data = {
         'new_account_list':new_account_list
         }
@@ -77,6 +77,16 @@ def approved_accountView(request,id):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
         activate_status = User.objects.filter(id=id).update(is_activation=True)
         if activate_status:
+            return redirect('/approve_account')
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def diactivate_accountView(request,id):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        diactivate_status = User.objects.filter(id=id).update(is_activation=False)
+        if diactivate_status:
             return redirect('/approve_account')
     else:
         return redirect('/')

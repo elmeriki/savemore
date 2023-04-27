@@ -51,17 +51,17 @@
                     </td>
                     <td class="align-middle"> 
                       {% if sts_values_list.adminstatus == "0" %} 
-                      <strong>Pending</strong>
+                      <span>Pending</span>
                     {% else %}
                     <span>Success</span>
                     {% endif %}                
     
                     <td class="align-middle"> 
-                            <span class="badge badge-success">ZAR{{sts_values_list.amount}}</span>
+                            <h6>R{{sts_values_list.amount}}</h6>
                          </td>
 
                     <td class="align-middle"> 
-                          <span class="badge badge-success">ZAR{{sts_values_list.actualamount}}</span>
+                          <h6>R{{sts_values_list.actualamount}}</h6>
                       </td>
                     
                     <td class="align-middle"> 
