@@ -21,6 +21,8 @@ from django.views.generic import View
 from savemauth.models import *
 from customer.models import *
 from cashiers.models import *
+from random_id import random_id
+import string 
 
 @login_required(login_url='/')  
 def cashier_dashboardView(request):
@@ -396,7 +398,7 @@ def new_cashier_orderView(request,type):
             messages.info(request,f'You are authorise to create a new {type} in 24 hours.')
             return redirect(f'/confirm_creating_order/{type}')
         
-        cashoutid = random.randint(8,100000) + 2
+        cashoutid = random_id(length=8,character_set=string.digits)
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Qadadic":
             save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
             save_cashout_id.save()

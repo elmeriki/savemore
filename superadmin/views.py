@@ -22,6 +22,8 @@ from savemauth.models import *
 from customer.models import *
 from superadmin.models import *
 from stock.models import *
+import string 
+from random_id import random_id
 
 
 
@@ -172,8 +174,7 @@ def add_to_cartView(request,id):
         customer_username = request.user.username
         customer_instance = User.objects.get(username=customer_username)
         if not Order.objects.filter(customer=customer_instance,status=0):
-            import random
-            orderid = random.randint(8,100000)
+            orderid = random_id(length=7,character_set=string.digits)
             create_new_order = Order(customer=customer_instance,orderid=orderid)
             create_new_order.save()
         customer_order_id_instance = Order.objects.filter(status=0,customer=customer_instance)
