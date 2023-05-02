@@ -165,33 +165,68 @@
                   <li class="menu-item has-active">
                     <a href="/cashier_dashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
                   </li><!-- /.menu-item -->
-          
-                
+                  {% for cashiers_permission in cashiers_permission %}
+                  {% if cashiers_permission.types == "Qadadic" %}
                   <li class="menu-item has-child">
                     <a href="/add_qadadic_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Qadadic</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
-          
+                  {% else %}
+
+                  {% endif %}
+                  {% endfor %}
                   <!-- .menu-item -->
+
+                  {% for cashiers_permission in cashiers_permission %}
+                  {% if cashiers_permission.types == "Sts" %}
                   <li class="menu-item has-child">
                     <a href="/sts_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">STS</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
+                  {% else %}
+
+                  {% endif %}
+                  {% endfor %}
                   <!-- .menu-item -->
                       <!-- .menu-item -->
+                      {% for cashiers_permission in cashiers_permission %}
+                      {% if cashiers_permission.types == "Papers" %}
                       <li class="menu-item">
                         <a href="/papers_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Papers</span></a>
                       </li><!-- /.menu-item -->
-  
+                      {% else %}
+
+                      {% endif %}
+                      {% endfor %}
+                  
+                  {% for cashiers_permission in cashiers_permission %}
+                  {% if cashiers_permission.types == "Notes" %}
                   <li class="menu-item">
                     <a href="/notes_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Notes</span></a>
                   </li><!-- /.menu-item -->
+
+                  {% else %}
+
+                  {% endif %}
+                  {% endfor %}
                     <!-- .menu-item -->
+                    {% for cashiers_permission in cashiers_permission %}
+                    {% if cashiers_permission.types == "Kazang" %}
                     <li class="menu-item">
                       <a href="/kazang_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Kazang</span></a>
                     </li><!-- /.menu-item -->
+                    {% else %}
+
+                    {% endif %}
+                    {% endfor %}
                     <!-- .menu-item -->
+                    {% for cashiers_permission in cashiers_permission %}
+                    {% if cashiers_permission.types == "Swipes" %}
                     <li class="menu-item">
                       <a href="/swipe_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Swipes</span></a>
                     </li><!-- /.menu-item -->
+                    {% else %}
+
+                    {% endif %}
+                    {% endfor %}
                             <!-- .menu-header -->
                             <li class="menu-header">OTHERS </li><!-- /.menu-header -->
 
@@ -200,7 +235,6 @@
                               <a href="/cashier_review" class="menu-link"><span class="menu-icon oi oi-chat"></span> <span class="menu-text">My Summary Review</span></a>
                             </li><!-- /.menu-item -->
                         <!-- .menu-item -->
-                   
                 </ul><!-- /.menu -->
               </nav><!-- /.stacked-menu -->
             </div><!-- /.aside-menu -->
@@ -219,7 +253,7 @@
           
                 
                   <li class="menu-item has-child">
-                    <a href="/processed_log" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Process Log</span></a> <!-- child menu -->
+                    <a href="/processed_log" class="menu-link"><span class="menu-icon oi oi-person"></span> <span class="menu-text">Report History</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
           
                   <!-- .menu-item -->
@@ -229,7 +263,7 @@
   
                   <!-- .menu-item -->
                   <li class="menu-item has-child">
-                    <a href="/sales_log" class="menu-link"><span class="menu-icon oi oi-pencil"></span> <span class="menu-text">Sales Log</span></a> <!-- child menu -->
+                    <a href="/sales_log" class="menu-link"><span class="menu-icon oi oi-pencil"></span> <span class="menu-text">Daily Report</span></a> <!-- child menu -->
                   </li><!-- /.menu-item -->
                   <!-- .menu-item -->
           

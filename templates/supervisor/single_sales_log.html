@@ -18,7 +18,7 @@
             <h1 class="page-title"> {{message}} </h1>
             {% endfor %}
             {% else %}
-            <h1 class="page-title">REPORT SUMMARY  {{cashier_name.first_name | upper}} </h1>
+            <p><strong>REPORT SUMMARY  {{cashier_name.first_name | upper}} <strong></p>
             {% endif %}
             <div class="btn-toolbar">
               <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
@@ -26,7 +26,7 @@
           </div>
         </header><!-- /.page-title-bar -->
 
-        {% if supervisor_salesrecod_check > 0 and supervisor_salesrecod_check > 0 %}
+        {% if supervisor_salesrecod_check > 0 and supervisor_salesrecod_check > 0 and grand_total > 0 %}
 
         <!-- .page-section -->
         <div class="page-section">
@@ -49,40 +49,73 @@
                 <!-- tbody -->
                 <tbody>
                   <!-- create empty row to passing html validator -->
+                  {% if qadadic_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>QADADIC</td>
                     <td>R {{qadadic_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
+          
+                  {% if sts_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>STS </td>
                     <td>R {{sts_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
+
+                  {% if papers_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>PAPERS </td>
                     <td>R {{papers_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
+
+                  {% if note_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>NOTES</td>
                     <td>R {{note_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
+
+                  {% if kazang_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>KAZANG </td>
                     <td>R {{kazang_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
+
+                  {% if swipes_total_sum == 0 %}
+
+                  {% else %}
                   <tr>
                     <td>SWIPES </td>
                     <td>R {{swipes_total_sum}}</td>
-                    <td>NA</td>
+                    <td> </td>
                   </tr>
+                  {% endif %}
                   <tr class="text-primary">
                     <td><h6>TOTAL</h6></td>
                     <td><h6>R {{grand_total}}</h6></td>
-                    <td><h6><a class="btn btn-primary" href="/record_sales/{{userid}}/{{grand_total}}">Process</a></h6></td>
+                    {% if supervisor_salesrecod_check_count == 6 %}
+                    <td><h6><a class="btn btn-success" href="/record_sales/{{userid}}/{{grand_total}}">Record Sales</a></h6></td>
+                    {% else %}
+                    <td><h6><a class="btn btn-warning" href="#">Not Completed</a></h6></td>
+                    {% endif %}
                   </tr>
                 </tbody><!-- /tbody -->
               </table><!-- /.table -->

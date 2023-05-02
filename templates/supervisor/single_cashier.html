@@ -21,10 +21,9 @@
                 </p> <!-- .dropdown-menu -->
                 {% endfor %}
                 {% else %}
-                <p >
-                  CASHIER DAILY CAPTURES
+                <p>
+                  CASHIER DAILY CAPTURES {{fetch_cashier_names | upper}}
                   </p> <!-- .dropdown-menu -->
-
                 {% endif %}
                 <div class="dropdown-menu stop-propagation">
                   <div class="dropdown-arrow"></div>
@@ -186,10 +185,10 @@
           <div class="d-flex justify-content-between">
             {% if messages %}
             {% for message in messages %}
-            <h1 class="page-title"> {{message}} </h1>
+            <p> {{message}} </p>
             {% endfor %}
             {% else %}
-            <h1 class="page-title"></h1>
+            <p></p>
             {% endif %}
             <div class="btn-toolbar">
               <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
@@ -209,7 +208,7 @@
                         <!-- thead -->
                         <thead>
                           <tr>
-                            <th style="min-width: 180px" class="text-primary">THERE IS NOT CASHIN DATA FOR YOU TO SUPERVISE</th>
+                            <th style="min-width: 180px" class="text-primary">THERE IS NO CASHIN DATA FOR YOU TO SUPERVISE</th>
                           </tr>
                         </thead><!-- /thead -->
                       </table><!-- /.table -->

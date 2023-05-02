@@ -29,13 +29,13 @@ def cashier_dashboardView(request):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
+        cashiers_permission =Cashierpermision.objects.filter(customer=customer_instance) 
         qadadic_values = CashierOrders.objects.filter(customer=customer_instance,types="Qadadic")
         sts_values = CashierOrders.objects.filter(customer=customer_instance,types="Sts")
         notes_values=CashierOrders.objects.filter(customer=customer_instance,types="Note")
         papers_values=CashierOrders.objects.filter(customer=customer_instance,types="Papers")
         kazang_values=CashierOrders.objects.filter(customer=customer_instance,types="Kazang")
         swipes_values=CashierOrders.objects.filter(customer=customer_instance,types="Swipes")
-
 
         data  = {
         'qadadic_values':qadadic_values,
@@ -44,6 +44,7 @@ def cashier_dashboardView(request):
         'papers_values':papers_values,
         'kazang_values':kazang_values,
         'swipes_values':swipes_values,
+        'cashiers_permission':cashiers_permission
         # 'sts_tota_sum':sts_tota_sum,
         # 'qadadic_tota_sum':qadadic_tota_sum,
         # 'note_tota_sum':note_tota_sum
@@ -189,7 +190,7 @@ def add_stsView(request,id):
         username=request.user.username
         customer_instance =User.objects.get(username=username)
         sts_list = Sts.objects.filter(customer=customer_instance,cashierorid=id)
-        admin_status = int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
+        admin_status=int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
         data={
         'id':id,
         'sts_list':sts_list,
@@ -400,33 +401,33 @@ def new_cashier_orderView(request,type):
         
         cashoutid = random_id(length=8,character_set=string.digits)
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Qadadic":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Qadadic_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Qadadic_cashout_id.save()
             return redirect('/add_qadadic_list')
         
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Sts":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Sts_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Sts_cashout_id.save()
             return redirect('/sts_list')
         
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Papers":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Papers_Papers_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Papers_Papers_cashout_id.save()
             return redirect('/papers_list')
         
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Note":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Note_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Note_cashout_id.save()
             return redirect('/notes_list')
         
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Kazang":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Kazang_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Kazang_cashout_id.save()
             return redirect('/kazang_list')
         
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Swipes":
-            save_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type)
-            save_cashout_id.save()
+            save_Swipes_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_Swipes_cashout_id.save()
             return redirect('/swipe_list')
     else:
         return redirect('/')

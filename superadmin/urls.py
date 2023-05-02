@@ -2,6 +2,9 @@ from django.urls import path,include
 from superadmin import views
 
 urlpatterns = [
+    path('cashier_permision/<str:userid>', views.cashier_permisionView, name='cashier_permisionView'),
+    path('save_cashier_permision/<str:userid>', views.save_cashier_permisionView, name='save_cashier_permisionView'),
+    path('delete_cashier_permission/<str:userid>/<str:types>', views.delete_cashier_permissionView, name='delete_cashier_permissionView'),
     path('approve_account', views.approve_accountView, name='approve_accountView'),
     path('activate_account/<int:id>', views.approved_accountView, name='approved_accountView'),
     path('diactivate_account/<int:id>', views.diactivate_accountView, name='diactivate_accountView'),

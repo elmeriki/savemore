@@ -24,7 +24,7 @@ from superadmin.models import *
 from stock.models import *
 import string 
 from random_id import random_id
-
+from cashiers.models import *
 
 
 @login_required(login_url='/')  
@@ -35,6 +35,49 @@ def approve_accountView(request):
         'new_account_list':new_account_list
         }
         return render(request,'customer/approve_account.html',context=data)
+    else:
+        return redirect('/')
+
+@login_required(login_url='/')  
+def cashier_permisionView(request,userid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        user_permision_list = Cashierpermision.objects.filter(customer=userid)
+        data = {
+            'userid':userid,
+            'user_permision_list':user_permision_list
+        }
+        return render(request,'customer/add_permision.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+@transaction.atomic  #transactional  
+def delete_cashier_permissionView(request,userid,types):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        delete_cashiere_permision =Cashierpermision.objects.filter(customer=userid,types=types).delete()
+        if delete_cashiere_permision:
+            messages.info(request,'Permision has been deleted successfuly') 
+            return redirect(f'/cashier_permision/{userid}')
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+@transaction.atomic  #transactional  
+def save_cashier_permisionView(request,userid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        if request.method == "POST":
+            types = request.POST['types']
+            cashier_instance = User.objects.get(id=userid)
+            if Cashierpermision.objects.filter(types=types,customer=cashier_instance).exists():
+                messages.info(request,'Permision has been added already') 
+                return redirect(f'/cashier_permision/{userid}')
+            else:
+                save_cashiere_permision = Cashierpermision(types=types,customer=cashier_instance)
+                if save_cashiere_permision:
+                    save_cashiere_permision.save()
+                    messages.info(request,'Permision added successfully.') 
+                return redirect(f'/cashier_permision/{userid}')
     else:
         return redirect('/')
 

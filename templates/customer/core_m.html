@@ -149,7 +149,7 @@
                 <!-- .btn-account -->
             {% if request.user.is_authenticated and request.user.is_customer %}
              <div class="dropdown d-none d-md-flex">
-              <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Customer Account</span></span></button> <!-- .dropdown-menu -->
+              <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name | upper}}</span> <span class="account-description">Customer Account</span></span></button> <!-- .dropdown-menu -->
               <div class="dropdown-menu">
                 <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                 <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
@@ -158,7 +158,7 @@
               </div>
               {% elif request.user.is_activation and request.user.is_ceo %}
               <div class="dropdown d-none d-md-flex">
-                <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Management (CEO)</span></span></button> <!-- .dropdown-menu -->
+                <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name | upper}}</span> <span class="account-description">Management (CEO)</span></span></button> <!-- .dropdown-menu -->
                 <div class="dropdown-menu">
                   <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                   <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
@@ -167,7 +167,7 @@
                 </div>
                 {% elif request.user.is_activation and request.user.is_admin %}
                 <div class="dropdown d-none d-md-flex">
-                  <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Super Admin</span></span></button> <!-- .dropdown-menu -->
+                  <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name | upper}}</span> <span class="account-description">Super Admin</span></span></button> <!-- .dropdown-menu -->
                   <div class="dropdown-menu">
                     <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                     <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
@@ -176,7 +176,7 @@
                   </div>
                   {% elif request.user.is_activation and request.user.is_cashier %}
                   <div class="dropdown d-none d-md-flex">
-                    <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Cahsier</span></span></button> <!-- .dropdown-menu -->
+                    <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name | upper}}</span> <span class="account-description">Cahsier</span></span></button> <!-- .dropdown-menu -->
                     <div class="dropdown-menu">
                       <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                       <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
@@ -185,7 +185,7 @@
                     </div>
                     {% elif request.user.is_activation and request.user.is_supervisor %}
                     <div class="dropdown d-none d-md-flex">
-                      <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name}}</span> <span class="account-description">Supervisor</span></span></button> <!-- .dropdown-menu -->
+                      <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img src="{% static 'assets/images/avatars/profile.png' %}" alt=""></span> <span class="account-summary pr-lg-4 d-none d-lg-block"><span class="account-name">{{request.user.last_name | upper}}</span> <span class="account-description">Supervisor</span></span></button> <!-- .dropdown-menu -->
                       <div class="dropdown-menu">
                         <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                         <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>

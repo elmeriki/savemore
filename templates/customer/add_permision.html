@@ -1,0 +1,127 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Add Permision | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                {% if messages %}
+
+                {% for message in messages %}
+                <p class="text-danger">
+                   {{message | upper }}
+                </p> 
+                {% endfor %}
+                {% else %}
+                <p >
+                ADD CASHIER'S PERMISION 
+                </p> 
+                {% endif %}
+                <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <a href="/admin_dashboard" class="btn btn-primary ml-auto">Close Screen</a>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+
+                 <div class="container">
+                    <form action="/save_cashier_permision/{{userid}}" method="POST">
+                    {% csrf_token %}
+                        <!-- .fieldset -->
+                        <fieldset>
+                          <div class="row">
+                            <!-- grid column -->
+                            <div class="col-md-6">
+                              <!-- .form-group -->
+                              <div class="form-group">
+                                <label for="sel1">TYPES</label> <select class="custom-select" name="types" id="sel1" required="">
+                                  <option value=""> Choose... </option>
+                                  <option value="Qadadic"> Qadadic </option>
+                                  <option value="Sts"> Sts </option>
+                                  <option value="Papers"> Papers </option>
+                                  <option value="Notes"> Notes </option>
+                                  <option value="Kazang"> Kazang </option>
+                                  <option value="Swipes"> Swipes </option>
+                                </select>
+                              </div><!-- /.form-group -->
+                            </div><!-- /grid column -->
+                            <!-- grid column -->
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="sel2">Action</label> 
+                                <button class="btn  btn-primary btn-block" type="submit">Save</button>
+                                </select>
+                              </div>
+                            </div><!-- /grid column -->
+                          </div><!-- /grid row -->
+                        </fieldset><!-- /.fieldset -->
+                      </form><!-- /.form -->
+                 </div>
+
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+
+<br><br>
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> TYPE</th>
+                    <th> DATE ADDED </th>
+                    <th> ACTIONS </th>
+
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for user_permision_list in user_permision_list %}
+                  <tr>
+  
+       
+                    <td class="align-middle"> 
+                            <h6>{{user_permision_list.types}}</h6>
+                         </td>
+
+                    <td class="align-middle"> 
+                            <span >{{user_permision_list.created_at | date}} </span>
+                 </td>
+                    </td>
+                      <td class="align-middle text-truncate">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <a href="/delete_cashier_permission/{{user_permision_list.customer.id}}/{{user_permision_list.types}}" class="text-muted">Remove Permision</a> <small class="d-block text-muted"></small>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}

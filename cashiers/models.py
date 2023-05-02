@@ -16,6 +16,21 @@ class Saleslog(models.Model):
         
     def __str__(self):
         return self.cashier.first_name
+    
+# Create your models here.
+class Cashierpermision(models.Model):
+    customer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    types = models.CharField(max_length=200,null=True,blank=True)
+    status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    adminstatus = models.CharField(max_length=200,default=0,null=True,blank=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+        
+    def __str__(self):
+        return self.types
+       
+    class Meta:
+        verbose_name_plural = "CASHIER PERMISION"
 
 # Create your models here.
 class CashierOrders(models.Model):
