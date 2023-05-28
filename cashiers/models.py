@@ -7,6 +7,7 @@ class Saleslog(models.Model):
     grandtotal=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     totalpertype=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     diff=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
+    di=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
     comment = models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
@@ -133,6 +134,19 @@ class Kazang(models.Model):
     updated_at = models.DateField(auto_now=True)
     class Meta:
         verbose_name_plural = "KAZANG"
+        
+    def __str__(self):
+        return self.cashierorid
+    
+class Acc(models.Model):
+    customer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    cashierorid =models.CharField(max_length=200,default=0,null=True,blank=True)
+    amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
+    status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    class Meta:
+        verbose_name_plural = "ACC"
         
     def __str__(self):
         return self.cashierorid

@@ -227,6 +227,21 @@
 
                     {% endif %}
                     {% endfor %}
+
+
+                    <!-- .menu-item -->
+                    {% for cashiers_permission in cashiers_permission %}
+                    {% if cashiers_permission.types == "Acc" %}
+                    <li class="menu-item">
+                      <a href="/acc_list" class="menu-link"><span class="menu-icon oi oi-cart text-primary"></span> <span class="menu-text">Acc</span></a>
+                    </li><!-- /.menu-item -->
+                    {% else %}
+
+                    {% endif %}
+                    {% endfor %}
+
+                
+
                             <!-- .menu-header -->
                             <li class="menu-header">OTHERS </li><!-- /.menu-header -->
 

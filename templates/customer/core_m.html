@@ -49,7 +49,10 @@
             <div class="top-bar-brand">
               <!-- toggle aside menu -->
               <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu" aria-label="toggle aside menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle aside menu -->
-              <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+              
+
+              {% if request.user.is_supervisor %}
+              <a href="/supervisor_dashboard"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
                   <defs>
                     <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
                   </defs>
@@ -57,6 +60,34 @@
                     <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="50"/>
                 </div>
                 </svg></a>
+                {% elif request.user.is_cashier %}
+                <a href="/cashier_dashboard"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+                  <defs>
+                    <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
+                  </defs>
+                  <div class="mb-3">
+                    <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="50"/>
+                </div>
+                </svg></a>
+                {% elif request.user.is_ceo %}
+                <a href="/admin_dashboard"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+                  <defs>
+                    <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
+                  </defs>
+                  <div class="mb-3">
+                    <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="50"/>
+                </div>
+                </svg></a>
+                {% else %}
+                <a href="/admin_dashboard"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28" viewbox="0 0 351 100">
+                  <defs>
+                    <path id="a" d="M156.538 45.644v1.04a6.347 6.347 0 0 1-1.847 3.98L127.708 77.67a6.338 6.338 0 0 1-3.862 1.839h-1.272a6.34 6.34 0 0 1-3.862-1.839L91.728 50.664a6.353 6.353 0 0 1 0-9l9.11-9.117-2.136-2.138a3.171 3.171 0 0 0-4.498 0L80.711 43.913a3.177 3.177 0 0 0-.043 4.453l-.002.003.048.047 24.733 24.754-4.497 4.5a6.339 6.339 0 0 1-3.863 1.84h-1.27a6.337 6.337 0 0 1-3.863-1.84L64.971 50.665a6.353 6.353 0 0 1 0-9l26.983-27.008a6.336 6.336 0 0 1 4.498-1.869c1.626 0 3.252.622 4.498 1.87l26.986 27.006a6.353 6.353 0 0 1 0 9l-9.11 9.117 2.136 2.138a3.171 3.171 0 0 0 4.498 0l13.49-13.504a3.177 3.177 0 0 0 .046-4.453l.002-.002-.047-.048-24.737-24.754 4.498-4.5a6.344 6.344 0 0 1 8.996 0l26.983 27.006a6.347 6.347 0 0 1 1.847 3.98zm-46.707-4.095l-2.362 2.364a3.178 3.178 0 0 0 0 4.501l2.362 2.364 2.361-2.364a3.178 3.178 0 0 0 0-4.501l-2.361-2.364z"></path>
+                  </defs>
+                  <div class="mb-3">
+                    <img class="rounded" src="{% static 'assets/images/save_logo.png' %}" alt="" height="50"/>
+                </div>
+                </svg></a>
+                {% endif %}
             </div><!-- /.top-bar-brand -->
             <!-- .top-bar-list -->
             <div class="top-bar-list">
@@ -162,7 +193,7 @@
                 <div class="dropdown-menu">
                   <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                   <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
-                  <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="#"><span class="dropdown-icon oi oi-person"></span> My Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                  <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="/ceo_profile"><span class="dropdown-icon oi oi-person"></span> My Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
                   <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
                 </div>
                 {% elif request.user.is_activation and request.user.is_admin %}
@@ -180,7 +211,7 @@
                     <div class="dropdown-menu">
                       <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
                       <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
-                      <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="#"><span class="dropdown-icon oi oi-person"></span> Cashier Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                      <h6 class="dropdown-header d-none d-md-block d-lg-none"> {{request.user.shopname}} </h6><a class="dropdown-item" href="/cashiers_profile"><span class="dropdown-icon oi oi-person"></span> Cashier Profile</a> <a class="dropdown-item" href="/logout"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
                       <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
                     </div>
                     {% elif request.user.is_activation and request.user.is_supervisor %}
@@ -257,7 +288,7 @@
     <script src="{% static 'assets/vendor/popper.js/umd/popper.min.js' %}"></script>
     <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.min.js' %}"></script> <!-- END BASE JS -->
     <!-- BEGIN PLUGINS JS -->
-    <script src="{% static 'assets/vendor/pace-progress/pace.min.js' %} "></script>
+    {% comment %} <script src="{% static 'assets/vendor/pace-progress/pace.min.js' %} "></script> {% endcomment %}
     <script src="{% static 'assets/vendor/stacked-menu/js/stacked-menu.min.js' %} "></script>
     <script src="{% static 'assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %} "></script>
     <script src="{% static 'assets/vendor/handlebars/handlebars.min.js' %} "></script>

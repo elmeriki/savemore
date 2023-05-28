@@ -16,7 +16,7 @@
           <div class="d-flex justify-content-between">
             {% if messages %}
             {% for message in messages %}
-            <h1 class="page-title"> {{message}} </h1>
+            <p class="text-primary"> {{message}} </p>
             {% endfor %}
             {% else %}
             <p><strong>CASHIERS SUMMARY REPORT </strong></p>
@@ -42,7 +42,8 @@
                   <tr>
                     <th>CASHIER'S NAMES</th>
                     <th style="min-width: 180px"> GRAND TOTAL</th>
-                    <th>SALES TOTAL</th>
+                    <th>SALES (SALES + DI)</th>
+                    <th>DI AMOUNT</th>
                     <th>DIFF TOTAL</th>
                     <th>STATUS</th>
                     <th>DATE</th>
@@ -54,9 +55,10 @@
                   <!-- create empty row to passing html validator -->
                   {% for sales_log in sales_log %}
                   <tr>
-                    <td>{{sales_log.cashier.first_name}} {{sales_log.cashier.branch}} Branch</td>
+                    <td>{{sales_log.cashier.first_name | upper}} <span class="text-primary">({{sales_log.cashier.branch}} Branch)</span></td>
                     <td>R {{sales_log.totalpertype}}.00</td>
                     <td>R {{sales_log.grandtotal}}.00</td>
+                    <td>R {{sales_log.di}}.00</td>
                     <td>R {{sales_log.diff}}.00</td>
                     <td>{{sales_log.status | upper}}</td>
                     <td>{{sales_log.created_at}}</td>

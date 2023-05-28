@@ -1,0 +1,98 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Cashier Profile | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+
+     <!-- .app-main -->
+     <main class="app-main">
+      <!-- .wrapper -->
+      <div class="wrapper">
+        <!-- .page -->
+        <div class="page">
+              <!-- .page-section -->
+              <div class="page-section">
+                <!-- grid row -->
+                <div class="row">
+                  <!-- grid column -->
+                  <div class="col-lg-4">
+                    <!-- .card -->
+                    <div class="card card-fluid">
+                      <h6 class="card-header"> My Person Informations </h6><!-- .nav -->
+                      <nav class="nav nav-tabs flex-column border-0">
+                        <a href="#" class="nav-link text-muted active">Cell Phone: {{request.user.username}}</a> <a href="#" class="nav-link">City: {{request.user.branch}}</a> <a href="#" class="nav-link">Date Join: {{request.user.date_joined | timesince}}</a> 
+                      </nav><!-- /.nav -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+                  <!-- grid column -->
+                  <div class="col-lg-8">
+                    <!-- .card -->
+                    <div class="card card-fluid">
+                      <h6 class="card-header"> Cashier's Profile </h6><!-- .card-body -->
+                      <div class="card-body">
+                        <!-- .media -->
+                        <div class="media mb-3">
+                          <!-- avatar -->
+                          <div class="user-avatar user-avatar-xl fileinput-button">
+                            <div class="fileinput-button-label"> Change photo </div><img src="{% static 'assets/images/avatars/profile.jpg' %}" alt=""> <input id="fileupload-avatar" type="file" name="avatar">
+                          </div><!-- /avatar -->
+                          <!-- .media-body -->
+                          <div class="media-body pl-3">
+                            <h3 class="card-title"> {{request.user.first_name}} </h3>
+                            <h6 class="card-subtitle text-muted">{{request.user.shopaddress}}</h6>
+                            <p class="card-text">
+                              <small>JOIN :{{request.user.date_joined | timesince}} ago </small>
+                            </p><!-- The avatar upload progress bar -->
+                            <div id="progress-avatar" class="progress progress-xs fade">
+                              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div><!-- /avatar upload progress bar -->
+                          </div><!-- /.media-body -->
+                        </div><!-- /.media -->
+                        <!-- form -->
+                        <form method="post">
+                          <!-- form row -->
+                          <!-- form row -->
+                          <div class="form-row">
+                            <!-- form column -->
+                            <label for="input02" class="col-md-3">Branch Name:</label> <!-- /form column -->
+                            <!-- form column -->
+                            <div class="col-md-9 mb-3">
+                              <input type="text" class="form-control" id="input02" value="{{request.user.branch}}">
+                            </div><!-- /form column -->
+                          </div><!-- /form row -->
+                          <!-- form row -->
+                          <div class="form-row">
+                            <!-- form column -->
+                            <label for="input03" class="col-md-3">Business Address</label> <!-- /form column -->
+                            <!-- form column -->
+                            <div class="col-md-9 mb-3">
+                              <textarea class="form-control" id="input03">{{request.user.shopaddress}}</textarea> <small class="text-muted">Appears on your profile page, 300 chars max.</small>
+                            </div><!-- /form column -->
+                          </div><!-- /form row -->
+                          <!-- form row -->
+                          <div class="form-row">
+                            <!-- form column -->
+                            <label for="input04" class="col-md-3">Active Account?</label> <!-- /form column -->
+                            <!-- form column -->
+                            <div class="col-md-9 mb-3">
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="input04" checked> <label class="custom-control-label" for="input04">Yes</label>
+                              </div>
+                            </div><!-- /form column -->
+                          </div><!-- /form row -->
+                          <hr>
+                          <!-- .form-actions -->
+                          {% comment %} <div class="form-actions">
+                            <button type="submit" class="btn btn-primary ml-auto">Update Profile</button>
+                          </div><!-- /.form-actions --> {% endcomment %}
+                        </form><!-- /form -->
+                      </div><!-- /.card-body -->
+                    </div><!-- /.card -->
+
+
+ 
+        </div><!-- /.page -->
+      </div><!-- .app-footer -->
+    </main><!-- /.app-main -->
+
+{% endblock %}

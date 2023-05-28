@@ -36,6 +36,7 @@ def cashier_dashboardView(request):
         papers_values=CashierOrders.objects.filter(customer=customer_instance,types="Papers")
         kazang_values=CashierOrders.objects.filter(customer=customer_instance,types="Kazang")
         swipes_values=CashierOrders.objects.filter(customer=customer_instance,types="Swipes")
+        acc_values=CashierOrders.objects.filter(customer=customer_instance,types="Acc")
 
         data  = {
         'qadadic_values':qadadic_values,
@@ -44,7 +45,8 @@ def cashier_dashboardView(request):
         'papers_values':papers_values,
         'kazang_values':kazang_values,
         'swipes_values':swipes_values,
-        'cashiers_permission':cashiers_permission
+        'cashiers_permission':cashiers_permission,
+        'acc_values':acc_values
         # 'sts_tota_sum':sts_tota_sum,
         # 'qadadic_tota_sum':qadadic_tota_sum,
         # 'note_tota_sum':note_tota_sum
@@ -65,6 +67,20 @@ def add_qadadicView(request,id):
         'admin_status':admin_status
         }
         return render(request,'cashier/add_qadadic.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def cashiers_profileView(request):
+    if request.user.is_authenticated and request.user.is_cashier:
+        return render(request,'cashier/cashiers_profile.html')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def ceo_profileView(request):
+    if request.user.is_authenticated and request.user.is_ceo:
+        return render(request,'cashier/ceo_profile.html')
     else:
         return redirect('/')
     
@@ -155,6 +171,23 @@ def delete_kazangView(request,cashierorderid,id):
     
 @login_required(login_url='/') 
 @transaction.atomic  #transactional  
+def delete_accView(request,cashierorderid,id):
+    if request.user.is_authenticated and request.user.is_cashier:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        
+        delete_amount = int(Acc.objects.values_list('amount', flat=True).get(id=id))
+        
+        curent_Amount = int(CashierOrders.objects.values_list('amount', flat=True).get(cashierorid=cashierorderid))
+        new_amount = curent_Amount - delete_amount
+        CashierOrders.objects.filter(customer=customer_instance,cashierorid=cashierorderid).update(amount=new_amount)
+        Acc.objects.filter(customer=customer_instance,id=id).delete()
+        return redirect(f'/add_acc/{cashierorderid}')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/') 
+@transaction.atomic  #transactional  
 def delete_swipesView(request,cashierorderid,id):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
@@ -235,6 +268,22 @@ def add_kazangView(request,id):
         return redirect('/')
     
 @login_required(login_url='/')  
+def add_accView(request,id):
+    if request.user.is_authenticated and request.user.is_cashier:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        acc_list = Acc.objects.filter(customer=customer_instance,cashierorid=id)
+        admin_status = int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
+        data={
+        'id':id,
+        'acc_list':acc_list,
+        'admin_status':admin_status
+        }
+        return render(request,'cashier/add_acc.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
 def add_wipesView(request,id):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
@@ -289,6 +338,19 @@ def swipe_listView(request):
         return render(request,'cashier/swipes_list.html',context=data)
     else:
         return render(request,'cashier/swipes_list.html',{})
+    
+@login_required(login_url='/')  
+def acc_listView(request):
+    username=request.user.username
+    customer_instance =User.objects.get(username=username)
+    acc_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Acc").order_by('-created_at')
+    if acc_values_list: 
+        data = {
+        'acc_values_list':acc_values_list
+        }
+        return render(request,'cashier/acc_list.html',context=data)
+    else:
+        return render(request,'cashier/acc_list.html',{})
 
 @login_required(login_url='/')  
 def save_paperView(request,id):
@@ -300,6 +362,9 @@ def save_paperView(request,id):
         booknoleng = len(str(bookno))
         if booknoleng < 4 or booknoleng > 4:
             messages.info(request,'Book Number must 4 Numbers')
+            return redirect(f'/add_paper/{id}')
+        if Papers.objects.filter(customer=customer_instance,bookno=bookno).exists():
+            messages.info(request,'Book Number already exists')
             return redirect(f'/add_paper/{id}')
         if booknoleng == 4:
             save_papers_values=Papers(customer=customer_instance,bookno=bookno,amount=amount,cashierorid=id)
@@ -385,6 +450,8 @@ def confirm_creating_orderView(request,type):
         'type':type
         }
         return render(request,'cashier/confirmation.html',context=data)
+    
+
 
 @login_required(login_url='/')  
 @transaction.atomic  #transactional 
@@ -395,8 +462,18 @@ def new_cashier_orderView(request,type):
         import random
         date_from = datetime.datetime.now() - datetime.timedelta(days=1)
         
+        date_from_ = datetime.datetime.now() - datetime.timedelta(days=2)
+        
         if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from):
             messages.info(request,f'You are authorise to create a new {type} in 24 hours.')
+            return redirect(f'/confirm_creating_order/{type}')
+        
+        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from_,status=0):
+            messages.info(request,f'Your Supervisor has not supervvise your previous record')
+            return redirect(f'/confirm_creating_order/{type}')
+        
+        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from_,status=1):
+            messages.info(request,f'Your Supervisor has not record sales for your previous record')
             return redirect(f'/confirm_creating_order/{type}')
         
         cashoutid = random_id(length=8,character_set=string.digits)
@@ -429,6 +506,11 @@ def new_cashier_orderView(request,type):
             save_Swipes_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
             save_Swipes_cashout_id.save()
             return redirect('/swipe_list')
+        
+        if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Acc":
+            save_acc_cashout_id = CashierOrders(customer=customer_instance,cashierorid=cashoutid,types=type,adminstatus=0)
+            save_acc_cashout_id.save()
+            return redirect('/acc_list')
     else:
         return redirect('/')
     
@@ -443,6 +525,9 @@ def save_add_qadadicView(request,id):
         booknoleng = len(str(bookno))
         if booknoleng < 4 or booknoleng > 4:
             messages.info(request,'Book Number must 4 Numbers')
+            return redirect(f'/add_qadadic/{id}')
+        if Qadadic.objects.filter(customer=customer_instance,bookno=bookno).exists():
+            messages.info(request,'Book Number already exists')
             return redirect(f'/add_qadadic/{id}')
         if booknoleng == 4:
             save_qadadic_values =Qadadic(customer=customer_instance,bookno=bookno,amount=amount,cashierorid=id)
@@ -471,6 +556,11 @@ def save_add_stsView(request,id):
         if booknoleng < 4 or booknoleng > 4:
             messages.info(request,'Book Number must 4 Numbers')
             return redirect(f'/add_sts/{id}')
+        
+        if Sts.objects.filter(customer=customer_instance,bookno=bookno).exists():
+            messages.info(request,'Book Number already exists')
+            return redirect(f'/add_sts/{id}')
+        
         if booknoleng == 4:
             save_sts_values=Sts(customer=customer_instance,bookno=bookno,amount=amount,cashierorid=id)
             if save_sts_values:
@@ -498,6 +588,25 @@ def save_add_kazangView(request,id):
             new_amount = curent_Amount + amount
             CashierOrders.objects.filter(customer=customer_instance,cashierorid=id).update(amount=new_amount)
             return redirect(f'/add_kazang/{id}')
+        else:
+            return redirect('/')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+@transaction.atomic  #transactional 
+def save_add_accView(request,id):
+    if request.user.is_authenticated and request.user.is_cashier and request.method=="POST":
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        amount = int(request.POST['amount'])
+        save_acc_values=Acc(customer=customer_instance,amount=amount,cashierorid=id)
+        if save_acc_values:
+            save_acc_values.save()
+            curent_Amount = int(CashierOrders.objects.values_list('amount', flat=True).get(cashierorid=id))
+            new_amount = curent_Amount + amount
+            CashierOrders.objects.filter(customer=customer_instance,cashierorid=id).update(amount=new_amount)
+            return redirect(f'/add_acc/{id}')
         else:
             return redirect('/')
     else:
@@ -634,6 +743,25 @@ def update_kazangView(request,id,pk):
         data={
         'id':id,
         'kazang_list':kazang_list,
+        'admin_status':admin_status,
+        'single_update':single_update
+        }
+        return render(request,'cashier/edith_kazang.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+@transaction.atomic  #transactional 
+def update_accView(request,id,pk):
+    if request.user.is_authenticated and request.user.is_cashier:
+        username=request.user.username
+        customer_instance =User.objects.get(username=username)
+        acc_list = Acc.objects.filter(customer=customer_instance,cashierorid=id)
+        single_update = Acc.objects.filter(customer=customer_instance,id=pk)
+        admin_status = int(CashierOrders.objects.values_list('adminstatus', flat=True).get(cashierorid=id))
+        data={
+        'id':id,
+        'acc_list':acc_list,
         'admin_status':admin_status,
         'single_update':single_update
         }

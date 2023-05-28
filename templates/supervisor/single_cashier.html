@@ -21,8 +21,8 @@
                 </p> <!-- .dropdown-menu -->
                 {% endfor %}
                 {% else %}
-                <p>
-                  CASHIER DAILY CAPTURES {{fetch_cashier_names | upper}}
+                <p class="text-primary">
+                  CASHIER DAILY CAPTURES FOR {{fetch_cashier_names | upper}}
                   </p> <!-- .dropdown-menu -->
                 {% endif %}
                 <div class="dropdown-menu stop-propagation">
@@ -185,7 +185,7 @@
           <div class="d-flex justify-content-between">
             {% if messages %}
             {% for message in messages %}
-            <p> {{message}} </p>
+            <p> {{message | upper}} </p>
             {% endfor %}
             {% else %}
             <p></p>
@@ -208,7 +208,7 @@
                         <!-- thead -->
                         <thead>
                           <tr>
-                            <th style="min-width: 180px" class="text-primary">THERE IS NO CASHIN DATA FOR YOU TO SUPERVISE</th>
+                            <th style="min-width: 180px" class="text-primary">THERE IS NO CASHIN DATA FOR {{fetch_cashier_instance.first_name | upper }} TO SUPERVISE</th>
                           </tr>
                         </thead><!-- /thead -->
                       </table><!-- /.table -->

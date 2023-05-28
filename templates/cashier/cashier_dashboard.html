@@ -373,6 +373,63 @@
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
 
+
+                  <!-- grid column -->
+                  <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                      <!-- .card-header -->
+                      <div class="card-header d-flex">
+                        <!-- .dropdown -->
+                        <div class="dropdown">
+                          <h3 id="client-tasks-tab" class="card-title"> ACC RECORDS</h3>
+                        </div><!-- /.dropdown -->
+                      </div><!-- /.card-header -->
+                      <!-- .table-responsive -->
+                      <div class="table-responsive">
+                        <!-- .table -->
+                        <table class="table">
+                          <!-- thead -->
+                          <thead>
+                            <tr>
+                              <th style="min-width:256px">REVIEWS </th>
+                              <th> AMOUNT </th>
+                              <th> ACTUAL COUNT </th>
+                              <th> DATES </th>
+                            </tr>
+                          </thead><!-- /thead -->
+                          <!-- tbody -->
+                          <tbody>
+                            <!-- tr -->
+                            {% for acc_values in acc_values %}
+                            <tr>
+                              <td class="align-middle text-truncate">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <a href="#">{% if acc_values.adminstatus == "0"  %} NA {% else %} Success {% endif %} </a> <small class="d-block text-muted">Acc Ref <a href="/add_kazang/{{acc_values.cashierorid}}">{{acc_values.cashierorid}}</a></small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="align-middle"> R{{acc_values.amount}} </td>
+                              {% if acc_values.actualamount == 0  %}
+                              <td class="align-middle"> Pending </td>
+                              {% else %}
+                              <td class="align-middle"> R{{acc_values.actualamount}} </td>
+                              {% endif %}
+                              
+                              <td class="align-middle">{{acc_values.created_at}}</td>
+                            </tr>
+                            <!-- /tr -->
+                          
+                            {% endfor %}
+                            <!-- tr -->
+                            <!-- tr -->
+                            </tr><!-- /tr -->
+                          </tbody><!-- /tbody -->
+                        </table><!-- /.table -->
+                      </div><!-- /.table-responsive -->
+                    </div><!-- /.card -->
+                  </div><!-- /grid column -->
+
                 </div><!-- /grid row -->
                 <!-- card-deck-xl -->
               </div><!-- /.page-section -->

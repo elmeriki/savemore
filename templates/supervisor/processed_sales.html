@@ -16,7 +16,7 @@
                 <header class="page-title-bar">
                   <div class="d-flex flex-column flex-md-row">
                     <p class="lead">
-                      <span class="font-weight-bold">Hi, {{request.user.first_name}}.</span> <span class="d-block text-primary">Record sales for each listed Cashier</span>
+                      <span class="font-weight-bold">Hi, {{request.user.first_name}}.</span> <span class="d-block text-primary">Select Cashier And Record Daily Sales</span>
                     </p>
                     <div class="ml-auto">
                     </div>
@@ -42,7 +42,7 @@
                           </div><!-- /avatars -->
                           <!-- /.media -->
                           <h5 class="card-title">
-                            <a href="/single_processed_sales/{{cashier_list.id}}">{{cashier_list.first_name}}</a>
+                            <a href="/single_processed_sales/{{cashier_list.id}}">{{cashier_list.first_name | upper }}</a>
                           </h5>
                           <p class="card-subtitle text-muted"> Last Login {{cashier_list.last_login | timesince }} ago </p><!-- .my-3 -->
                           <div class="my-3">
