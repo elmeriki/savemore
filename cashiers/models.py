@@ -60,6 +60,7 @@ class Qadadic(models.Model):
     bookno =  models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=  models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -76,6 +77,7 @@ class Sts(models.Model):
     bookno =  models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -90,6 +92,7 @@ class Papers(models.Model):
     bookno =  models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -103,6 +106,7 @@ class Notes(models.Model):
     cashierorid =models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -117,6 +121,7 @@ class Swipes(models.Model):
     cashierorid =models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -130,6 +135,7 @@ class Kazang(models.Model):
     cashierorid =models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:
@@ -143,6 +149,7 @@ class Acc(models.Model):
     cashierorid =models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
+    done=models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     class Meta:

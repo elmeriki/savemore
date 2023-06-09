@@ -47,10 +47,10 @@
                   <tr>
                     {% ifchanged %}
                       <br>
-                    <h6><a href="#" class="text-danger">{{processed_orders.customer.first_name| upper}} (DATE {{processed_orders.created_at}})<hr></a></h6>
+                    <p class="text-primary">{{processed_orders.customer.first_name| upper}} LOG FROM: {{startdate}} TO: {{enddate}}<hr></p>
                     {% endifchanged %}
                     
-                    <li><a href="/processed_single_order/{{processed_orders.cashierorid}}/{{processed_orders.types}}">{{processed_orders.types}} (TOTAL:R{{processed_orders.amount}})</a></li>
+                    <li><a class="text-dark" href="/processed_single_order/{{processed_orders.cashierorid}}/{{processed_orders.types}}">TOTAL SALES FOR {{processed_orders.types | upper}} R{{processed_orders.amount}} </a></li>
 
                   </tr>
                   {% endfor %}

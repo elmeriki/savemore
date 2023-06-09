@@ -19,10 +19,12 @@
             <p class="text-primary"> {{message}} </p>
             {% endfor %}
             {% else %}
-            <p><strong>CASHIERS SUMMARY REPORT </strong></p>
+            <p><strong>CASHIERS SUMMARY REPORT</strong></p>
             {% endif %}
             <div class="btn-toolbar">
-              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
+              <a href="/print" class="text-white" target="_blank">
+              <button class="btn btn-primary ml-auto">Download</button>
+            </a>
             </div>
           </div>
         </header><!-- /.page-title-bar -->
@@ -56,15 +58,16 @@
                   {% for sales_log in sales_log %}
                   <tr>
                     <td>{{sales_log.cashier.first_name | upper}} <span class="text-primary">({{sales_log.cashier.branch}} Branch)</span></td>
-                    <td>R {{sales_log.totalpertype}}.00</td>
-                    <td>R {{sales_log.grandtotal}}.00</td>
-                    <td>R {{sales_log.di}}.00</td>
-                    <td>R {{sales_log.diff}}.00</td>
-                    <td>{{sales_log.status | upper}}</td>
+                    <td>R {{sales_log.totalpertype}}</td>
+                    <td>R {{sales_log.grandtotal}}</td>
+                    <td>R {{sales_log.di}}</td>
+                    <td>R {{sales_log.diff}}</td>
+                    <td class="text-primary">{{sales_log.status | upper}}</td>
                     <td>{{sales_log.created_at}}</td>
                     <td>{{sales_log.comment}}</td>
                   </tr>
                   {% endfor %}
+                 
                 </tbody><!-- /tbody -->
               </table><!-- /.table -->
             </div><!-- /.card-body -->

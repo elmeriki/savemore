@@ -29,14 +29,23 @@ def cashier_dashboardView(request):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        cashiers_permission =Cashierpermision.objects.filter(customer=customer_instance) 
-        qadadic_values = CashierOrders.objects.filter(customer=customer_instance,types="Qadadic")
-        sts_values = CashierOrders.objects.filter(customer=customer_instance,types="Sts")
-        notes_values=CashierOrders.objects.filter(customer=customer_instance,types="Note")
-        papers_values=CashierOrders.objects.filter(customer=customer_instance,types="Papers")
-        kazang_values=CashierOrders.objects.filter(customer=customer_instance,types="Kazang")
-        swipes_values=CashierOrders.objects.filter(customer=customer_instance,types="Swipes")
-        acc_values=CashierOrders.objects.filter(customer=customer_instance,types="Acc")
+        cashiers_permission=Cashierpermision.objects.filter(customer=customer_instance) 
+        
+        Qadadic = Cashierpermision.objects.filter(customer=customer_instance,types="Qadadic")
+        Sts = Cashierpermision.objects.filter(customer=customer_instance,types="Sts")
+        Note = Cashierpermision.objects.filter(customer=customer_instance,types="Note")
+        Papers = Cashierpermision.objects.filter(customer=customer_instance,types="Papers")
+        Kazang = Cashierpermision.objects.filter(customer=customer_instance,types="Kazang")
+        Swipes = Cashierpermision.objects.filter(customer=customer_instance,types="Swipes")
+        Acc = Cashierpermision.objects.filter(customer=customer_instance,types="Acc")
+
+        qadadic_values = CashierOrders.objects.filter(customer=customer_instance,types="Qadadic").order_by('-created_at','-cashierorid')[:12]
+        sts_values = CashierOrders.objects.filter(customer=customer_instance,types="Sts").order_by('-created_at','-cashierorid')[:12]
+        notes_values=CashierOrders.objects.filter(customer=customer_instance,types="Note").order_by('-created_at','-cashierorid')[:12]
+        papers_values=CashierOrders.objects.filter(customer=customer_instance,types="Papers").order_by('-created_at','-cashierorid')[:12]
+        kazang_values=CashierOrders.objects.filter(customer=customer_instance,types="Kazang").order_by('-created_at','-cashierorid')[:12]
+        swipes_values=CashierOrders.objects.filter(customer=customer_instance,types="Swipes").order_by('-created_at','-cashierorid')[:12]
+        acc_values=CashierOrders.objects.filter(customer=customer_instance,types="Acc").order_by('-created_at','-cashierorid')[:12]
 
         data  = {
         'qadadic_values':qadadic_values,
@@ -46,10 +55,14 @@ def cashier_dashboardView(request):
         'kazang_values':kazang_values,
         'swipes_values':swipes_values,
         'cashiers_permission':cashiers_permission,
-        'acc_values':acc_values
-        # 'sts_tota_sum':sts_tota_sum,
-        # 'qadadic_tota_sum':qadadic_tota_sum,
-        # 'note_tota_sum':note_tota_sum
+        'acc_values':acc_values,
+        'Qadadic':Qadadic,
+        'Sts':Sts,
+        'Note':Note,
+        'Papers':Papers,
+        'Kazang':Kazang,
+        'Swipes':Swipes,
+        'Acc':Acc,
         }
         return render(request,'cashier/cashier_dashboard.html',context=data)
 
@@ -209,7 +222,7 @@ def add_qadadic_listView(request):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        qadadic_orders = CashierOrders.objects.filter(customer=customer_instance,types="Qadadic").order_by('-created_at')
+        qadadic_orders = CashierOrders.objects.filter(customer=customer_instance,types="Qadadic").order_by('-created_at','-cashierorid')[:12]
         data = {
         'qadadic_orders':qadadic_orders
         }
@@ -303,7 +316,7 @@ def add_wipesView(request,id):
 def papers_listView(request):
     username=request.user.username
     customer_instance =User.objects.get(username=username)
-    paper_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Papers").order_by('-created_at')
+    paper_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Papers").order_by('-created_at','-cashierorid')[:12]
     if paper_values_list: 
         data = {
         'paper_values_list':paper_values_list
@@ -316,7 +329,7 @@ def papers_listView(request):
 def kazang_listView(request):
     username=request.user.username
     customer_instance =User.objects.get(username=username)
-    kazang_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Kazang").order_by('-created_at')
+    kazang_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Kazang").order_by('-created_at','-cashierorid')[:12]
     if kazang_values_list: 
         data = {
         'kazang_values_list':kazang_values_list
@@ -330,7 +343,7 @@ def kazang_listView(request):
 def swipe_listView(request):
     username=request.user.username
     customer_instance =User.objects.get(username=username)
-    swipes_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Swipes").order_by('-created_at')
+    swipes_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Swipes").order_by('-created_at','-cashierorid')[:12]
     if swipes_values_list: 
         data = {
         'swipes_values_list':swipes_values_list
@@ -343,7 +356,7 @@ def swipe_listView(request):
 def acc_listView(request):
     username=request.user.username
     customer_instance =User.objects.get(username=username)
-    acc_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Acc").order_by('-created_at')
+    acc_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Acc").order_by('-created_at','-cashierorid')[:12]
     if acc_values_list: 
         data = {
         'acc_values_list':acc_values_list
@@ -401,7 +414,7 @@ def notes_listView(request):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance=User.objects.get(username=username)
-        notes_values_list=CashierOrders.objects.filter(customer=customer_instance,types="Note").order_by('-created_at')
+        notes_values_list=CashierOrders.objects.filter(customer=customer_instance,types="Note").order_by('-created_at','-cashierorid')[:12]
         if notes_values_list: 
             data = {
             'notes_values_list':notes_values_list
@@ -432,7 +445,7 @@ def sts_listView(request):
     if request.user.is_authenticated and request.user.is_cashier:
         username=request.user.username
         customer_instance =User.objects.get(username=username)
-        sts_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Sts").order_by('-created_at')
+        sts_values_list = CashierOrders.objects.filter(customer=customer_instance,types="Sts").order_by('-created_at','-cashierorid')[:12]
         if sts_values_list: 
             data = {
             'sts_values_list':sts_values_list
@@ -460,21 +473,25 @@ def new_cashier_orderView(request,type):
         username=request.user.username
         customer_instance =User.objects.get(username=username)
         import random
-        date_from = datetime.datetime.now() - datetime.timedelta(days=1)
+        # date_from = datetime.datetime.now() - datetime.timedelta(days=1)
         
-        date_from_ = datetime.datetime.now() - datetime.timedelta(days=2)
+        # date_from_ = datetime.datetime.now() - datetime.timedelta(days=2)
         
-        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from):
-            messages.info(request,f'You are authorise to create a new {type} in 24 hours.')
-            return redirect(f'/confirm_creating_order/{type}')
+        # if CashierOrders.objects.filter(customer=customer_instance,types=type):
+        #     messages.info(request,f'You are authorise to create a new {type} in 24 hours.')
+        #     return redirect(f'/confirm_creating_order/{type}')
         
-        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from_,status=0):
+        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(status=0).exists():
             messages.info(request,f'Your Supervisor has not supervvise your previous record')
             return redirect(f'/confirm_creating_order/{type}')
+        else:
+            pass
         
-        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(created_at__gt=date_from_,status=1):
+        if CashierOrders.objects.filter(customer=customer_instance,types=type).filter(adminstatus=1).exists():
             messages.info(request,f'Your Supervisor has not record sales for your previous record')
             return redirect(f'/confirm_creating_order/{type}')
+        else:
+            pass
         
         cashoutid = random_id(length=8,character_set=string.digits)
         if not CashierOrders.objects.filter(customer=customer_instance,status=0).filter(cashierorid=cashoutid) and type=="Qadadic":

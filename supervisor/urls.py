@@ -19,4 +19,6 @@ urlpatterns = [
     path('record_sales/<int:userid>/<int:grand_total>', views.record_salesView, name='record_salesView'),
     path('record_salessave/<int:userid>/<int:gt>', views.record_salessaveView, name='record_salessaveView'),
     path('sales_log', views.sales_logView, name='sales_logView'),
+    path('print', views.printView, name='printView'),
+
 ]

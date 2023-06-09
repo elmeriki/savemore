@@ -32,7 +32,20 @@ class Emailthread(threading.Thread):
         
 
 def landPageView(request):
-    return render(request,'customer/login.html',{})
+    if request.user.is_authenticated and request.user.is_cashier:
+        return redirect('/cashier_dashboard')
+    
+    if request.user.is_authenticated and request.user.is_cashier:
+        return redirect('/cashier_dashboard')
+    
+    if request.user.is_authenticated and request.user.is_admin:
+        return redirect('/super_admin_dashboard')
+    
+    if request.user.is_authenticated and request.user.is_customer:
+        return redirect('/customer_dashboard')
+    
+    else:
+        return render(request,'customer/login.html',{})
 
 
 def createAccountView(request):

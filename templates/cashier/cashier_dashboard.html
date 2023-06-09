@@ -30,6 +30,7 @@
 
                 <!-- grid row -->
                 <div class="row">
+                  {% if Qadadic %}
                   <div class="col-12 col-lg-6 col-xl-6">
                     <!-- .card -->
                     <div class="card">
@@ -92,8 +93,11 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
 
+                  {% endif %}
 
+                  {% if Sts %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -147,9 +151,12 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
+
+                  {% endif %}
 
 
-
+                  {% if Papers %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -203,9 +210,13 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
 
 
+                  {% endif %}
 
+
+                  {% if Note %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -259,8 +270,11 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
 
+                  {% endif %}
 
+                  {% if Swipes %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -314,9 +328,12 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
+
+                  {% endif %}
 
 
-
+                  {% if Kazang %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -372,8 +389,11 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
 
+                  {% endif %}
 
+                  {% if Acc %}
                   <!-- grid column -->
                   <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
@@ -429,6 +449,9 @@
                       </div><!-- /.table-responsive -->
                     </div><!-- /.card -->
                   </div><!-- /grid column -->
+                  {% else %}
+
+                  {% endif %}
 
                 </div><!-- /grid row -->
                 <!-- card-deck-xl -->
