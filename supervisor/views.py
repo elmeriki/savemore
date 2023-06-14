@@ -521,3 +521,174 @@ def print2View(request,cashier_id,startdate,enddate):
         return render(request,'print/print2.html',context=data)
     else:
         return redirect('/')
+    
+@login_required(login_url='/')  
+def print_general_reportView(request,category,from_date,end_date):
+    if request.user.is_authenticated and request.user.is_supervisor:
+        if category=="Qadadic":
+            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Sts":
+            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Papers":
+            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Notes":
+            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Kazang":
+            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Swipes":
+            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+        if category=="Acc":
+            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+            }
+            return render(request,'print/print3.html',context=data)
+    else:
+        return redirect('/')
+
+    
+@login_required(login_url='/')  
+def general_reportView(request):
+    if request.user.is_authenticated and request.user.is_supervisor:
+        return render(request,'supervisor/general_report.html')
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def filter_general_reportView(request):
+    if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
+        category =request.POST['type']
+        from_date =request.POST['startdate']
+        end_date =request.POST['enddate']
+        if category == "Qadadic":
+            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Sts":
+            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Papers":
+            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Kazang":
+            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Swipes":
+            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Acc":
+            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+        if category == "Notes":
+            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            data = {
+                'general_report_per_category':general_report_per_category,
+                'category':category,
+                'from_date':from_date,
+                'end_date':end_date,
+                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+
+            }
+            return render(request,'supervisor/general_report.html',context=data)
+    else:
+        return redirect('/')

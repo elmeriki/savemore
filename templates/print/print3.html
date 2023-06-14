@@ -9,7 +9,7 @@
         <link rel="apple-touch-icon" sizes="144x144" href="{% static 'assets/images/favic_logo.png' %}">
         <link rel="shortcut icon" href="{% static 'assets/images/favic_logo.png' %}">
         <link rel="shortcut icon" href="{% static 'assets/images/favic_logo.png' %}">
-        <title>DAILY REPORT SUMMARY</title>
+        <title>GENERAL CASHIER REPORT</title>
     </head>
     <body>
         <div class="ticket">
@@ -20,28 +20,27 @@
                 <br>342 Vom Hagen Street
                 <br>Pretoria West
                 <br> 012 327 5980
+                {% comment %} <h1>CASHIER NAMES: </h1> {% endcomment %}
                 </p>
                 <table>
+                    <h5>  CASHIER GENERAL REPORT  FROM: {{from_date}}  TO: {{end_date}}</h5>
+                    <hr>
                     <tr>
-                      <th>CASHIER</th>
-                      <th>TOTAL</th>
-                      <th>(SALES + DI)</th>
-                      <th>DI AMOUNT</th>
-                      <th>DIFF</th>
-                      <th>STATUS</th>
+                      <th>CASHIER NAMES</th>
+                      <th>{{category | upper}} NO</th>
+                      <th>AMOUNT</th>
                       <th>DATE</th>
-                      <th>COMMENT</th>
                     </tr>
-                    {% for sales_log in sales_log %}
+                    {% for general_report_per_category in general_report_per_category %}
                     <tr>
-                      <td>{{sales_log.cashier.first_name}}</td>
-                      <td>R{{sales_log.grandtotal}}</td>
-                      <td>R{{sales_log.totalpertype}}</td>
-                      <td>R{{sales_log.di}}</td>
-                      <td>R{{sales_log.diff}}</td>
-                      <td>{{sales_log.status}}</td>
-                      <td>{{sales_log.created_at}}</td>
-                      <td>{{sales_log.comment}}</td>
+                      <td>{{general_report_per_category.customer.first_name | lower }} </td>
+                      {% if not general_report_per_category.bookno %}
+                      <td>N/A</td>
+                      {% else %}
+                      <td>{{general_report_per_category.bookno}} </td>
+                      {% endif %}
+                      <td>R{{general_report_per_category.amount}} </td>
+                      <td>{{general_report_per_category.created_at}} </td>
                     </tr>
                     {% endfor %}
                   </table>

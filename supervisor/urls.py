@@ -22,5 +22,10 @@ urlpatterns = [
     path('filter_daily_report', views.filter_daily_reportView, name='filter_daily_reportView'),
     path('print', views.printView, name='printView'),
     path('print2/<str:startdate>/<str:enddate>/<str:cashier_id>', views.print2View, name='print2View'),
+    
+    path('print_general_report/<str:from_date>/<str:end_date>/<str:category>', views.print_general_reportView, name='print_general_reportView'),
+
+    path('general_report', views.general_reportView, name='general_reportView'),
+    path('filter_general_report', views.filter_general_reportView, name='filter_general_reportView'),
 
 ]

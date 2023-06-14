@@ -1,0 +1,165 @@
+{% extends "customer/core_m.html" %}
+{% block title %} GENERAL REPORT | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+          <!-- .card-header -->
+          <div class="card-header d-flex">
+            <!-- .dropdown -->
+            <div class="dropdown">
+              {% if messages %}
+              {% for message in messages %}
+              <p class="text-danger"> {{message}} </p> 
+              {% endfor %}
+        
+              {% else %}
+              {% if general_report_per_category %}
+             <p class="text-dark">{{category | upper }} GENERAL REPORT SUMMARY  FROM {{from_date}}  TO {{end_date}}</p> 
+              {% else %}
+              <p class="text-dark">{{category | upper }} GERNAL CASHIER REPORT</p> 
+              {% endif %}
+              {% endif %}
+        
+              <!-- .dropdown-menu -->
+              <div class="dropdown-menu stop-propagation">
+                <div class="dropdown-arrow"></div>
+              </div><!-- /.dropdown-menu -->
+            </div><!-- /.dropdown -->
+            <a href="/print_general_report/{{from_date}}/{{end_date}}/{{category}}" target="_blank" class="btn btn-primary ml-auto">Print</a>
+          </div><!-- /.card-header -->
+
+{% if general_report_per_category %}
+
+
+
+      
+                <!-- .card-header -->
+                <div class="card-header">
+                <!-- .card-body -->
+                <div class="card-body">
+                  <!-- .table -->
+                  
+                  <table id="invoicesTable" class="table">
+                
+                    <thead>
+                     
+                      <tr>
+                        <th class="text-danger">CASHIER'S NAMES</th>
+                        <th class="text-danger" style="min-width: 180px"> {{category | upper}} NO</th>
+                        <th class="text-danger">AMOUNT</th>
+                        <th class="text-danger">DATE</th>
+                      </tr>
+                    </thead><!-- /thead -->
+                    <!-- tbody -->
+                    <tbody>
+                      <!-- create empty row to passing html validator -->
+                      {% for general_report_per_category in general_report_per_category %}
+                      <tr>
+                        <td>{{general_report_per_category.customer.first_name | lower }}</td>
+                        {% if not general_report_per_category.bookno %}
+                        <td>N/A</td>
+                        {% else %}
+                        <td>{{general_report_per_category.bookno}}</td>
+                        {% endif %}
+                        <td>R {{general_report_per_category.amount}}</td>
+                        <td>{{general_report_per_category.created_at}}</td>
+                      </tr>
+                      {% endfor %}
+                     
+                    </tbody><!-- /tbody -->
+                  </table><!-- /.table -->
+                  <hr>
+                  
+                  <br>
+                  <h5 class="text-dark">GRAND TOTAL:R{{grand_total}}</h5>
+                  <br><br>
+                  <p class="text-muted"> Note: For system performance purposes, a maximum of 20 records will be displayed. However, during printing, the complete set of filtered records will be displayed</p>
+                </div><!-- /.card-body -->
+
+
+
+{% else %}
+  <!-- .table-responsive -->
+  <div class="table-responsive">
+    <!-- .table -->
+    <table class="table">
+      <!-- thead -->
+      <thead>
+        <tr>
+          <th style="min-width:256px"> SELECT TYPES</th>
+          <th style="min-width:256px"> SELECT START DATES</th>
+          <th style="min-width:256px"> SELECT END DATES </th>
+          <th> ACTION </th>
+        </tr>
+      </thead><!-- /thead -->
+      <!-- tbody -->
+      <tbody>
+        <!-- tr -->
+
+        <form action="/filter_general_report" method="POST">
+          {% csrf_token %}
+        <tr>
+          <td class="align-middle text-truncate">
+            <div class="align-items-center">
+                  <div class="form-group">
+                    <select class="custom-select" id="sel1" name="type" required="">
+                      <option value=""> Choose... </option>
+                      <option value="Qadadic">Qadadic</option>
+                      <option value="Papers">Papers</option>
+                      <option value="Sts">Sts</option>
+                      <option value="Notes">Notes</option>
+                      <option value="Kazang">Kazang</option>
+                      <option value="Swipes">Swipes</option>
+                      <option value="Acc">Acc</option>
+                    </select>
+                  </div>
+            </div>
+          </td>
+          <td class="align-middle text-truncate">
+            <div class="media align-items-center">
+              <div class="media-body">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="tf1" name="startdate"  aria-describedby="tf1Help"> 
+              </div>
+              </div>
+            </div>
+          </td>
+          <td class="align-middle text-truncate">
+            <div class="media align-items-center">
+              <div class="media-body">
+                <div class="form-group">
+                  <input type="date" class="form-control" id="tf1" name="enddate"  aria-describedby="tf1Help"> 
+              </div><!-- /.form-group -->
+              </div>
+            </div>
+          </td>
+       <td class="align-middle"> 
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+      </div>
+      </td>
+
+        </tr>
+      </form>
+
+        <!-- /tr -->
+        <!-- tr -->
+      </tbody><!-- /tbody -->
+    </table><!-- /.table -->
+  </div><!-- /.table-responsive -->
+</div><!-- /.card -->
+
+{% endif %}
+
+          </div><!-- /.card -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+
+
+{% endblock %}
