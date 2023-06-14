@@ -134,7 +134,10 @@ def process_actual_saveView(request,orderid,type,customerid):
 @login_required(login_url='/')  
 def processed_logView(request):
     if request.user.is_authenticated and request.user.is_supervisor:
-        return render(request,'supervisor/processed_log.html')
+        data={
+        'cashier_list':User.objects.filter(is_cashier=True)
+        }
+        return render(request,'supervisor/processed_log.html',context=data)
     else:
         return redirect('/')
     
@@ -301,15 +304,22 @@ def single_processed_salesView(request,userid):
 @login_required(login_url='/')  
 def search_processed_logView(request):
     if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
+        cashier_id=int(request.POST['cashier_name'])
         startdate = request.POST['startdate']
         enddate = request.POST['enddate']
-        processed_orders=CashierOrders.objects.filter(created_at__range=(startdate,enddate),adminstatus=2)
-        data = {
-        'startdate':startdate,
-        'enddate':enddate,
-        'processed_orders':processed_orders,
-        }
-        return render(request,'supervisor/processed_log.html',context=data)
+        cashier_instance = User.objects.get(id=cashier_id)
+        if not CashierOrders.objects.filter(created_at__range=(startdate,enddate),adminstatus=2).filter(customer=cashier_instance):
+            messages.info(request,f'NO DATA WAS FOUND')
+            return redirect('/processed_log')
+        else:
+            processed_orders=CashierOrders.objects.filter(created_at__range=(startdate,enddate),adminstatus=2).filter(customer=cashier_instance)
+            data = {
+            'startdate':startdate,
+            'enddate':enddate,
+            'cashier_id':cashier_id,
+            'processed_orders':processed_orders,
+            }
+            return render(request,'supervisor/processed_log.html',context=data)
     else:
         return redirect('/')
 
@@ -465,11 +475,24 @@ def record_salessaveView(request,userid,gt):
 @login_required(login_url='/')  
 def sales_logView(request):
     if request.user.is_authenticated and request.user.is_supervisor:
-        sales_log = Saleslog.objects.all().order_by('-created_at')[:12]
-        data = {
-            'sales_log':sales_log
-        }
-        return render(request,'supervisor/sales_log.html',context=data)
+        return render(request,'supervisor/sales_log.html')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def filter_daily_reportView(request):
+    if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
+        startdate =request.POST['startdate']
+        enddate =request.POST['enddate']
+        if not Saleslog.objects.filter(created_at__range=(startdate,enddate)):
+            messages.info(request,f'No Data Found')
+            return redirect('/sales_log')
+        else:
+            sales_log=Saleslog.objects.filter(created_at__range=(startdate,enddate))
+            data = {
+                'sales_log':sales_log
+            }
+            return render(request,'supervisor/sales_log.html',context=data)
     else:
         return redirect('/')
     
@@ -481,5 +504,20 @@ def printView(request):
             'sales_log':sales_log
         }
         return render(request,'print/print.html',context=data)
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def print2View(request,cashier_id,startdate,enddate):
+    if request.user.is_authenticated and request.user.is_supervisor or request.user.is_authenticated and request.user.is_ceo:
+        cashier_instance=User.objects.get(id=cashier_id)
+        processed_orders=CashierOrders.objects.filter(created_at__range=(startdate,enddate),adminstatus=2).filter(customer=cashier_instance)
+        data={
+         'processed_orders':processed_orders,
+         'startdate':startdate,
+         'enddate':enddate,
+         'cashier_names':cashier_instance.first_name
+        }
+        return render(request,'print/print2.html',context=data)
     else:
         return redirect('/')

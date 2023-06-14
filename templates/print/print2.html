@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="{% static 'assets/print/print.css' %}">
-        <title>DAILY REPORT SUMMARY</title>
+        <title>CASHIER LOG HISTORY</title>
     </head>
     <body>
         <div class="ticket">
@@ -17,28 +17,19 @@
                 <br>342 Vom Hagen Street
                 <br>Pretoria West
                 <br> 012 327 5980
+                {% comment %} <h1>CASHIER NAMES: </h1> {% endcomment %}
                 </p>
                 <table>
+                    <h5> PROCESSED LOG FOR {{cashier_names | upper }}  FROM: {{startdate}}  TO: {{enddate}}</h5>
+                    <hr>
                     <tr>
-                      <th>CASHIER</th>
-                      <th>TOTAL</th>
-                      <th>(SALES + DI)</th>
-                      <th>DI AMOUNT</th>
-                      <th>DIFF</th>
-                      <th>STATUS</th>
-                      <th>DATE</th>
-                      <th>COMMENT</th>
+                      <th>TYPES</th>
+                      <th>AMOUNT</th>
                     </tr>
-                    {% for sales_log in sales_log %}
+                    {% for processed_orders in processed_orders %}
                     <tr>
-                      <td>{{sales_log.cashier.first_name}}</td>
-                      <td>R{{sales_log.grandtotal}}</td>
-                      <td>R{{sales_log.totalpertype}}</td>
-                      <td>R{{sales_log.di}}</td>
-                      <td>R{{sales_log.diff}}</td>
-                      <td>{{sales_log.status}}</td>
-                      <td>{{sales_log.created_at}}</td>
-                      <td>{{sales_log.comment}}</td>
+                      <td> {{processed_orders.types | upper}} </td>
+                      <td>R {{processed_orders.amount}} </td>
                     </tr>
                     {% endfor %}
                   </table>

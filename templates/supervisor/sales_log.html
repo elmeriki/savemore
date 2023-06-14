@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 
-
+{% if sales_log %}
 <main class="app-main">
   <!-- .wrapper -->
   <div class="wrapper">
@@ -14,16 +14,10 @@
         <!-- .page-title-bar -->
         <header class="page-title-bar">
           <div class="d-flex justify-content-between">
-            {% if messages %}
-            {% for message in messages %}
-            <p class="text-primary"> {{message}} </p>
-            {% endfor %}
-            {% else %}
             <p><strong>CASHIERS SUMMARY REPORT</strong></p>
-            {% endif %}
             <div class="btn-toolbar">
-              <a href="/print" class="text-white" target="_blank">
-              <button class="btn btn-primary ml-auto">Download</button>
+              <a href="/print" target="_blank" class="text-white" target="_blank">
+              <button class="btn btn-primary ml-auto">Print Log</button>
             </a>
             </div>
           </div>
@@ -78,7 +72,93 @@
     </div><!-- /.page -->
   </div><!-- /.wrapper -->
 </main><!-- /.app-main -->
-</div><!-- /.app -->
+</div><!-- /.app --> 
+
+{% else %}
 
 
+<main class="app-main">
+  <!-- .wrapper -->
+  <div class="wrapper">
+    <!-- .page -->
+    <div class="page">
+      <div class="card">
+        <!-- .card-header -->
+        <div class="card-header d-flex">
+          <!-- .dropdown -->
+          <div class="dropdown">
+            {% if messages %}
+            {% for message in messages %}
+            <h1 class="text-danger"> {{message}} </h1> 
+            {% endfor %}
+      
+            {% else %}
+      
+           <p class="text-primary"> FILTER DIALY REPORT </p> 
+      
+            {% endif %}
+      
+            <!-- .dropdown-menu -->
+            <div class="dropdown-menu stop-propagation">
+              <div class="dropdown-arrow"></div>
+            </div><!-- /.dropdown-menu -->
+          </div><!-- /.dropdown -->
+          <a href="/supervisor_dashboard" class="btn btn-primary ml-auto">Close</a>
+        </div><!-- /.card-header -->
+
+<!-- .table-responsive -->
+<div class="table-responsive">
+  <!-- .table -->
+  <table class="table">
+    <!-- thead -->
+    <thead>
+      <tr>
+        <th style="min-width:256px"> SELECT START DATES</th>
+        <th style="min-width:256px"> SELECT END DATES </th>
+        <th> ACTION </th>
+      </tr>
+    </thead><!-- /thead -->
+    <!-- tbody -->
+    <tbody>
+      <!-- tr -->
+      <form action="/filter_daily_report" method="POST">
+        {% csrf_token %}
+      <tr>
+        <td class="align-middle text-truncate">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <div class="form-group">
+                <input type="date" class="form-control" id="tf1" name="startdate" required="required"  aria-describedby="tf1Help"> 
+            </div><!-- /.form-group -->
+            </div>
+          </div>
+        </td>
+        <td class="align-middle text-truncate">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <div class="form-group">
+                <input type="date" class="form-control" id="tf1" name="enddate" required="required"  aria-describedby="tf1Help"> 
+            </div><!-- /.form-group -->
+            </div>
+          </div>
+        </td>
+     <td class="align-middle"> 
+      <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Proceed</button>
+    </div>
+    </td>
+
+      </tr>
+    </form>
+
+      <!-- /tr -->
+      <!-- tr -->
+    </tbody><!-- /tbody -->
+  </table><!-- /.table -->
+</div><!-- /.table-responsive -->
+</div><!-- /.card -->
+</div><!-- /.card -->
+</div><!-- /.wrapper -->
+</main><!-- /.app-main -->
+{% endif %}
 {% endblock %}
