@@ -25,7 +25,9 @@ from cashiers.models import *
 @login_required(login_url='/')  
 def supervisor_dashboardView(request):
     if request.user.is_authenticated and request.user.is_supervisor:
-        cashier_list =User.objects.filter(is_cashier=True)
+        supervisor_instance = request.user
+        supervisor_username=supervisor_instance.username
+        cashier_list =User.objects.filter(is_cashier=True,supervisor=supervisor_username)
         data  = {
         'cashier_list':cashier_list
         }
@@ -187,7 +189,9 @@ def processed_salesView(request):
             kazang_total_sum=0
         else:
             pass
-        cashier_list =User.objects.filter(is_cashier=True)
+        supervisor_instance=request.user
+        supervisor_username=supervisor_instance.username
+        cashier_list=User.objects.filter(is_cashier=True,supervisor=supervisor_username)
         if qadadic_total_sum is None:
             data = {
             'supervisor_response_check':supervisor_response_check,
@@ -423,11 +427,12 @@ def record_salessaveView(request,userid,gt):
     if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
         sales_total = int(request.POST['amount']) + int((request.POST['diamount']))
         diamount = int((request.POST['diamount']))
+        precoin = int((request.POST['precoin']))
         comment = request.POST['comment']
         customer_instance =User.objects.get(id=userid)
-        diff_amount =  sales_total - int(gt)
+        diff_amount =  sales_total - int(gt) - int(precoin)
         if sales_total > int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Short",totalpertype=gt,di=diamount,comment=comment)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Short",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
             if record_Sales:
                 record_Sales.save()
                 CashierOrders.objects.filter(~Q(adminstatus=2),customer=customer_instance).update(adminstatus=2)
@@ -441,7 +446,7 @@ def record_salessaveView(request,userid,gt):
                 messages.info(request,f'Sale has been recorded successfully. Please hold for a few minutes while the process is completed in the background')
                 return redirect('/sales_log')
         if sales_total < int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Over",totalpertype=gt,di=diamount,comment=comment)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Over",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
             if record_Sales:
                 record_Sales.save()
                 Qadadic.objects.filter(customer=customer_instance,done=2).update(done=0)
@@ -455,7 +460,7 @@ def record_salessaveView(request,userid,gt):
                 messages.info(request,f'Sale has been recorded successfully. Please hold for a few minutes while the process is completed in the background')
                 return redirect('/sales_log')
         if sales_total == int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Balance",totalpertype=gt,di=diamount,comment=comment)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Balance",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
             if record_Sales:
                 record_Sales.save()
                 Qadadic.objects.filter(customer=customer_instance,done=2).update(done=0)
@@ -484,24 +489,34 @@ def filter_daily_reportView(request):
     if request.user.is_authenticated and request.user.is_supervisor and request.method=="POST":
         startdate =request.POST['startdate']
         enddate =request.POST['enddate']
+        supervison_instance=request.user
+        supervisor_username=supervison_instance.username 
         if not Saleslog.objects.filter(created_at__range=(startdate,enddate)):
-            messages.info(request,f'No Data Found')
-            return redirect('/sales_log')
+                messages.info(request,f'No Data Found')
+                return redirect('/sales_log')
         else:
-            sales_log=Saleslog.objects.filter(created_at__range=(startdate,enddate))
+            listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True)
+            sales_log=Saleslog.objects.filter(created_at__range=(startdate,enddate),cashier__in=listof_permited_cashiers)
             data = {
-                'sales_log':sales_log
+              'sales_log':sales_log,
+              'startdate':startdate,
+              'enddate':enddate
             }
             return render(request,'supervisor/sales_log.html',context=data)
     else:
         return redirect('/')
     
 @login_required(login_url='/')  
-def printView(request):
+def printView(request,from_date,end_date):
     if request.user.is_authenticated and request.user.is_supervisor or request.user.is_authenticated and request.user.is_ceo:
-        sales_log = Saleslog.objects.all().order_by('-created_at')[:12]
+        supervisor_instance = request.user 
+        supervisor_username =supervisor_instance.username
+        listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True)
+        sales_log=Saleslog.objects.filter(cashier__in=listof_permited_cashiers,created_at__range=(from_date,end_date)).order_by('-created_at')
         data = {
-            'sales_log':sales_log
+            'sales_log':sales_log,
+            'from_date':from_date,
+            'end_date':end_date,
         }
         return render(request,'print/print.html',context=data)
     else:
@@ -525,74 +540,77 @@ def print2View(request,cashier_id,startdate,enddate):
 @login_required(login_url='/')  
 def print_general_reportView(request,category,from_date,end_date):
     if request.user.is_authenticated and request.user.is_supervisor:
+        supervisor_instance = request.user 
+        supervisor_username =supervisor_instance.username
+        listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True)
         if category=="Qadadic":
-            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Sts":
-            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Papers":
-            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Notes":
-            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Kazang":
-            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Swipes":
-            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
         if category=="Acc":
-            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
             }
             return render(request,'print/print3.html',context=data)
     else:
@@ -613,80 +631,83 @@ def filter_general_reportView(request):
         category =request.POST['type']
         from_date =request.POST['startdate']
         end_date =request.POST['enddate']
+        supervison_instance=request.user
+        supervisor_username=supervison_instance.username
+        listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True)
         if category == "Qadadic":
-            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Qadadic.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Sts":
-            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Sts.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Sts.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Papers":
-            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Papers.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Papers.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Kazang":
-            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Kazang.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Swipes":
-            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Swipes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Acc":
-            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Acc.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Acc.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)
         if category == "Notes":
-            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).order_by('customer')[:20]
+            general_report_per_category=Notes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).order_by('customer')[:20]
             data = {
                 'general_report_per_category':general_report_per_category,
                 'category':category,
                 'from_date':from_date,
                 'end_date':end_date,
-                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).aggregate(Sum('amount'))['amount__sum']
+                'grand_total':Notes.objects.filter(created_at__range=(from_date,end_date),status=1).filter(customer__in=listof_permited_cashiers).aggregate(Sum('amount'))['amount__sum']
 
             }
             return render(request,'supervisor/general_report.html',context=data)

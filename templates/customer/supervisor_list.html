@@ -1,0 +1,131 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Account Approval | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+{% if supervisor_list %}
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i></button> <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Administrator Names </th>
+                    <th> Decination </th>
+                    <th> Email </th>
+                    <th> Cell Phone </th>
+                    <th> Date Join </th>
+                    <th> Branch </th>
+                    <th>Status</th>
+                    <th>Activate</th>
+                    <th>Diactivate</th>
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for supervisor_list in supervisor_list %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">SP</a>
+                        <div class="media-body">
+                          <a href="#">{{supervisor_list.first_name}}</a> <small class="d-block text-muted"><a href="/supervisor_permision/{{supervisor_list.id}}">Permision</a></small>
+                        </div>
+                      </div>
+                    </td>
+                    {% if supervisor_list.is_ceo == True  %}
+                    <td class="align-middle"> Management (Ceo)</td>
+                    {% elif supervisor_list.is_admin == True  %}
+                    <td class="align-middle"> Super Admin</td>
+                    {% elif supervisor_list.is_cashier == True  %}
+                    <td class="align-middle"> Cahsier</td>
+                    {% elif supervisor_list.is_marketer == True  %}
+                    <td class="align-middle"> Marketers</td>
+                    {% elif supervisor_list.is_supervisor == True  %}
+                    <td class="align-middle"> Supervisor</td>
+                    {% endif %}
+                    <td class="align-middle"> {{supervisor_list.email}}</td>
+                    <td class="align-middle"> {{supervisor_list.username}} </td>
+                    <td class="align-middle">
+                      <span class="badge badge-dark">{{supervisor_list.date_joined | timesince}} ago</span>
+                    </td>
+                    <td class="align-middle">
+                      <span class="badge badge-muted">{{supervisor_list.branch}}</span>
+                    </td>
+                    <td class="align-middle text-left">
+                      {% if supervisor_list.is_activation == True %}
+                        <span class="badge badge-success">Active</span>
+                        {% else %}
+                        <span class="badge badge-danger">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle" class="btn btn-primary"> 
+                      <form action="/activate_supervisor_account/{{supervisor_list.id}}"  method="POST">
+                        {% csrf_token %}
+                        {% if supervisor_list.is_activation == True %}
+                        <input type="submit" disabled class="btn btn-primary" value="Activate">
+                        {% else %}
+                        <input type="submit"  class="btn btn-primary" value="Activate">
+
+                        {% endif %}
+                      </form>
+                  </td>
+                  <td class="align-middle" class="btn btn-primary"> 
+                    <form action="/diactivate_supervisor_account/{{supervisor_list.id}}"  method="POST">
+                      {% csrf_token %}
+                      {% if supervisor_list.is_activation == True  %}
+                      <input type="submit" class="btn btn-danger" value="Diactivate">
+                      {% else %}
+                      <input type="submit" disabled class="btn btn-danger" value="Diactivate">
+                      {% endif %}
+                    </form>
+                </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+</div><!-- /.app -->
+{% else %}
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <br> <br>
+        <center>
+            <p> NO SUPERVISOR ACCOUNT FOUND </p>
+<hr>
+        </center>
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+</div><!-- /.app -->
+
+{% endif %}
+{% endblock %}

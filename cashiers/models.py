@@ -8,6 +8,7 @@ class Saleslog(models.Model):
     totalpertype=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     diff=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     di=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
+    precoin=models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)
     status = models.CharField(max_length=200,default=0,null=True,blank=True)
     comment = models.CharField(max_length=200,default=0,null=True,blank=True)
     created_at = models.DateField(auto_now_add=True)
@@ -55,7 +56,7 @@ class CashierOrders(models.Model):
 
 # Create your models here.
 class Qadadic(models.Model):
-    customer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    customer=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     cashierorid = models.CharField(max_length=200,default=0,null=True,blank=True)
     bookno =  models.CharField(max_length=200,default=0,null=True,blank=True)
     amount=  models.DecimalField(max_digits=11,decimal_places=0,default=0,blank=True,null=True)

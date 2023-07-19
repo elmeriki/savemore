@@ -37,6 +37,17 @@ def approve_accountView(request):
         return render(request,'customer/approve_account.html',context=data)
     else:
         return redirect('/')
+    
+@login_required(login_url='/')  
+def supervisorsView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        supervisor_list =User.objects.filter(is_supervisor=True).exclude(is_superuser=True).exclude(is_ceo=True).exclude(is_customer=True).exclude(is_admin=True).exclude(is_marketer=True).exclude(is_cashier=True).exclude(is_stock=True)
+        data = {
+        'supervisor_list':supervisor_list
+        }
+        return render(request,'customer/supervisor_list.html',context=data)
+    else:
+        return redirect('/')
 
 @login_required(login_url='/')  
 def cashier_permisionView(request,userid):
@@ -47,6 +58,23 @@ def cashier_permisionView(request,userid):
             'user_permision_list':user_permision_list
         }
         return render(request,'customer/add_permision.html',context=data)
+    else:
+        return redirect('/')
+    
+
+@login_required(login_url='/')  
+def supervisor_permisionView(request,userid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        supervisor_instance=User.objects.get(id=userid)
+        supervisor_username=supervisor_instance.username
+        supervisor_permision_list=User.objects.filter(is_cashier=True,supervisor=supervisor_username)
+        list_of_cashiers=User.objects.filter(is_activation=True,is_cashier=True).filter(supervisor="None")
+        data = {
+            'userid':userid,
+            'supervisor_permision_list':supervisor_permision_list,
+            'list_of_cashiers':list_of_cashiers
+        }
+        return render(request,'customer/add_supervisor_permision.html',context=data)
     else:
         return redirect('/')
     
@@ -61,6 +89,18 @@ def delete_cashier_permissionView(request,userid,types):
     else:
         return redirect('/')
     
+@login_required(login_url='/')  
+@transaction.atomic  #transactional  
+def delete_supervisor_permissionView(request,userid,supervisorid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        supervisor_instance=User.objects.get(username=supervisorid)
+        delete_supervisor_permision=User.objects.get(id=userid)
+        delete_supervisor_permision.supervisor="None"
+        delete_supervisor_permision.save()
+        messages.info(request,'Permision has been deleted successfuly') 
+        return redirect(f'/supervisor_permision/{supervisor_instance.id}')
+    else:
+        return redirect('/')
     
 @login_required(login_url='/')  
 @transaction.atomic  #transactional  
@@ -76,8 +116,29 @@ def save_cashier_permisionView(request,userid):
                 save_cashiere_permision = Cashierpermision(types=types,customer=cashier_instance)
                 if save_cashiere_permision:
                     save_cashiere_permision.save()
-                    messages.info(request,'Permision added successfully.') 
+                    messages.info(request,'Supervisor Permision added successfully.') 
                 return redirect(f'/cashier_permision/{userid}')
+    else:
+        return redirect('/')
+    
+    
+@login_required(login_url='/')  
+@transaction.atomic  #transactional  
+def save_supervisor_permisionView(request,userid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        if request.method == "POST":
+            add_cashiers=request.POST['add_cashiers']
+            supervisor_instance=User.objects.get(id=userid)
+            cashier_instance=User.objects.get(username=add_cashiers)
+            if User.objects.filter(username=cashier_instance.username,supervisor=supervisor_instance.username).exists():
+                messages.info(request,'Permision has been added already') 
+                return redirect(f'/supervisor_permision/{userid}')
+            else:
+                supervisor_instance=User.objects.get(id=userid)
+                cashier_instance.supervisor=supervisor_instance.username
+                cashier_instance.save()
+                messages.info(request,'Supervisor Permision added successfully.') 
+                return redirect(f'/supervisor_permision/{userid}')
     else:
         return redirect('/')
 
@@ -124,6 +185,15 @@ def approved_accountView(request,id):
     else:
         return redirect('/')
     
+@login_required(login_url='/')  
+def activate_supervisor_accountView(request,id):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        activate_status = User.objects.filter(id=id).update(is_activation=True)
+        if activate_status:
+            return redirect('/supervisors')
+    else:
+        return redirect('/')
+    
     
 @login_required(login_url='/')  
 def diactivate_accountView(request,id):
@@ -131,6 +201,15 @@ def diactivate_accountView(request,id):
         diactivate_status = User.objects.filter(id=id).update(is_activation=False)
         if diactivate_status:
             return redirect('/approve_account')
+    else:
+        return redirect('/')
+
+@login_required(login_url='/')  
+def diactivate_supervisor_accountView(request,id):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        diactivate_status = User.objects.filter(id=id).update(is_activation=False)
+        if diactivate_status:
+            return redirect('/supervisors')
     else:
         return redirect('/')
     

@@ -7,7 +7,9 @@ urlpatterns = [
     path('delete_cashier_permission/<str:userid>/<str:types>', views.delete_cashier_permissionView, name='delete_cashier_permissionView'),
     path('approve_account', views.approve_accountView, name='approve_accountView'),
     path('activate_account/<int:id>', views.approved_accountView, name='approved_accountView'),
+    path('activate_supervisor_account/<int:id>', views.activate_supervisor_accountView, name='activate_supervisor_accountView'),
     path('diactivate_account/<int:id>', views.diactivate_accountView, name='diactivate_accountView'),
+    path('diactivate_supervisor_account/<int:id>', views.diactivate_supervisor_accountView, name='diactivate_supervisor_accountView'),
     path('promotion', views.promotionView, name='promotionView'),
     path('send_promo', views.send_promoView, name='send_promoView'),
     path('send_to_all_customer_promo', views.send_to_all_customer_promoView, name='send_to_all_customer_promoView'),
@@ -34,5 +36,8 @@ urlpatterns = [
     path('customer_search', views.customer_searchView, name='customer_searchView'),
     path('admin_edith_order_detail/<int:order_id>', views.admin_edith_order_detailView, name='admin_edith_order_detailView'),
     path('admin_update_order_detail/<int:id>/<int:qty>/<int:orderid>', views.admin_update_order_detailView, name='admin_update_order_detailView'),
-
+    path('supervisors', views.supervisorsView, name='supervisorsView'),
+    path('supervisor_permision/<str:userid>', views.supervisor_permisionView, name='supervisor_permisionView'),
+    path('save_supervisor_permision/<str:userid>', views.save_supervisor_permisionView, name='save_supervisor_permisionView'),
+    path('delete_supervisor_permission/<str:userid>/<str:supervisorid>', views.delete_supervisor_permissionView, name='delete_supervisor_permissionView'),
 ]

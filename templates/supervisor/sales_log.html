@@ -16,7 +16,7 @@
           <div class="d-flex justify-content-between">
             <p><strong>CASHIERS SUMMARY REPORT</strong></p>
             <div class="btn-toolbar">
-              <a href="/print" target="_blank" class="text-white" target="_blank">
+              <a href="/print/{{startdate}}/{{enddate}}" target="_blank" class="text-white" target="_blank">
               <button class="btn btn-primary ml-auto">Print Log</button>
             </a>
             </div>
@@ -41,6 +41,7 @@
                     <th>SALES (SALES + DI)</th>
                     <th>DI AMOUNT</th>
                     <th>DIFF TOTAL</th>
+                    <th>PRECOIN</th>
                     <th>STATUS</th>
                     <th>DATE</th>
                     <th>COMMENT</th>
@@ -56,6 +57,7 @@
                     <td>R {{sales_log.grandtotal}}</td>
                     <td>R {{sales_log.di}}</td>
                     <td>R {{sales_log.diff}}</td>
+                    <td>R {{sales_log.precoin}}</td>
                     <td class="text-primary">{{sales_log.status | upper}}</td>
                     <td>{{sales_log.created_at}}</td>
                     <td>{{sales_log.comment}}</td>
@@ -89,7 +91,7 @@
           <div class="dropdown">
             {% if messages %}
             {% for message in messages %}
-            <h1 class="text-danger"> {{message}} </h1> 
+            <p class="text-danger"> {{message}} </p> 
             {% endfor %}
       
             {% else %}
