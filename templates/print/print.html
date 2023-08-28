@@ -25,7 +25,8 @@
                     <tr>
                       <th>CASHIER</th>
                       <th>TOTAL</th>
-                      <th>(SALES + DI)</th>
+                      <th>SALES TOTAL</th>
+                      <th>SALES</th>
                       <th>DI AMOUNT</th>
                       <th>DIFF</th>
                       <th>PRECOIN</th>
@@ -38,6 +39,11 @@
                       <td>{{sales_log.cashier.first_name}}</td>
                       <td>R{{sales_log.grandtotal}}</td>
                       <td>R{{sales_log.totalpertype}}</td>
+                      {% if sales_log.sales == 0 %}
+                      <td>Min DFST</td>
+                      {% else %}
+                      <td>R{{sales_log.sales}}</td>
+                      {% endif %}
                       <td>R{{sales_log.di}}</td>
                       <td>R{{sales_log.diff}}</td>
                       <td>R{{sales_log.precoin}}</td>

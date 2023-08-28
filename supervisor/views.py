@@ -432,7 +432,7 @@ def record_salessaveView(request,userid,gt):
         customer_instance =User.objects.get(id=userid)
         diff_amount =  sales_total - int(gt) - int(precoin)
         if sales_total > int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Short",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Short",totalpertype=gt,di=diamount,comment=comment,precoin=precoin,sales=sales_total)
             if record_Sales:
                 record_Sales.save()
                 CashierOrders.objects.filter(~Q(adminstatus=2),customer=customer_instance).update(adminstatus=2)
@@ -446,7 +446,7 @@ def record_salessaveView(request,userid,gt):
                 messages.info(request,f'Sale has been recorded successfully. Please hold for a few minutes while the process is completed in the background')
                 return redirect('/sales_log')
         if sales_total < int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Over",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Over",totalpertype=gt,di=diamount,comment=comment,precoin=precoin,sales=sales_total)
             if record_Sales:
                 record_Sales.save()
                 Qadadic.objects.filter(customer=customer_instance,done=2).update(done=0)
@@ -460,7 +460,7 @@ def record_salessaveView(request,userid,gt):
                 messages.info(request,f'Sale has been recorded successfully. Please hold for a few minutes while the process is completed in the background')
                 return redirect('/sales_log')
         if sales_total == int(gt):
-            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Balance",totalpertype=gt,di=diamount,comment=comment,precoin=precoin)
+            record_Sales=Saleslog(cashier=customer_instance,grandtotal=sales_total,diff=diff_amount,status="Balance",totalpertype=gt,di=diamount,comment=comment,precoin=precoin,sales=sales_total)
             if record_Sales:
                 record_Sales.save()
                 Qadadic.objects.filter(customer=customer_instance,done=2).update(done=0)
