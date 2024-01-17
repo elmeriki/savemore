@@ -266,10 +266,10 @@ def save_daily_SalesView(request):
 @login_required(login_url='/')  
 def save_daily_expensesView(request):
     if request.user.is_authenticated and request.method =="POST" and request.POST['branch'] and request.POST['title']  and request.POST['amount']  and request.POST['message'] and request.user.is_ceo or request.user.is_admin:
-        branch = request.POST['branch']
-        title = request.POST['title']
-        amount = float(request.POST['amount'])
-        message = request.POST['message']
+        branch=request.POST['branch']
+        title=request.POST['title']
+        amount=float(request.POST['amount'])
+        message=request.POST['message']
         save_daily_expenses=Expenses(customer=request.user,branch=branch,amount=amount,title=title,message=message)
         if save_daily_expenses:
             save_daily_expenses.save()
