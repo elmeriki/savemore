@@ -48,6 +48,29 @@ def supervisorsView(request):
         return render(request,'customer/supervisor_list.html',context=data)
     else:
         return redirect('/')
+    
+    
+@login_required(login_url='/')  
+def cashier_orderView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        cashier_orders =CashierOrders.objects.filter()[:30]
+        data = {
+        'cashier_orders':cashier_orders
+        }
+        return render(request,'customer/cashier_orders.html',context=data)
+    else:
+        return redirect('/')
+
+@login_required(login_url='/')  
+def delete_cashier_orderView(request,cashierorid):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        delete_cashier_order=CashierOrders.objects.filter(cashierorid=cashierorid).delete()
+        if delete_cashier_order:
+            messages.info(request,'Cashier order has been deleted successfully') 
+            return redirect('/cashier_order')
+    else:
+        return redirect('/cashier_order')
+
 
 @login_required(login_url='/')  
 def cashier_permisionView(request,userid):

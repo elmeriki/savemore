@@ -16,7 +16,7 @@ class User(AbstractUser):
     shopname =  models.CharField(max_length=200,blank=True,null=True,default="None")
     city =  models.CharField(max_length=200,blank=True,null=True,default="None")
     shopaddress =  models.CharField(max_length=200,blank=True,null=True,default="None")
-    branch =  models.CharField(max_length=200,blank=True,null=True,default="None")
+    branch=models.CharField(max_length=200,blank=True,null=True,default="None")
     subb =  models.CharField(max_length=200,blank=True,null=True,default="None")
     supervisor=models.CharField(max_length=200,blank=True,null=True,default="None")
     def __str__(self):

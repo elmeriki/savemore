@@ -1,0 +1,101 @@
+{% extends "customer/core_m.html" %}
+{% block title %} Account Approval | SaveMore Group  {% endblock %}
+{% load static %}
+{% block content %}
+
+{% if cashier_orders %}
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .dropdown -->
+              <div class="dropdown">
+                {% if messages %}
+                {% for message in messages %}
+                <p class="text-danger">{{message | upper}}</p>
+                {% endfor %}
+                {% else %}
+                <p> FIRST 30 CASHIER ORDERS </p> 
+                {% endif %}
+                <!-- .dropdown-menu -->
+                <div class="dropdown-menu stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown -->
+              <button onclick="history.back()" class="btn btn-primary ml-auto">Close</button>
+            </div><!-- /.card-header -->
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table">
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th style="min-width:256px"> Cashier Names </th>
+                    <th> Type </th>
+                    <th> Order ID</th>
+                    <th> Amount </th>
+                    <th> Actual Amount </th>
+                    <th> Date </th>
+                    <th> Branch </th>
+                    
+                  </tr>
+                </thead><!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  {% for cashier_orders in cashier_orders %}
+                  <tr>
+                    <td class="align-middle text-truncate">
+                      <div class="media align-items-center">
+                        <a href="#" class="tile bg-pink text-white mr-2">{{cashier_orders.customer.first_name | first }}</a>
+                        <div class="media-body">
+                          <a href="#">{{cashier_orders.customer.first_name}} {{cashier_orders.customer.last_name}}</a> <small class="d-block text-muted">
+                            <a class="text-danger" href="/delete_cashier_order/{{cashier_orders.cashierorid}}" onclick="return confirm('Are you sure want to delete this cashier order. Please check again before deleting?')">Delete</a>
+                          </small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle"> {{cashier_orders.types}}</td>
+                    <td class="align-middle"> {{cashier_orders.cashierorid}}</td>
+                    <td class="align-middle"> R{{cashier_orders.amount}}</td>
+                    <td class="align-middle"> R{{cashier_orders.actualamount}}</td>
+                    <td class="align-middle"> {{cashier_orders.created_at}}</td>
+                    <td class="align-middle"> {{cashier_orders.customer.branch}}</td>
+                  </td>
+      
+                </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- /tr -->
+                  <!-- tr -->
+                </tbody><!-- /tbody -->
+              </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+          </div><!-- /.card -->
+      </div><!-- /.page -->
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+</div><!-- /.app -->
+{% else %}
+<main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page">
+        <br> <br>
+        <center>
+            <p> NO CASHIERS ORDERS FOUND </p>
+<hr>
+        </center>
+    </div><!-- /.wrapper -->
+  </main><!-- /.app-main -->
+</div><!-- /.app -->
+
+{% endif %}
+{% endblock %}
