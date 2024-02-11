@@ -65,9 +65,10 @@
                     <td class="align-middle"> Supervisor</td>
                     {% endif %}
                     <td class="align-middle"> {{new_account_list.email}}</td>
-                    <td class="align-middle"> {{new_account_list.username}} </td>
+                    <td class="align-middle"> {{new_account_list.username}} <br>
+                    </td>
                     <td class="align-middle">
-                      <span class="badge badge-dark">{{new_account_list.date_joined | timesince}} ago</span>
+                      <span class="badge badge-dark">{{new_account_list.date_joined.date}}</span>
                     </td>
                     <td class="align-middle">
                       <span class="badge badge-muted">{{new_account_list.branch}}</span>

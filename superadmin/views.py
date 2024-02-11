@@ -39,6 +39,26 @@ def approve_accountView(request):
         return redirect('/')
     
 @login_required(login_url='/')  
+def change_passwordView(request):
+    if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
+        return render(request,'customer/change_password.html')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
+def change_password_View(request):
+    if request.user.is_authenticated and request.method=="POST" and request.user.is_ceo or request.user.is_admin:
+        phone = request.POST['phone']
+        password = request.POST['password']
+        user_instance = User.objects.get(username=phone)
+        user_instance.set_password(password)
+        user_instance.save()
+        messages.info(request,'Cashier Password has been updated successfully') 
+        return redirect('/change_password')
+    else:
+        return redirect('/')
+    
+@login_required(login_url='/')  
 def supervisorsView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
         supervisor_list =User.objects.filter(is_supervisor=True).exclude(is_superuser=True).exclude(is_ceo=True).exclude(is_customer=True).exclude(is_admin=True).exclude(is_marketer=True).exclude(is_cashier=True).exclude(is_stock=True)
@@ -53,7 +73,7 @@ def supervisorsView(request):
 @login_required(login_url='/')  
 def cashier_orderView(request):
     if request.user.is_authenticated and request.user.is_ceo or request.user.is_admin:
-        cashier_orders =CashierOrders.objects.filter()[:30]
+        cashier_orders =CashierOrders.objects.filter(amount=0)[:30]
         data = {
         'cashier_orders':cashier_orders
         }

@@ -136,8 +136,11 @@ def process_actual_saveView(request,orderid,type,customerid):
 @login_required(login_url='/')  
 def processed_logView(request):
     if request.user.is_authenticated and request.user.is_supervisor:
+        supervisor_instance = request.user
+        supervisor_branch=supervisor_instance.branch
         data={
-        'cashier_list':User.objects.filter(is_cashier=True)
+        'cashier_list':User.objects.filter(is_cashier=True,branch=supervisor_branch),
+        'supervisor_branch':supervisor_branch
         }
         return render(request,'supervisor/processed_log.html',context=data)
     else:
@@ -491,11 +494,12 @@ def filter_daily_reportView(request):
         enddate =request.POST['enddate']
         supervison_instance=request.user
         supervisor_username=supervison_instance.username 
+        supervisor_branch=supervison_instance.branch 
         if not Saleslog.objects.filter(created_at__range=(startdate,enddate)):
                 messages.info(request,f'No Data Found')
                 return redirect('/sales_log')
         else:
-            listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True)
+            listof_permited_cashiers=User.objects.filter(is_activation=True,supervisor=supervisor_username).filter(is_cashier=True,branch=supervisor_branch)
             sales_log=Saleslog.objects.filter(created_at__range=(startdate,enddate),cashier__in=listof_permited_cashiers)
             data = {
               'sales_log':sales_log,
